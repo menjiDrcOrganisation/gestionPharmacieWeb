@@ -12,3 +12,5 @@ Route::post('/register', [AuthController::class, 'registerusers']);
 Route::get('/users', [AuthController::class, 'show']);
 Route::Post('/pharmacies', [AuthController::class, 'pharmacie']);
 Route::Post('/registerVendeur', [AuthController::class, 'registerVendeur']);
+//fake route
+Route::post('/pharmacie', [AuthController::class, 'pharmacie']);
