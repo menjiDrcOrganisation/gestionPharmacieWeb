@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Medicament;
 use Illuminate\Http\Request;
 
+use Illuminate\Http\Request\CreateMedicamentRequest;
+
 class MedicamentController extends Controller
 {
     /**
@@ -26,9 +28,20 @@ class MedicamentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateMedicamentRequest $request)
     {
-        //
+        return $request->all();
+    }
+
+
+      /**
+     * get medicament.
+     */
+    public function get()
+    {
+        return [
+            "gffgf"
+        ];
     }
 
     /**

@@ -7,4 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Formes extends Model
 {
     //
+    protected $fillable=[
+        "nom",
+        "description"
+    ];
 }
