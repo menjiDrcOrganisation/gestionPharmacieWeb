@@ -8,12 +8,23 @@ use App\Models\Pharmacie;
 use App\Models\User;
 use App\Models\Vendeur;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
+use Str;
 
 class AuthController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function googloauth2(Request $request)
+    {
+        // This method is not implemented in the provided code.
+        // You can implement Google OAuth2 logic here if needed.
+        // For example, redirecting to Google's OAuth2 authorization URL,
+        // handling the callback, and exchanging the authorization code for an access token.
+        
+
+    }
     public function login(Request $request)
 {
     try {
@@ -119,7 +130,7 @@ class AuthController extends Controller
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required|string|min:8',
                 'id_pharmacie' => 'required|exists:pharmacies,id_pharmacie',
-                
+
             ]);
 
             $user = User::create([
@@ -142,10 +153,59 @@ class AuthController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function logout(Request $request)
     {
-        //
+      try {
+          $request->user()->tokens()->delete(); // Supprime tous les tokens
+
+        return response()->json([
+            'message' => 'Déconnexion réussie'
+        ],201);
+      } catch (\Throwable $th) {
+        return response()->json([
+            'error' => 'Une erreur est survenue lors de la déconnexion.',
+        ], 500);
+      }
     }
+     public function forgetpassword (Request $request){
+        try {
+            $request->validate([
+                'email' => 'required|email',
+            ]);
+
+            $status = Password::sendResetLink(
+                $request->only('email')
+            );
+
+            return $status == Password::RESET_LINK_SENT
+                        ? response()->json(['message' => __($status)], 200)
+                        : response()->json(['error' => __($status)], 400);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Erreur : ' . $e->getMessage()], 500);
+        }
+     }
+     public function resetpassword(Request $request)
+    {
+        try {
+            $request->validate([
+                'token' => 'required',
+                'email' => 'required|email',
+                'password' => 'required|confirmed|min:8',
+            ]);
+            $status = Password::reset(
+                $request->only('email', 'password', 'password_confirmation', 'token'),
+                function (User $user) use ($request) {
+                    $user->forceFill([
+                        'password' => bcrypt($request->password),
+                        'remember_token' => Str::random(60),
+                    ])->save();
+                }
+            );
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Erreur : ' . $e->getMessage()], 500);
+        }
+    }
+
 
     //fackedata controller
      public function pharmacie(Request $request)

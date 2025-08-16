@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\admin;
+
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -13,6 +17,40 @@ class AdminController extends Controller
     public function index()
     {
         //
+    }
+     public function redirectToGoogle()
+    {
+
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function handleGoogleCallback()
+    {
+
+        try {
+
+
+            // $googleUser = Socialite::driver('google')->stateless()->user();
+         $googleUser =   Socialite::driver('google')->stateless()->setHttpClient(
+    new \GuzzleHttp\Client(['verify' => false])
+)->user();
+
+
+
+            $user = User::firstOrCreate(
+                ['email' => $googleUser->getEmail()],
+                [
+                    'name' => $googleUser->getName(),
+                    'password' => bcrypt(uniqid()), // mot de passe aléatoire
+                ]
+            );
+
+            Auth::login($user);
+
+            return redirect('/dashboard'); // ou où tu veux rediriger
+        } catch (\Exception $e) {
+            return dd($e->getMessage());
+        }
     }
 
     /**
@@ -36,7 +74,7 @@ class AdminController extends Controller
      */
     public function show(admin $admin)
     {
-        //
+            //
     }
 
     /**
