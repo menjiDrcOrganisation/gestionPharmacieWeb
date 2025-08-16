@@ -12,6 +12,7 @@ Route::prefix('pharmacies/{id_pharmacie}/medicaments')->name('pharmacies.medicam
     Route::put('/{id_medicament}', [MedicamentController::class, 'update'])->name('update'); 
     Route::delete('/{id_medicament}', [MedicamentController::class, 'destroy'])->name('destroy'); 
 });
+require __DIR__.'/apiAuth.php';
 
 
 
