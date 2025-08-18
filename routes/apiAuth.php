@@ -15,6 +15,12 @@ Route::Post('/registerVendeur', [AuthController::class, 'registerVendeur']);
 Route::post('/lots/{id_pharmacie}/medicament', [App\Http\Controllers\Api\LotController::class, 'getlostmedicament']);
 Route::post('/lots', [App\Http\Controllers\Api\LotController::class, 'store']);
 Route::get('/lots', [App\Http\Controllers\Api\LotController::class, 'index']);
+Route::post('/lots/{id}/prixunitaire', [App\Http\Controllers\Api\LotController::class, 'setprixunitaire']);
+Route::get('/lots/pharmacie/{id_pharmacie}', [App\Http\Controllers\Api\LotController::class, 'getlotspharmacie']);
+Route::put('/lots/{id}', [App\Http\Controllers\Api\LotController::class, 'update']);
+Route::delete('/lots/{id}', [App\Http\Controllers\Api\LotController::class, 'destroy']);
+// Route definitions for LotController
+
 Route::get('/lots/{id_pharmacie}', [App\Http\Controllers\Api\LotController::class, 'getlotspharmacie']);
 Route::put('/lots/{id}', [App\Http\Controllers\Api\LotController::class, 'update']);
 Route::delete('/lots/{id}', [App\Http\Controllers\Api\LotController::class, 'destroy']);
