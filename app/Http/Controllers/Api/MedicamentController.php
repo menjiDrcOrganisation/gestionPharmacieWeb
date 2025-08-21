@@ -24,19 +24,24 @@ class MedicamentController extends Controller
     /**
      * Ajouter un nouveau médicament et l'associer à une pharmacie
      */
-    public function store(CreateMedicamentRequest $request, $id_pharmacie)
+    public function store(Request $request, $id_lot)
     {
-        $pharmacie = Pharmacie::findOrFail($id_pharmacie);
-
-        $medicament = Medicament::create($request->validated());
-
-        $pharmacie->medicaments()->attach($medicament->id_medicament);
-
+        // Récupère le lot
+        $lot = Lot::findOrFail($id_lot);
+    
+        // Crée la vente
+        $vente = Vente::create($request->all()); // Assure-toi d'avoir $fillable dans Vente
+    
+        // Attache la vente au lot via la table pivot
+        $lot->ventes()->attach($vente->id_vente);
+    
+        // Retourne la réponse JSON
         return response()->json([
-            'message' => 'Médicament enregistré avec succès',
-            'data' => $medicament->load('pharmacies')
+            'message' => 'Vente enregistrée avec succès',
+            'data' => $vente->load('lots') // Charge les lots associés
         ], 201);
     }
+    
 
     /**
      * Récupérer un médicament précis dans une pharmacie
