@@ -3,25 +3,24 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Formes;
 use Illuminate\Http\Request;
 
 class FormeController extends Controller
 {
-    //
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        try {
+            $formes = Formes::all();
+            return response()->json($formes, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to retrieve formes'], 500);
+        }
+        // // --- IGNORE ---
+        // return response()->json(['message' => 'Not implemented'], 501);
     }
 
     /**
@@ -29,21 +28,26 @@ class FormeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            // Validate the request data if necessary
+
+            $request->validate([
+                'nom' => 'required|string|max:255',
+                'description' => 'nullable|string',
+            ]);
+            $forme = Formes::create($request->all());
+            return response()->json($forme, 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+        // // --- IGNORE ---
+        // return response()->json(['message' => 'Not implemented'], 501);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Formes $formes)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Formes $formes)
+    public function show(string $id)
     {
         //
     }
@@ -51,7 +55,7 @@ class FormeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Formes $formes)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -59,7 +63,7 @@ class FormeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Formes $formes)
+    public function destroy(string $id)
     {
         //
     }

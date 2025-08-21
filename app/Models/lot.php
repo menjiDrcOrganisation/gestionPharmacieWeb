@@ -12,17 +12,24 @@ class lot extends Model
     public $incrementing = true;
     protected $keyType = 'int';
 
-    protected $fillable=["numero_lot",
-    "prix_achat",
-    "prix_unitaire",
-    "date_expiration",
-    "id_medicament",
-    "id_fournisseur"
+    protected $fillable = [
+        "date_expiration",
+        "quantite",
+        "prix_achat",
+        "prix_unitaire",
+        "numero_lot",
+        "id_pharmacie",
+        "id_medicament"
     ];
 
-      
-      public function ventes()
-      {
-          return $this->belongsToMany(Vente::class, 'lot_vente', 'id_lot', 'id_vente');
-      }
+     
+    public function ventes()
+    {
+        return $this->belongsToMany(Vente::class, 'lot_vente', 'id_lot', 'id_vente');
+    }
+
+    public function medicament()
+    {
+        return $this->belongsTo(Medicament::class, 'id_medicament', 'id_medicament');
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Dose;
 use Illuminate\Http\Request;
 
 class DoseController extends Controller
@@ -14,15 +15,12 @@ class DoseController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        try {
+            $doses = Dose::all();
+            return response()->json($doses, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to retrieve doses'], 500);
+        }
     }
 
     /**
@@ -30,7 +28,17 @@ class DoseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            // Validate the request data if necessary
+            $request->validate([
+                'quantite' => 'required|numeric',
+                'unite' => 'required|string|max:255',
+            ]);
+            $dose = Dose::create($request->all());
+            return response()->json($dose, 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -52,7 +60,7 @@ class DoseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Dose $dose)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -60,7 +68,7 @@ class DoseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Dose $dose)
+    public function destroy(string $id)
     {
         //
     }
