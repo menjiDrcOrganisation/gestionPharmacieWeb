@@ -17,6 +17,7 @@ class vente extends Model
     "montant_total",
     "nom_client",
     "id_pharmacie" 
+    
     ];
 
     public function lots()

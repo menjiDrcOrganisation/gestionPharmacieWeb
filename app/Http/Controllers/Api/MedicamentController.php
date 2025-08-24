@@ -3,85 +3,133 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateMedicamentRequest;
 use Illuminate\Http\Request;
 use App\Models\Medicament;
 use App\Models\Pharmacie;
+use App\Models\Lot;
 
 class MedicamentController extends Controller
 {
     /**
-     * Lister tous les médicaments d'une pharmacie spécifique
+     * Liste des médicaments d'une pharmacie
      */
     public function index($id_pharmacie)
     {
-        $pharmacie = Pharmacie::findOrFail($id_pharmacie);
-        $medicaments = $pharmacie->medicaments()->get();
+        try {
+            $pharmacie = Pharmacie::findOrFail($id_pharmacie);
 
-        return response()->json($medicaments);
+            $lots = Lot::with(['medicament', 'pharmacie'])
+                        ->where('id_pharmacie', $id_pharmacie)
+                        ->get();
+
+            return response()->json([
+                'message' => 'Voici les médicaments de cette pharmacie',
+                'data' => $lots
+            ], 200);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Une erreur est survenue',
+                'error' => $th->getMessage()
+            ], 500);
+        }
     }
 
     /**
-     * Ajouter un nouveau médicament et l'associer à une pharmacie
+     * Ajouter un médicament à une pharmacie
      */
-    public function store(Request $request, $id_lot)
+    public function store(Request $request, $id_pharmacie)
     {
-        // Récupère le lot
-        $lot = Lot::findOrFail($id_lot);
-    
-        // Crée la vente
-        $vente = Vente::create($request->all()); // Assure-toi d'avoir $fillable dans Vente
-    
-        // Attache la vente au lot via la table pivot
-        $lot->ventes()->attach($vente->id_vente);
-    
-        // Retourne la réponse JSON
-        return response()->json([
-            'message' => 'Vente enregistrée avec succès',
-            'data' => $vente->load('lots') // Charge les lots associés
-        ], 201);
+        try {
+            $pharmacie = Pharmacie::findOrFail($id_pharmacie);
+
+            // calcul du prix unitaire
+            $indice = $pharmacie->indice;
+            $prix_unitaire = $indice * $request->input("prix_achat");
+
+            // ajout du médicament pour une pharmacie 
+            $lot = Lot::create([
+                'numero_lot'     => 'LOT' . time(), // numéro unique
+                'prix_achat'     => $request->input("prix_achat"),
+                'quantite'       => $request->input("quantite"),
+                'prix_unitaire'  => $prix_unitaire,
+                'date_expiration'=> $request->input("date_expiration"),
+                'id_pharmacie'   => $id_pharmacie,  
+                'id_medicament'  => $request->input("id_medicament"),   
+                'id_fournisseur' => $request->input("id_fournisseur", 1),   
+            ]);
+
+            return response()->json([
+                'message' => 'Médicament ajouté avec succès',
+                'data' => $lot
+            ], 201);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Une erreur est survenue',
+                'error' => $th->getMessage()
+            ], 500);
+        }
     }
-    
 
     /**
-     * Récupérer un médicament précis dans une pharmacie
+     * Afficher un médicament d'une pharmacie
      */
     public function show($id_pharmacie, $id_medicament)
     {
-        $pharmacie = Pharmacie::findOrFail($id_pharmacie);
+        try {
+            $lot = Lot::with(['medicament', 'pharmacie'])
+                        ->where('id_pharmacie', $id_pharmacie)
+                        ->where('id_medicament', $id_medicament)
+                        ->get();
 
-        $medicament = $pharmacie->medicaments()
-                                ->where('medicaments.id_medicament', $id_medicament)
-                                ->first();
+            return response()->json([
+                'message' => 'Médicament trouvé',
+                'data' => $lot
+            ], 200);
 
-        if (!$medicament) {
-            return response()->json(['message' => 'Médicament introuvable dans cette pharmacie'], 404);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Médicament introuvable ou erreur',
+                'error' => $th->getMessage()
+            ], 404);
         }
-
-        return response()->json($medicament);
     }
 
     /**
-     * Modifier un médicament dans une pharmacie
+     * Modifier un médicament d'une pharmacie
      */
     public function update(Request $request, $id_pharmacie, $id_medicament)
     {
-        $pharmacie = Pharmacie::findOrFail($id_pharmacie);
+        try {
+            $lot = Lot::where('id_pharmacie', $id_pharmacie)
+                      ->where('id_medicament', $id_medicament)
+                      ->firstOrFail();
 
-        $medicament = $pharmacie->medicaments()
-                                ->where('medicaments.id_medicament', $id_medicament)
-                                ->first();
+            $lot->update([
+                'prix_achat'     => $request->input("prix_achat", $lot->prix_achat),
+                'quantite'       => $request->input("quantite", $lot->quantite),
+                'date_expiration'=> $request->input("date_expiration", $lot->date_expiration),
+            ]);
 
-        if (!$medicament) {
-            return response()->json(['message' => 'Médicament introuvable dans cette pharmacie'], 404);
+            // recalcul du prix unitaire si prix_achat est modifié
+            if ($request->has("prix_achat")) {
+                $indice = Pharmacie::findOrFail($id_pharmacie)->indice;
+                $lot->prix_unitaire = $indice * $lot->prix_achat;
+                $lot->save();
+            }
+
+            return response()->json([
+                'message' => 'Médicament mis à jour avec succès',
+                'data' => $lot
+            ], 200);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Mise à jour échouée',
+                'error' => $th->getMessage()
+            ], 500);
         }
-
-        $medicament->update($request->all());
-
-        return response()->json([
-            'message' => 'Médicament mis à jour avec succès',
-            'data' => $medicament
-        ]);
     }
 
     /**
@@ -89,20 +137,22 @@ class MedicamentController extends Controller
      */
     public function destroy($id_pharmacie, $id_medicament)
     {
-        $pharmacie = Pharmacie::findOrFail($id_pharmacie);
+        try {
+            $lot = Lot::where('id_pharmacie', $id_pharmacie)
+                      ->where('id_medicament', $id_medicament)
+                      ->firstOrFail();
 
-        $medicament = $pharmacie->medicaments()
-                                ->where('medicaments.id_medicament', $id_medicament)
-                                ->first();
+            $lot->delete();
 
-        if (!$medicament) {
-            return response()->json(['message' => 'Médicament introuvable dans cette pharmacie'], 404);
+            return response()->json([
+                'message' => 'Médicament supprimé avec succès'
+            ], 200);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Suppression échouée',
+                'error' => $th->getMessage()
+            ], 500);
         }
-
-        $pharmacie->medicaments()->detach($id_medicament);
-        //supprimer le médicament complètement si nécessaire
-        // $medicament->delete();
-
-        return response()->json(['message' => 'Médicament supprimé avec succès']);
     }
 }

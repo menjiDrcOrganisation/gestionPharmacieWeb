@@ -32,4 +32,10 @@ class lot extends Model
     {
         return $this->belongsTo(Medicament::class, 'id_medicament', 'id_medicament');
     }
+
+
+    public function pharmacie()
+    {
+        return $this->belongsTo(Pharmacie::class, 'id_pharmacie', 'id_pharmacie');
+    }
 }
