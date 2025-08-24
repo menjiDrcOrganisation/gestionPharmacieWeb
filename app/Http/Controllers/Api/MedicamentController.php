@@ -18,9 +18,10 @@ class MedicamentController extends Controller
         try {
             $pharmacie = Pharmacie::findOrFail($id_pharmacie);
 
-            $lots = Lot::with(['medicament', 'pharmacie'])
-                        ->where('id_pharmacie', $id_pharmacie)
-                        ->get();
+            $lots = Lot::with([
+                'medicament.forme', 
+                'medicament.dose', 
+                'pharmacie'])->where('id_pharmacie', $id_pharmacie)->get();
 
             return response()->json([
                 'message' => 'Voici les médicaments de cette pharmacie',
@@ -78,7 +79,8 @@ class MedicamentController extends Controller
     public function show($id_pharmacie, $id_medicament)
     {
         try {
-            $lot = Lot::with(['medicament', 'pharmacie'])
+            $lot = Lot::with(['medicament.forme', 
+                'medicament.dose', 'pharmacie'])
                         ->where('id_pharmacie', $id_pharmacie)
                         ->where('id_medicament', $id_medicament)
                         ->get();
@@ -104,7 +106,7 @@ class MedicamentController extends Controller
         try {
             $lot = Lot::where('id_pharmacie', $id_pharmacie)
                       ->where('id_medicament', $id_medicament)
-                      ->firstOrFail();
+                      ->get();
 
             $lot->update([
                 'prix_achat'     => $request->input("prix_achat", $lot->prix_achat),
@@ -114,7 +116,7 @@ class MedicamentController extends Controller
 
             // recalcul du prix unitaire si prix_achat est modifié
             if ($request->has("prix_achat")) {
-                $indice = Pharmacie::findOrFail($id_pharmacie)->indice;
+                $indice = Pharmacie::find($id_pharmacie)->indice;
                 $lot->prix_unitaire = $indice * $lot->prix_achat;
                 $lot->save();
             }
@@ -140,8 +142,7 @@ class MedicamentController extends Controller
         try {
             $lot = Lot::where('id_pharmacie', $id_pharmacie)
                       ->where('id_medicament', $id_medicament)
-                      ->firstOrFail();
-
+                      ->get();
             $lot->delete();
 
             return response()->json([

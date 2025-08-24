@@ -23,11 +23,8 @@ class CreateMedicamentRequest extends FormRequest
     {
         
         return [
-            "nom"=>['required'],
-            "description"=>['required'],
-            "id_forme"=>['required'],
-            "id_dose"=>['required'],
-            //
+            "id_medicament"=>['required'],
+            "quantite"=>['required']
         ];
     }
 }

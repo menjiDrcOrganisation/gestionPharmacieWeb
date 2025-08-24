@@ -8,8 +8,8 @@ use App\Http\Controllers\Api\DoseController;
 
 Route::prefix('pharmacies/{id_pharmacie}/medicaments')->name('pharmacies.medicaments.')->group(function () {
     Route::get('/', [MedicamentController::class, 'index'])->name('index'); 
-    Route::get('/{id_medicament}', [MedicamentController::class, 'show'])->name('show'); 
     Route::post('/', [MedicamentController::class, 'store'])->name('store'); 
+    Route::get('/{id_medicament}', [MedicamentController::class, 'show'])->name('show'); 
     Route::put('/{id_medicament}', [MedicamentController::class, 'update'])->name('update'); 
     Route::delete('/{id_medicament}', [MedicamentController::class, 'destroy'])->name('destroy'); 
 });
