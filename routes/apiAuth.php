@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DoseController;
 
+
+Route::post('/google-login', [AuthController::class, 'googleLogin']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'registerusers']);
 Route::get('/users', [AuthController::class, 'show']);

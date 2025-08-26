@@ -10,6 +10,8 @@ use App\Models\Vendeur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Str;
+use Google_Client;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -22,7 +24,7 @@ class AuthController extends Controller
         // You can implement Google OAuth2 logic here if needed.
         // For example, redirecting to Google's OAuth2 authorization URL,
         // handling the callback, and exchanging the authorization code for an access token.
-        
+
 
     }
     public function login(Request $request)
@@ -59,6 +61,68 @@ class AuthController extends Controller
         }
     } catch (\Exception $e) {
         return response()->json(['message' => 'Erreur : ' . $e->getMessage()], 500);
+    }
+}
+ public function googleLogin(Request $request)
+    {
+    $request->validate([
+        'id_token' => 'required|string',
+    ]);
+
+    $idToken = $request->id_token;
+
+    $client = new Google_Client(['client_id' => env('GOOGLE_CLIENT_ID')]);
+    $client->setHttpClient(new \GuzzleHttp\Client(['verify' => false]));
+
+    try {
+        // Vérifie que le token est valide
+        $payload = $client->verifyIdToken($idToken);
+
+        if (!$payload) {
+            return response()->json(['error' => 'Token invalide'], 401);
+        }
+
+        // Infos récupérées depuis Google
+        $googleId = $payload['sub'];
+        $email = $payload['email'];
+        $name = $payload['name'] ?? $email;
+
+        // Crée ou récupère l’utilisateur
+        $user = User::firstOrCreate(
+            ['email' => $email],
+            [
+                'name' => $name,
+                'google_id' => $googleId,
+                'password' => bcrypt(Str::random(16)), // mot de passe aléatoire
+                'role' => 'gerant' 
+            ]
+        );
+
+        // Connecte l’utilisateur
+        Auth::login($user);
+
+        // Création du token
+        $token = $user->createToken('API Token')->plainTextToken;
+
+        // Récupération du rôle
+        if ($user->role === 'gerant') {
+            $role = Gerant::where('id_utilisateur', $user->id)->first();
+        } elseif ($user->role === 'vendeur') {
+            $role = Vendeur::where('id_utilisateur', $user->id)->first();
+        } else {
+            $role = null;
+        }
+
+        // Réponse similaire à login()
+        return response()->json([
+
+            'user' => $user,
+            'role' => $role,
+            'token' => $token
+        ], 200);
+
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'Erreur serveur: '.$e->getMessage()], 500);
     }
 }
 
