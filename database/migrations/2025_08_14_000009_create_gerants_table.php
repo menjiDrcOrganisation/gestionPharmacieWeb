@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('gerants', function (Blueprint $table) {
             $table->id('id_gerant');
-            $table->foreignId('id_utilisateur')->constrained('utilisateurs', 'id_utilisateur');
+            $table->foreignId('id_utilisateur')->constrained('users', 'id');
             $table->timestamps();
         });
     }
