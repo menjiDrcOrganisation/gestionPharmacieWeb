@@ -10,10 +10,11 @@ return new class extends Migration {
             $table->id('id_lot');
             $table->string('numero_lot');
             $table->integer('prix_achat');
+            $table->integer('quantite');
             $table->integer('prix_unitaire');
             $table->date('date_expiration');
             $table->foreignId('id_medicament')->constrained('medicaments', 'id_medicament');
-            $table->foreignId('id_fournisseur')->constrained('fournisseurs', 'id_fournisseur');
+            $table->foreignId('id_pharmacie')->constrained('pharmacies', 'id_pharmacie');
             $table->timestamps();
         });
     }
