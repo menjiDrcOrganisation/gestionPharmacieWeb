@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Dose;
+use App\Models\Formes;
 use App\Models\Lot;
+use App\Models\Medicament;
 use App\Models\Pharmacie;
 use App\Models\pharmacie_medicament;
 use Illuminate\Http\Request;
@@ -31,12 +34,13 @@ class LotController extends Controller
    public function store(Request $request)
 {
     try {
+
         // Validation des données
         $request->validate([
             "id_medicament" => "required|integer|exists:medicaments,id_medicament",
             "quantite" => "required|integer|min:1",
             "date_expiration" => "required|date|after:today",
-            "prix_achat" => "required|numeric|min:0",
+            "prix_achat" => "required|integer|min:0",
             "id_pharmacie" => "required|integer|exists:pharmacies,id_pharmacie",
         ]);
 
@@ -193,4 +197,24 @@ public function getlostmedicament(string $id_pharmacie, request $request)
             return response()->json(['error' => 'Failed to delete lot: ' . $e->getMessage()], 500);
         }
     }
+    public function getallformeanddose(){
+        try {
+         $forme = Formes::all();
+        $dose = Dose::all();
+        return response()->json(['forme'=>$forme,'dose'=>$dose],200);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to retrieve formes'], 500);
+    }
+}
+    public function getallmedicament(){
+        try{
+            $medicaments = Medicament::all();
+            return response()->json($medicaments,200);
+        }
+        catch (\Exception $e){
+            return response()->json(['error'=>'Failed to retrieve medicaments: '.$e->getMessage()],500);
+        }
+    }
+
 }

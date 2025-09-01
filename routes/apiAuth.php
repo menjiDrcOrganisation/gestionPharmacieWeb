@@ -37,4 +37,6 @@ Route::get('/doses', [DoseController::class, 'index']);
 Route::post('/formes', [App\Http\Controllers\Api\FormeController::class, 'store']);
 Route::get('/formes', [App\Http\Controllers\Api\FormeController::class, 'index']);
 
+Route::get('/getallformeanddose', [App\Http\Controllers\Api\LotController::class, 'getallformeanddose']);
+Route::get('/getallmedicament', [App\Http\Controllers\Api\LotController::class, 'getallmedicament']);   
 
