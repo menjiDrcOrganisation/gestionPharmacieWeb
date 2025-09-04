@@ -40,3 +40,8 @@ Route::get('/formes', [App\Http\Controllers\Api\FormeController::class, 'index']
 Route::get('/getallformeanddose', [App\Http\Controllers\Api\LotController::class, 'getallformeanddose']);
 Route::get('/getallmedicament', [App\Http\Controllers\Api\LotController::class, 'getallmedicament']);   
 
+Route::post('/forgot-password', [AuthController::class, 'sendResetLink']);
+Route::post('/reset-password', [AuthController::class, 'resetPassword']);
+
+ Route::get('user/profile', [AuthController::class, 'profile']);
+ Route::put('user/profile', [AuthController::class, 'updateProfile']);

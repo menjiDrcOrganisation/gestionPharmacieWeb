@@ -9,9 +9,15 @@ use App\Models\User;
 use App\Models\Vendeur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
-use Str;
+
+
+use Illuminate\Support\Str;
+
 use Google_Client;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -94,7 +100,7 @@ class AuthController extends Controller
                 'name' => $name,
                 'google_id' => $googleId,
                 'password' => bcrypt(Str::random(16)), // mot de passe aléatoire
-                'role' => 'gerant' 
+                'role' => 'gerant'
             ]
         );
 
@@ -248,7 +254,7 @@ class AuthController extends Controller
             return response()->json(['message' => 'Erreur : ' . $e->getMessage()], 500);
         }
      }
-     public function resetpassword(Request $request)
+     public function resetpassword_two(Request $request)
     {
         try {
             $request->validate([
@@ -293,4 +299,149 @@ class AuthController extends Controller
         }
     }
 
+
+
+
+
+      // 📩 Étape 1 : envoyer le lien de réinitialisation
+    public function sendResetLink(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+        ]);
+
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        if ($status === Password::RESET_LINK_SENT) {
+            return response()->json(['message' => 'Lien de réinitialisation envoyé.'], 200);
+        }
+
+        throw ValidationException::withMessages([
+            'email' => [trans($status)],
+        ]);
+    }
+
+    // 🔁 Étape 2 : Réinitialiser le mot de passe
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+            'token' => 'required|string',
+            'password' => 'required|min:6|confirmed',
+        ]);
+
+        $status = Password::reset(
+            $request->only('email', 'token', 'password', 'password_confirmation'),
+            function ($user, $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password),
+                    'remember_token' => Str::random(60),
+                ])->save();
+            }
+        );
+
+        if ($status == Password::PASSWORD_RESET) {
+            return response()->json(['message' => 'Mot de passe réinitialisé avec succès.'], 200);
+        }
+
+        throw ValidationException::withMessages([
+            'email' => [trans($status)],
+        ]);
+    }
+     public function profilePhoto(Request $request)
+    {
+        return response()->json([
+            'data' => $request->user()->loadMissing('profilePhoto')
+        ]);
+    }
+
+    public function updateProfile(Request $request)
+    {
+
+       try {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+           //'number_phone' => 'nullable|string|max:20',
+           'email' => 'required|email|unique:users,email,'.$request->user()->id,
+        ]);
+
+        $request->user()->update($validated);
+
+        return response()->json([
+            'message' => 'Profil mis à jour',
+            'data' => $request->user()->fresh()
+        ],200);
+       } catch (\Exception $e) {
+        return response()->json(['message' => 'Erreur : ' . $e->getMessage()], 500);
+       }
+    }
+
+    public function changePassword(Request $request)
+    {
+        // Validation des données
+        $validator = Validator::make($request->all(), [
+            'current_password' => ['required', 'string'],
+            'new_password' => ['required', 'string'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $user = $request->user();
+
+        // Vérifie le mot de passe actuel
+        if (!Hash::check($request->current_password, $user->password)) {
+            return response()->json([
+                'message' => 'Le mot de passe actuel est incorrect'
+            ], 401);
+        }
+
+        // Met à jour le mot de passe
+        $user->update([
+            'password' => Hash::make($request->new_password)
+        ]);
+
+        return response()->json([
+            'message' => 'Mot de passe mis à jour avec succès'
+        ],200);
+    }
+
+    public function updatePhoto(Request $request)
+    {
+        $request->validate([
+            'photo' => 'required|image|max:2048',
+        ]);
+
+        $path = $request->file('photo')->store('profile-photos');
+
+        if ($oldPhoto = $request->user()->profile_photo_path) {
+            //Storage::delete($oldPhoto);
+        }
+
+        $request->user()->update([
+            'profile_photo_path' => $path
+        ]);
+
+        return response()->json([
+            'message' => 'Photo de profil mise à jour',
+         //   'photo_url' => Storage::url($path)
+        ]);
+    }
+
+    public function getClients()
+    {
+        // $clients = Client::with('user')->get();// relation directe
+
+        // return response()->json([
+        //     'message' => 'Clients de l’utilisateur connecté',
+        //     'data' => ClientResource::collection($clients),
+        // ]);
+
+    }
 }

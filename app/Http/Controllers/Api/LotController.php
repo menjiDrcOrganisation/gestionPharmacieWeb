@@ -83,8 +83,10 @@ class LotController extends Controller
 public function getlotspharmacie(string $id_pharmacie)
 {
     try {
-        // Récupérer les lots pour la pharmacie spécifiée
-        $lots = Lot::where('id_pharmacie', $id_pharmacie)->get();
+        // Récupérer les lots avec les informations du médicament
+        $lots = Lot::with('medicament')
+            ->where('id_pharmacie', $id_pharmacie)
+            ->get();
 
         if ($lots->isEmpty()) {
             return response()->json(['message' => 'Aucun lot trouvé pour cette pharmacie'], 404);
@@ -95,6 +97,7 @@ public function getlotspharmacie(string $id_pharmacie)
         return response()->json(['error' => 'Failed to retrieve lots for the specified pharmacy'], 500);
     }
 }
+
 
 public function getlostmedicament(string $id_pharmacie, request $request)
 {
@@ -140,7 +143,7 @@ public function getlostmedicament(string $id_pharmacie, request $request)
             // Enregistrer les modifications
             $lot->save();
 
-            return response()->json($lot, 200);
+            return response()->json($lot, 201);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to update unit price: ' . $e->getMessage()], 500);
         }
@@ -172,7 +175,7 @@ public function getlostmedicament(string $id_pharmacie, request $request)
         // Enregistrer les modifications
         $lot->save();
 
-        return response()->json($lot, 200);
+        return response()->json($lot, 201);
 
       }
       catch (\Exception $e){
