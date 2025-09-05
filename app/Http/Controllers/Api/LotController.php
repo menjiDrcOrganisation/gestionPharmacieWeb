@@ -57,7 +57,7 @@ class LotController extends Controller
         }
 
         // Calcul du prix unitaire (ici on utilise le prix d'achat, à ajuster si nécessaire)
-        $prix_unitaire = $request->prix_achat * $pharmacie->indice / $request->quantite;
+        $prix_unitaire = $request->prix_achat * $pharmacie->indice ;
 
         // Générer un numéro de lot unique
         $numero_lot = uniqid('lot_');
@@ -84,7 +84,9 @@ public function getlotspharmacie(string $id_pharmacie)
 {
     try {
         // Récupérer les lots avec les informations du médicament
-        $lots = Lot::with('medicament')
+        $lots = Lot::with('medicament',
+                 'medicament.forme',
+                'medicament.dose', )
             ->where('id_pharmacie', $id_pharmacie)
             ->get();
 
