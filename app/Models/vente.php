@@ -24,4 +24,8 @@ class vente extends Model
     {
         return $this->belongsToMany(Lot::class, 'lot_vente', 'id_lot', 'id_vente');
     }
+    public function pharmacie()
+    {
+        return $this->belongsTo(Pharmacie::class, 'id_pharmacie', 'id_pharmacie');
+    }
 }

@@ -17,11 +17,13 @@ class MedicamentController extends Controller
     {
         try {
             $pharmacie = Pharmacie::findOrFail($id_pharmacie);
+           
 
             $lots = Lot::with([
                 'medicament.forme', 
                 'medicament.dose', 
                 'pharmacie'])->where('id_pharmacie', $id_pharmacie)->get();
+                
 
             return response()->json([
                 'message' => 'Voici les médicaments de cette pharmacie',

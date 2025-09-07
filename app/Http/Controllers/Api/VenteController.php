@@ -17,9 +17,12 @@ class VenteController extends Controller
     public function index($id_pharmacie)
     {
         try {
-            $ventes = Vente::with('lots.medicament.forme,lots.medicament.dose')
+            $ventes = Vente::with('lots.medicament.forme','lots.medicament.dose','lots.pharmacie',
+            'pharmacie')
                 ->where('id_pharmacie', $id_pharmacie)
                 ->get();
+
+                return response()->json($ventes);
 
             return response()->json([
                 'message' => 'Liste des ventes',
@@ -60,7 +63,7 @@ class VenteController extends Controller
                 }
 
                 // Attacher lot avec quantité (pivot table)
-                $vente->lots()->attach($lot_id, ['quantite_vendue' => $quantiteVendue]);
+                $vente->lots()->attach($lot_id, ['quantite_vendu' => $quantiteVendue]);
 
                 // Décrémenter le stock
                 $lot->decrement('quantite', $quantiteVendue);
@@ -73,7 +76,7 @@ class VenteController extends Controller
 
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => 'Erreur lors de l\'enregistrement de la vente',
+            
                 'error'   => $th->getMessage()
             ], 500);
         }

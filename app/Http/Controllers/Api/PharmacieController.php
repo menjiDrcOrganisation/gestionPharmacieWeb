@@ -4,46 +4,51 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Pharmacie; // Assure-toi d’avoir le modèle Pharmacie
 
 class PharmacieController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Liste toutes les pharmacies
     public function index()
     {
-        //
+        return response()->json([
+            'data' => Pharmacie::all()
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Crée une nouvelle pharmacie
     public function store(Request $request)
     {
-        //
+        $pharmacie = Pharmacie::create($request->all());
+        return response()->json($pharmacie, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    // Affiche une pharmacie spécifique
+    public function show($id_pharmacie)
     {
-        //
+        $pharmacie = Pharmacie::findOrFail($id_pharmacie);
+        return response()->json($pharmacie);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    // Met à jour une pharmacie
+    public function update(Request $request, $id_pharmacie)
     {
-        //
+        $pharmacie = Pharmacie::findOrFail($id_pharmacie);
+        $pharmacie->update($request->all());
+        return response()->json($pharmacie);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    // Supprime une pharmacie
+    public function destroy($id_pharmacie)
     {
-        //
+        $pharmacie = Pharmacie::findOrFail($id_pharmacie);
+        $pharmacie->delete();
+        return response()->json(null, 204);
+    }
+
+    public function pharmaciesDuGerant($id_gerant)
+    {
+        $pharmacies = Pharmacie::where('id_gerant', $id_gerant)->get();
+        return response()->json($pharmacies);
     }
 }
