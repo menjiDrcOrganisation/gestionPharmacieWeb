@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Mail\UserCreatedMail;
-use App\Models\Gerant;
+use App\Models\gerant;
 use App\Models\Pharmacie;
 use App\Models\User;
 use App\Models\Vendeur;
