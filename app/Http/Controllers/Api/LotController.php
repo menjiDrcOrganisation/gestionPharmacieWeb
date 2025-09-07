@@ -214,7 +214,8 @@ public function getlostmedicament(string $id_pharmacie, request $request)
 }
     public function getallmedicament(){
         try{
-            $medicaments = Medicament::with('forme','dose')->get();
+            $medicaments = Medicament::with('forme','dose')
+            ->get();
             return response()->json($medicaments,200);
         }
         catch (\Exception $e){
