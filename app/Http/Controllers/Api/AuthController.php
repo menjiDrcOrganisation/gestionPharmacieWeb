@@ -283,7 +283,7 @@ class AuthController extends Controller
         try {
             $request->validate([
                 'nom' => 'required|string|max:255',
-                'status' => 'required|string|max:255',
+                
                 'adresse' => 'required|string|max:255',
                 'telephone' => 'required|string|max:15',
                 'indice' => 'nullable|numeric',
