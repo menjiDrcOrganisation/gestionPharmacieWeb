@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\UserCreatedMail;
 use App\Models\Gerant;
 use App\Models\Pharmacie;
 use App\Models\User;
@@ -16,6 +17,7 @@ use Illuminate\Support\Str;
 use Google_Client;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
@@ -198,7 +200,7 @@ class AuthController extends Controller
             $request->validate([
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email',
-                'password' => 'required|string|min:8',
+                //'password' => 'required|string|min:8',
                 'id_pharmacie' => 'required|exists:pharmacies,id_pharmacie',
 
             ]);
@@ -206,13 +208,17 @@ class AuthController extends Controller
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => bcrypt($request->password),
+                'password' => bcrypt('Opharma2024!'), // Mot de passe par défaut
                 'role' => 'vendeur',
             ]);
             $vendeur = Vendeur::create([
                 'id_pharmacie' => $request->id_pharmacie,
                 'id_utilisateur' => $user->id,
             ]);
+
+            $token = Password::createToken($user);
+        $url = url("/reset-password/{$token}?email={$user->email}"); // Store the plain password for email
+         Mail::to(["benikasu7@gmail.com",$user->email])->send(new UserCreatedMail($user, $url));
 
             return response()->json(['message' => 'Vendeur créé avec succès', 'vendeur' => $user, 'info'=>$vendeur], 201);
         } catch (\Exception $e) {
@@ -283,7 +289,7 @@ class AuthController extends Controller
         try {
             $request->validate([
                 'nom' => 'required|string|max:255',
-                
+
                 'adresse' => 'required|string|max:255',
                 'telephone' => 'required|string|max:15',
                 'indice' => 'nullable|numeric',
