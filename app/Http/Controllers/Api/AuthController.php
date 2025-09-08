@@ -116,7 +116,7 @@ class AuthController extends Controller
                 'role' => 'gerant'
             ]
         );
-        if ($request->role === 'gerant') {
+        if ($user->role === 'gerant') {
    $info = Gerant::firstOrCreate([
         'id_utilisateur' => $user->id
     ]);
