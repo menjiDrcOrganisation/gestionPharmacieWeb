@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Medicament;
 use App\Models\Pharmacie;
-use App\Models\Lot;
+use App\Models\lot;
 
 class MedicamentController extends Controller
 {
@@ -19,12 +19,11 @@ class MedicamentController extends Controller
             $pharmacie = Pharmacie::findOrFail($id_pharmacie);
            
 
-            $lots = Lot::with([
+            $lots = lot::with([
                 'medicament.forme', 
                 'medicament.dose', 
                 'pharmacie'])->where('id_pharmacie', $id_pharmacie)->get();
                 
-
             return response()->json([
                 'message' => 'Voici les médicaments de cette pharmacie',
                 'data' => $lots
@@ -45,7 +44,7 @@ class MedicamentController extends Controller
             $medicaments = Medicament::all();
            
 
-            $lots = Lot::with([
+            $lots = lot::with([
                 'medicament.forme', 
                 'medicament.dose', 
                 'pharmacie'])->get();
@@ -79,7 +78,7 @@ class MedicamentController extends Controller
             $prix_unitaire = $indice * $request->input("prix_achat");
 
             // ajout du médicament pour une pharmacie 
-            $lot = Lot::create([
+            $lot = lot::create([
                 'numero_lot'     => 'LOT' . time(), // numéro unique
                 'prix_achat'     => $request->input("prix_achat"),
                 'quantite'       => $request->input("quantite"),
@@ -109,7 +108,7 @@ class MedicamentController extends Controller
     public function show($id_pharmacie, $id_medicament)
     {
         try {
-            $lot = Lot::with(['medicament.forme', 
+            $lot = lot::with(['medicament.forme', 
                 'medicament.dose', 'pharmacie'])
                         ->where('id_pharmacie', $id_pharmacie)
                         ->where('id_medicament', $id_medicament)
@@ -134,7 +133,7 @@ class MedicamentController extends Controller
     public function update(Request $request, $id_pharmacie, $id_medicament)
     {
         try {
-            $lot = Lot::where('id_pharmacie', $id_pharmacie)
+            $lot = lot::where('id_pharmacie', $id_pharmacie)
                       ->where('id_medicament', $id_medicament)
                       ->get();
 
@@ -170,7 +169,7 @@ class MedicamentController extends Controller
     public function destroy($id_pharmacie, $id_medicament)
     {
         try {
-            $lot = Lot::where('id_pharmacie', $id_pharmacie)
+            $lot = lot::where('id_pharmacie', $id_pharmacie)
                       ->where('id_medicament', $id_medicament)
                       ->get();
             $lot->delete();
