@@ -98,7 +98,7 @@ class AuthController extends Controller
         $payload = $client->verifyIdToken($idToken);
 
         if (!$payload) {
-            return response()->json(['error' => $idToken], 401);
+            return response()->json(['error' => $client], 401);
         }
 
         // Infos récupérées depuis Google
