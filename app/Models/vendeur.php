@@ -15,6 +15,7 @@ class vendeur extends Model
     protected $fillable = [
        'id_utilisateur',
         'id_pharmacie',
+        'id_vendeur'
         
     ];
 
