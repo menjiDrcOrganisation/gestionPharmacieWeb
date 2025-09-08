@@ -124,13 +124,23 @@ class AuthController extends Controller
         $token = $user->createToken('API Token')->plainTextToken;
 
         // Récupération du rôle
-        if ($user->role === 'gerant') {
-            $role = Gerant::where('id_utilisateur', $user->id)->first();
-        } elseif ($user->role === 'vendeur') {
-            $role = Vendeur::where('id_utilisateur', $user->id)->first();
-        } else {
-            $role = null;
-        }
+       if ($user->role === 'gerant') {
+                $info = Gerant::where('id_utilisateur', $user->id)->first();
+                $role = [
+             'id'  => $info->id_gerant,
+             'role'  => 'gerant',
+   
+                ];
+            } elseif ($user->role === 'vendeur') {
+                $info = Vendeur::where('id_utilisateur', $user->id)->first();
+                 $role = [
+             'id'  => $info->id_vendeur,
+             'role'  => 'vendeur',
+   
+                ];
+            } else {
+                $role = null;
+            }
 
         // Réponse similaire à login()
         return response()->json([
