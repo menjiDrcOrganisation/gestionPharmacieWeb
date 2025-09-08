@@ -28,7 +28,7 @@ Route::put('/lots/{id}', [App\Http\Controllers\Api\LotController::class, 'update
 Route::delete('/lots/{id}', [App\Http\Controllers\Api\LotController::class, 'destroy']);
 
 //fake route
-Route::post('/pharmacies', [AuthController::class, 'pharmacie']);
+Route::post('/pharmacies/gerant', [AuthController::class, 'pharmacie']);
 
 Route::post('/doses', [DoseController::class, 'store']);
 Route::get('/doses', [DoseController::class, 'index']);
@@ -38,7 +38,7 @@ Route::post('/formes', [App\Http\Controllers\Api\FormeController::class, 'store'
 Route::get('/formes', [App\Http\Controllers\Api\FormeController::class, 'index']);
 
 Route::get('/getallformeanddose', [App\Http\Controllers\Api\LotController::class, 'getallformeanddose']);
-Route::get('/getallmedicament', [App\Http\Controllers\Api\LotController::class, 'getallmedicament']);   
+Route::get('/getallmedicament', [App\Http\Controllers\Api\LotController::class, 'getallmedicament']);
 
 Route::post('/forgot-password', [AuthController::class, 'sendResetLink']);
 Route::post('/reset-password', [AuthController::class, 'resetPassword']);
