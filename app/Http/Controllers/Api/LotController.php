@@ -71,12 +71,12 @@ class LotController extends Controller
             "numero_lot" => $numero_lot,
             "id_pharmacie" => $request->id_pharmacie,
             "id_medicament" => $request->id_medicament
-        ]);
+        ]); 
 
         return response()->json($lot, 201);
 
     } catch (\Exception $e) {
-        return response()->json(['error' => $e->getMessage()], 500);
+        return response()->json(['error' => $e->getMessage()], 403);
     }
 }
 
