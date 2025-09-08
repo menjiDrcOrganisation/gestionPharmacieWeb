@@ -124,7 +124,7 @@ class AuthController extends Controller
         'id'   => $info->id_gerant,
         'role' => 'gerant',
     ] : null;
-} elseif ($request->role === 'vendeur') {
+} elseif ($user->role === 'vendeur') {
     $info = Vendeur::firstOrCreate([
         'id_utilisateur' => $user->id
     ]);
