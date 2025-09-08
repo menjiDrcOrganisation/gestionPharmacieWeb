@@ -116,14 +116,16 @@ class AuthController extends Controller
                 'role' => 'gerant'
             ]
         );
-        if ($user->wasRecentlyCreated && $request->role === 'gerant') {
-    
-       $inof = Gerant::create([
-            'id_utilisateur' => $user->id
-        ]);
-        return response()->json(['error' => $inof], 401);
+        if ($request->role === 'gerant') {
+    Gerant::firstOrCreate([
+        'id_utilisateur' => $user->id
+    ]);
+} elseif ($request->role === 'vendeur') {
+    Vendeur::firstOrCreate([
+        'id_utilisateur' => $user->id
+    ]);
+}
 
-    }
 
         // Connecte l’utilisateur
         Auth::login($user);
@@ -131,24 +133,24 @@ class AuthController extends Controller
         // Création du token
         $token = $user->createToken('API Token')->plainTextToken;
 
-        // Récupération du rôle
-       if ($user->role === 'gerant') {
-                $info = Gerant::where('id_utilisateur', $user->id)->first();
-                $role = [
-             'id'  => $info->id_gerant,
-             'role'  => 'gerant',
    
-                ];
-            } elseif ($user->role === 'vendeur') {
-                $info = Vendeur::where('id_utilisateur', $user->id)->first();
-                 $role = [
-             'id'  => $info->id_vendeur,
-             'role'  => 'vendeur',
-   
-                ];
-            } else {
-                $role = null;
-            }
+
+if ($user->role === 'gerant') {
+    $info = Gerant::where('id_utilisateur', $user->id)->first();
+    $role = $info ? [
+        'id'   => $info->id_gerant,
+        'role' => 'gerant',
+    ] : null;
+} elseif ($user->role === 'vendeur') {
+    $info = Vendeur::where('id_utilisateur', $user->id)->first();
+    $role = $info ? [
+        'id'   => $info->id_vendeur,
+        'role' => 'vendeur',
+    ] : null;
+} else {
+    $role = null;
+}
+
 
         // Réponse similaire à login()
         return response()->json([
