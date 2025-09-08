@@ -3,63 +3,47 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pharmacie;
+use App\Http\Requests\PharmacieRequest;
 use Illuminate\Http\Request;
 
 class PharmacieController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $pharmacies = Pharmacie::with('gerant')->get();
+        return view('pharmacie.index', compact('pharmacies'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('pharmacie.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(PharmacieRequest $request)
     {
-        //
+        Pharmacie::create($request->validated());
+        return redirect()->route('pharmacie.index')->with('success', 'Pharmacie créée avec succès !');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Pharmacie $pharmacie)
+    public function edit($id)
     {
-        //
+        $pharmacie = Pharmacie::findOrFail($id);
+        return view('pharmacie.edit', compact('pharmacie'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Pharmacie $pharmacie)
+    public function update(PharmacieRequest $request, $id)
     {
-        //
+        $pharmacie = Pharmacie::findOrFail($id);
+        $pharmacie->update($request->validated());
+
+        return redirect()->route('pharmacie.index')->with('success', 'Pharmacie mise à jour avec succès !');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Pharmacie $pharmacie)
+    public function destroy($id)
     {
-        //
-    }
+        $pharmacie = Pharmacie::findOrFail($id);
+        $pharmacie->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Pharmacie $pharmacie)
-    {
-        //
+        return redirect()->route('pharmacie.index')->with('success', 'Pharmacie supprimée avec succès !');
     }
 }

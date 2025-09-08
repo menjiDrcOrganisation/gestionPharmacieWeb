@@ -7,12 +7,12 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void {
         Schema::create('pharmacies', function (Blueprint $table) {
-            $table->id('id_pharmacie');
+            $table->id('id');
             $table->string('nom');
             $table->string('adresse');
             $table->string('telephone');
             $table->float('indice')->nullable();
-            $table->foreignId('id_gerant')->constrained('gerants', 'id_gerant');
+            $table->foreignId('id_gerant')->constrained('gerants');
             $table->enum('statut', ['en_attente', 'valide', 'ferme'])->default('en_attente');
             $table->timestamps();
         });

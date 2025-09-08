@@ -7,59 +7,65 @@ use Illuminate\Http\Request;
 
 class FormesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = Formes::query();
+
+        // 🔎 Recherche
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where('nom', 'like', "%$search%")
+                  ->orWhere('description', 'like', "%$search%");
+        }
+
+        $formes = $query->orderBy('id_forme', 'desc')->paginate(10);
+
+        return view('formes.index', compact('formes'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('formes.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nom' => 'required|string|max:100',
+            'description' => 'nullable|string',
+        ]);
+
+        Formes::create($request->all());
+
+        return redirect()->route('formes.index')->with('success', 'Forme ajoutée avec succès !');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Formes $formes)
+    public function show(Formes $forme)
     {
-        //
+        return view('formes.show', compact('forme'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Formes $formes)
+    public function edit(Formes $forme)
     {
-        //
+        return view('formes.edit', compact('forme'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Formes $formes)
+    public function update(Request $request, Formes $forme)
     {
-        //
+        $request->validate([
+            'nom' => 'required|string|max:100',
+            'description' => 'nullable|string',
+        ]);
+
+        $forme->update($request->all());
+
+        return redirect()->route('formes.index')->with('success', 'Forme mise à jour avec succès !');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Formes $formes)
+    public function destroy(Formes $forme)
     {
-        //
+        $forme->delete();
+
+        return redirect()->route('formes.index')->with('success', 'Forme supprimée avec succès !');
     }
 }

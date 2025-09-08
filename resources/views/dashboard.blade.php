@@ -1,4 +1,5 @@
 @extends('layouts.main')
+@section('titre', 'Tableau de bord')
 @section('content')
     <div class="w-full px-6 py-6 mx-auto">
         <!-- row 1 -->

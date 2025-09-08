@@ -9,6 +9,9 @@
     <title>Argon Dashboard 2 Tailwind by Creative Tim</title>
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <!-- Nucleo Icons -->
@@ -24,7 +27,10 @@
     class="m-0 font-sans text-base antialiased font-normal dark:bg-slate-900 leading-default bg-gray-50 text-slate-500">
     <div class="absolute w-full bg-blue-500 dark:hidden min-h-75"></div>
     <!-- sidenav  -->
-
+    <button id="menu-toggle"
+    class="xl:hidden p-2 m-2 text-gray-600 bg-gray-200 rounded-lg focus:outline-none">
+    <i class="bi bi-list text-2xl"></i>
+</button>
     @include('layouts.aside')
     <!-- end sidenav -->
 
