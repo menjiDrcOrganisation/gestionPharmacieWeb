@@ -38,6 +38,34 @@ class MedicamentController extends Controller
         }
     }
 
+    
+    public function getallmedicament()
+    {
+        try {
+            $medicaments = Medicament::all();
+           
+
+            $lots = Lot::with([
+                'medicament.forme', 
+                'medicament.dose', 
+                'pharmacie'])->get();
+                
+
+            return response()->json([
+                'message' => 'Voici les médicaments',
+                'data' => $lots
+            ], 200);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Une erreur est survenue',
+                'error' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    
+
     /**
      * Ajouter un médicament à une pharmacie
      */
