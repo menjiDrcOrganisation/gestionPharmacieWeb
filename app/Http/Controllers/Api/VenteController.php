@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\StoreVenteRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Vente;
-use App\Models\Lot;
+use App\Models\vente;
+use App\Models\lot;
 use App\Models\Pharmacie;
 
 class VenteController extends Controller
@@ -17,7 +17,7 @@ class VenteController extends Controller
     public function index($id_pharmacie)
     {
         try {
-            $ventes = Vente::with('lots.medicament.forme','lots.medicament.dose','lots.pharmacie',
+            $ventes = vente::with('lots.medicament.forme','lots.medicament.dose','lots.pharmacie',
             'pharmacie')
                 ->where('id_pharmacie', $id_pharmacie)
                 ->get();
@@ -48,13 +48,13 @@ class VenteController extends Controller
 
             // Créer la vente sans les lots
             $venteData = collect($data)->except(['lots_ids', 'quantite_medicament_lot'])->toArray();
-            $vente = Vente::create($venteData);
+            $vente = vente::create($venteData);
 
             // Attacher les lots avec quantités vendues
             foreach ($data['lots_ids'] as $index => $lot_id) {
                 $quantiteVendue = $data['quantite_medicament_lot'][$index];
 
-                $lot = Lot::findOrFail($lot_id);
+                $lot = lot::findOrFail($lot_id);
 
                 if ($lot->quantite < $quantiteVendue) {
                     return response()->json([
@@ -88,7 +88,7 @@ class VenteController extends Controller
     public function show($id_pharmacie, $id_vente)
     {
         try {
-            $vente = Vente::with('lots')
+            $vente = vente::with('lots')
                 ->where('id_pharmacie', $id_pharmacie)
                 ->where('id', $id_vente)
                 ->firstOrFail();
@@ -112,7 +112,7 @@ class VenteController extends Controller
     public function update(Request $request, $id_pharmacie, $id_vente)
     {
         try {
-            $vente = Vente::where('id_pharmacie', $id_pharmacie)
+            $vente = vente::where('id_pharmacie', $id_pharmacie)
                           ->where('id', $id_vente)
                           ->firstOrFail();
 
@@ -137,7 +137,7 @@ class VenteController extends Controller
     public function destroy($id_pharmacie, $id_vente)
     {
         try {
-            $vente = Vente::where('id_pharmacie', $id_pharmacie)
+                $vente = vente::where('id_pharmacie', $id_pharmacie)
                           ->where('id', $id_vente)
                           ->firstOrFail();
 
