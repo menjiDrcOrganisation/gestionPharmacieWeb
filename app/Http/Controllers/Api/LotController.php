@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Dose;
 use App\Models\Formes;
-use App\Models\Lot;
+use App\Models\lot;
 use App\Models\Medicament;
 use App\Models\Pharmacie;
 use App\Models\pharmacie_medicament;
@@ -21,7 +21,7 @@ class LotController extends Controller
     public function index()
     {
     try {
-        $lots = Lot::all();
+        $lots = lot::all();
         return response()->json($lots, 200);
     } catch (\Exception $e) {
         return response()->json(['error' => 'Failed to retrieve lots'], 500);
@@ -63,7 +63,7 @@ class LotController extends Controller
         $numero_lot = uniqid('lot_');
 
         // Créer le lot
-        $lot = Lot::create([
+        $lot = lot::create([
             "date_expiration" => $request->date_expiration,
             "quantite" => $request->quantite,
             "prix_achat" => $request->prix_achat,
@@ -84,7 +84,7 @@ public function getlotspharmacie(string $id_pharmacie)
 {
     try {
         // Récupérer les lots avec les informations du médicament
-        $lots = Lot::with('medicament',
+        $lots = lot::with('medicament',
                  'medicament.forme',
                 'medicament.dose', )
             ->where('id_pharmacie', $id_pharmacie)
@@ -107,7 +107,7 @@ public function getlostmedicament(string $id_pharmacie, request $request)
 
     try {
         // Récupérer les lots pour le médicament spécifié dans la pharmacie
-        $lots = Lot::where('id_pharmacie', $id_pharmacie)
+        $lots = lot::where('id_pharmacie', $id_pharmacie)
             ->where('id_medicament', $request->id_medicament)
             ->get();
 
@@ -137,7 +137,7 @@ public function getlostmedicament(string $id_pharmacie, request $request)
             ]);
 
             // Récupérer le lot
-            $lot = Lot::findOrFail($id);
+            $lot = lot::findOrFail($id);
 
             // Mettre à jour le prix unitaire
             $lot->prix_unitaire = $request->prix_unitaire;
@@ -161,7 +161,7 @@ public function getlostmedicament(string $id_pharmacie, request $request)
         ]);
 
         // Récupérer le lot
-        $lot = Lot::findOrFail($id);
+        $lot = lot::findOrFail($id);
 
         // Mettre à jour les informations du lot
         $lot->quantite = $request->quantite;
@@ -192,7 +192,7 @@ public function getlostmedicament(string $id_pharmacie, request $request)
     {
         try {
             // Récupérer le lot
-            $lot = Lot::findOrFail($id);
+            $lot = lot::findOrFail($id);
 
             // Supprimer le lot
             $lot->delete();
