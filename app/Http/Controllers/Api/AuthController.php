@@ -117,13 +117,21 @@ class AuthController extends Controller
             ]
         );
         if ($request->role === 'gerant') {
-    Gerant::firstOrCreate([
+   $info = Gerant::firstOrCreate([
         'id_utilisateur' => $user->id
     ]);
+     $role = $info ? [
+        'id'   => $info->id_gerant,
+        'role' => 'gerant',
+    ] : null;
 } elseif ($request->role === 'vendeur') {
-    Vendeur::firstOrCreate([
+    $info = Vendeur::firstOrCreate([
         'id_utilisateur' => $user->id
     ]);
+     $role = $info ? [
+        'id'   => $info->id_vendeur,
+        'role' => 'vendeur',
+    ] : null;
 }
 
 
@@ -135,21 +143,6 @@ class AuthController extends Controller
 
    
 
-if ($user->role === 'gerant') {
-    $info = Gerant::where('id_utilisateur', $user->id)->first();
-    $role = $info ? [
-        'id'   => $info->id_gerant,
-        'role' => 'gerant',
-    ] : null;
-} elseif ($user->role === 'vendeur') {
-    $info = Vendeur::where('id_utilisateur', $user->id)->first();
-    $role = $info ? [
-        'id'   => $info->id_vendeur,
-        'role' => 'vendeur',
-    ] : null;
-} else {
-    $role = null;
-}
 
 
         // Réponse similaire à login()
