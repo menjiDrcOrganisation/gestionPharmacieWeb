@@ -83,6 +83,7 @@ class AuthController extends Controller
 }
  public function googleLogin(Request $request)
     {
+    
     $request->validate([
         'id_token' => 'required|string',
     ]);
@@ -97,7 +98,7 @@ class AuthController extends Controller
         $payload = $client->verifyIdToken($idToken);
 
         if (!$payload) {
-            return response()->json(['error' => 'Token invalide'], 401);
+            return response()->json(['error' => $idToken], 401);
         }
 
         // Infos récupérées depuis Google
