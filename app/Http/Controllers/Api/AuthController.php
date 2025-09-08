@@ -116,6 +116,11 @@ class AuthController extends Controller
                 'role' => 'gerant'
             ]
         );
+          if ($user->wasRecentlyCreated && $request->role === 'gerant') {
+        Gerant::create([
+            'id_utilisateur' => $user->id
+        ]);
+    }
 
         // Connecte l’utilisateur
         Auth::login($user);
