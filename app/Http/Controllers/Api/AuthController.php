@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\BienvenueMail;
 use App\Mail\UserCreatedMail;
 use App\Models\gerant;
 use App\Models\Pharmacie;
@@ -67,13 +68,14 @@ class AuthController extends Controller
             } else {
                 $role = null;
             }
-
+Mail::to($user->email)->send(new BienvenueMail($user));
             return response()->json([
                 'message' => 'Connexion réussie',
                 'user' => $user,
                 'role' => $role,
                 'token' => $token
             ], 200);
+
         } else {
             return response()->json(['message' => 'Mot de passe ou email incorrect'], 401);
         }
