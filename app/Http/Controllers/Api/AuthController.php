@@ -51,9 +51,19 @@ class AuthController extends Controller
 
             // Récupération du rôle
             if ($user->role === 'gerant') {
-                $role = Gerant::where('id_utilisateur', $user->id)->first();
+                $info = Gerant::where('id_utilisateur', $user->id)->first();
+                $role = [
+             'id'  => $info->id_gerant,
+             'role'  => 'gerant',
+   
+                ];
             } elseif ($user->role === 'vendeur') {
-                $role = Vendeur::where('id_utilisateur', $user->id)->first();
+                $info = Vendeur::where('id_utilisateur', $user->id)->first();
+                 $role = [
+             'id'  => $info->id_vendeur,
+             'role'  => 'vendeur',
+   
+                ];
             } else {
                 $role = null;
             }
