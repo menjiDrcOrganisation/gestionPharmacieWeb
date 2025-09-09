@@ -65,7 +65,7 @@
             </li>
 
             <li>
-                <a href="{{ route('pharmacie.index') }}" class="nav-link flex items-center px-4 py-3 rounded-lg text-slate-700">
+                <a href="{{ route('pharmacies.index') }}" class="nav-link flex items-center px-4 py-3 rounded-lg text-slate-700">
                     <div class="mr-3 flex h-8 w-8 items-center justify-center rounded-lg bg-green-100">
                         <i class="bi bi-building text-green-600"></i>
                     </div>

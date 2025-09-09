@@ -54,7 +54,7 @@ class GerantController extends Controller
         return view('gerants.edit', compact('gerant'));
     }
 
-    public function update(Request $request, Gerant $gerant)
+    public function update(Request $request, gerant $gerant)
     {
         $request->validate([
             'name'  => 'required|string|max:255',
@@ -80,6 +80,7 @@ class GerantController extends Controller
     public function destroy(gerant $gerant)
     {
         $gerant->user->delete(); // supprime aussi l'entrée dans `gerants` via cascade
+        $gerant->delete(); 
         return redirect()->route('gerants.index')->with('success', 'Gérant supprimé.');
     }
 }

@@ -3,47 +3,72 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pharmacie;
-use App\Http\Requests\PharmacieRequest;
+use App\Models\gerant;
 use Illuminate\Http\Request;
 
 class PharmacieController extends Controller
 {
     public function index()
     {
-        $pharmacies = Pharmacie::with('gerant')->get();
-        return view('pharmacie.index', compact('pharmacies'));
+        $pharmacies = Pharmacie::with('gerant.user')->latest()->paginate(10);
+        return view('pharmacies.index', compact('pharmacies'));
     }
 
     public function create()
     {
-        return view('pharmacie.create');
+        $gerants = gerant::with('user')->get();
+        return view('pharmacies.create', compact('gerants'));
     }
 
-    public function store(PharmacieRequest $request)
+    public function store(Request $request)
     {
-        Pharmacie::create($request->validated());
-        return redirect()->route('pharmacie.index')->with('success', 'Pharmacie créée avec succès !');
+        $validated = $request->validate([
+            'nom' => 'required|string|max:255',
+            'adresse' => 'required|string|max:255',
+            'telephone' => 'required|string|max:20',
+            'indice' => 'nullable|numeric',
+            'id_gerant' => 'required|exists:gerants,id',
+            'statut' => 'required|in:en_attente,valide,ferme',
+        ]);
+
+        Pharmacie::create($validated);
+
+        return redirect()->route('pharmacies.index')->with('success', 'Pharmacie créée avec succès.');
     }
 
-    public function edit($id)
+    public function edit(Pharmacie $pharmacy)
     {
-        $pharmacie = Pharmacie::findOrFail($id);
-        return view('pharmacie.edit', compact('pharmacie'));
+        $gerants = gerant::with('user')->get();
+        return view('pharmacies.edit', compact('pharmacy', 'gerants'));
     }
 
-    public function update(PharmacieRequest $request, $id)
+    public function update(Request $request, Pharmacie $pharmacy)
     {
-        $pharmacie = Pharmacie::findOrFail($id);
-        $pharmacie->update($request->validated());
+        $validated = $request->validate([
+            'nom' => 'required|string|max:255',
+            'adresse' => 'required|string|max:255',
+            'telephone' => 'required|string|max:20',
+            'indice' => 'nullable|numeric',
+            'id_gerant' => 'required|exists:gerants,id',
+            'statut' => 'required|in:en_attente,valide,ferme',
+        ]);
 
-        return redirect()->route('pharmacie.index')->with('success', 'Pharmacie mise à jour avec succès !');
+        $pharmacy->update($validated);
+
+        return redirect()->route('pharmacies.index')->with('success', 'Pharmacie mise à jour avec succès.');
     }
 
-    public function destroy($id)
+    public function destroy(Pharmacie $pharmacy)
     {
-        $pharmacie = Pharmacie::findOrFail($id);
-        $pharmacie->delete();
-
-        return redirect()->route('pharmacie.index')->with('success', 'Pharmacie supprimée avec succès !');
+        $pharmacy->delete();
+        return redirect()->route('pharmacies.index')->with('success', 'Pharmacie supprimée avec succès.');
     }
+    public function updateStatut(Request $request, $id)
+{
+    $pharmacy = Pharmacy::findOrFail($id);
+    $pharmacy->update(['statut' => $request->statut]);
+
+    return redirect()->route('pharmacies.index')->with('success', 'Statut mis à jour avec succès');
+}
+
 }

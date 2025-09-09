@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use HasFactory;
 use App\Models\User;
+use App\Models\pharmacie;
 
 class gerant extends Model
 {
@@ -19,4 +20,10 @@ class gerant extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function pharmacies()
+{
+    return $this->hasMany(Pharmacie::class, 'id_gerant');
+}
+
 }

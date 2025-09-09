@@ -19,10 +19,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/gestion', function () {
-    return view('gestion');
-})->name('gestion');
-
 Route::middleware(['auth', 'superadmin'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
@@ -40,18 +36,6 @@ Route::middleware(['auth', 'superadmin'])->group(function () {
 Route::get('/auth/google', [AdminController::class, 'redirectToGoogle'])->name('google.redirect');
 Route::get('/auth/google/callback', [AdminController::class, 'handleGoogleCallback'])->name('google.callback');
 
-// Route Pharmacie
-
-
-Route::prefix('pharmacies')->group(function () {
-    Route::get('/', [PharmacieController::class, 'index'])->name('pharmacie.index');
-    Route::get('/create', [PharmacieController::class, 'create'])->name('pharmacie.create');
-    Route::post('/store', [PharmacieController::class, 'store'])->name('pharmacie.store');
-    Route::get('/{id}/edit', [PharmacieController::class, 'edit'])->name('pharmacie.edit');
-    Route::put('/{id}/update', [PharmacieController::class, 'update'])->name('pharmacie.update');
-    Route::delete('/{id}/delete', [PharmacieController::class, 'destroy'])->name('pharmacie.delete');
-});
-
 
 // Ressource complète pour CRUD Gérants
 Route::resource('gerants', GerantController::class);
@@ -64,6 +48,13 @@ Route::resource('formes', FormesController::class);
 
 // Ressource complète pour CRUD Médicaments
 Route::resource('medicaments', MedicamentController::class);
+
+// Ressource complète pour CRUD Pharmacies
+Route::resource('pharmacies', PharmacieController::class);
+
+// Mise à jour statut
+Route::patch('/pharmacies/{id}/statut', [PharmacieController::class, 'updateStatut'])->name('pharmacies.updateStatut');
+
 
 
 

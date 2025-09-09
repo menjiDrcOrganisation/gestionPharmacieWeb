@@ -36,7 +36,7 @@
 
     <main class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68 rounded-xl">
         <!-- Navbar -->
-        @include('layouts.navbar')
+        {{-- @include('layouts.navbar') --}}
 
         <!-- end Navbar -->
 

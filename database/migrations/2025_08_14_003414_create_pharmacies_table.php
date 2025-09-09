@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void {
         Schema::create('pharmacies', function (Blueprint $table) {
-            $table->id('id');
+            $table->id();
             $table->string('nom');
             $table->string('adresse');
             $table->string('telephone');
