@@ -184,9 +184,10 @@ class AuthController extends Controller
         $token = $user->createToken('API Token')->plainTextToken;
 
     if ($user->role === 'gerant') {
-   $info = gerant::Create([
+   $info = Gerant::Create([
         'id_utilisateur' => $user->id
     ]);
+    return response()->json(['message' => $info], 201);
      $role = $info ? [
         'id'   => $info->id_gerant,
         'role' => 'gerant',
