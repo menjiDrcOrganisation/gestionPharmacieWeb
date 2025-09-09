@@ -180,9 +180,11 @@ class AuthController extends Controller
             'password' => bcrypt($request->password),
             'role' => $request->role,
         ]);
+          // Création du token
+        $token = $user->createToken('API Token')->plainTextToken;
 
-             if ($user->role === 'gerant') {
-   $info = Gerant::firstOrCreate([
+    if ($user->role === 'gerant') {
+   $info = Gerant::Create([
         'id_utilisateur' => $user->id
     ]);
      $role = $info ? [
@@ -190,7 +192,7 @@ class AuthController extends Controller
         'role' => 'gerant',
     ] : null;
 } elseif ($user->role === 'vendeur') {
-    $info = Vendeur::firstOrCreate([
+    $info = Vendeur::Create([
         'id_utilisateur' => $user->id
     ]);
      $role = $info ? [
@@ -199,8 +201,7 @@ class AuthController extends Controller
     ] : null;
 }
 
-        // Création du token
-        $token = $user->createToken('API Token')->plainTextToken;
+
 
         return response()->json([
             'message' => 'Utilisateur créé avec succès',
