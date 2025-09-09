@@ -56,14 +56,14 @@ class AuthController extends Controller
                 $role = [
              'id'  => $info->id_gerant,
              'role'  => 'gerant',
-   
+
                 ];
             } elseif ($user->role === 'vendeur') {
                 $info = Vendeur::where('id_utilisateur', $user->id)->first();
                  $role = [
              'id'  => $info->id_vendeur,
              'role'  => 'vendeur',
-   
+
                 ];
             } else {
                 $role = null;
@@ -85,7 +85,7 @@ class AuthController extends Controller
 }
  public function googleLogin(Request $request)
     {
-    
+
     $request->validate([
         'id_token' => 'required|string',
     ]);
@@ -143,7 +143,7 @@ class AuthController extends Controller
         // Création du token
         $token = $user->createToken('API Token')->plainTextToken;
 
-   
+
 
 
 
@@ -181,13 +181,23 @@ class AuthController extends Controller
             'role' => $request->role,
         ]);
 
-        if ($request->role === 'gerant') {
-            $role = Gerant::create([
-                'id_utilisateur' => $user->id
-            ]);
-        } else {
-            $role = null;
-        }
+             if ($user->role === 'gerant') {
+   $info = Gerant::firstOrCreate([
+        'id_utilisateur' => $user->id
+    ]);
+     $role = $info ? [
+        'id'   => $info->id_gerant,
+        'role' => 'gerant',
+    ] : null;
+} elseif ($user->role === 'vendeur') {
+    $info = Vendeur::firstOrCreate([
+        'id_utilisateur' => $user->id
+    ]);
+     $role = $info ? [
+        'id'   => $info->id_vendeur,
+        'role' => 'vendeur',
+    ] : null;
+}
 
         // Création du token
         $token = $user->createToken('API Token')->plainTextToken;
