@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Vendeur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Validation\Rule;
 
 
 use Illuminate\Support\Str;
@@ -401,7 +402,7 @@ class AuthController extends Controller
         ]);
     }
 
-   
+
 
 public function updateProfile(Request $request)
 {
