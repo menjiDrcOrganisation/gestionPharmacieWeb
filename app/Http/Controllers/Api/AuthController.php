@@ -408,7 +408,7 @@ class AuthController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
            //'number_phone' => 'nullable|string|max:20',
-           'email' => 'required|email|unique:users,email,'.$request->user()->id,
+           'email' => 'required|email|unique:users,email'
         ]);
 
         $request->user()->update($validated);
