@@ -44,4 +44,5 @@ Route::post('/forgot-password', [AuthController::class, 'sendResetLink']);
 Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 
  Route::get('user/profile', [AuthController::class, 'profile']);
- Route::put('user/profile', [AuthController::class, 'updateProfile']);
+ Route::middleware('auth:sanctum')->put('user/profile', [AuthController::class, 'updateProfile']);
+

@@ -410,9 +410,8 @@ public function updateProfile(Request $request)
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => [
-                'required',
-                'email',
-                Rule::unique('users', 'email')->ignore($request->user()->id),
+                'required'
+
             ],
         ]);
 
