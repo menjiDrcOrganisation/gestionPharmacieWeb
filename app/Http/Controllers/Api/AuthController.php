@@ -401,14 +401,18 @@ class AuthController extends Controller
         ]);
     }
 
-    public function updateProfile(Request $request)
-    {
+   
 
-       try {
+public function updateProfile(Request $request)
+{
+    try {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-           //'number_phone' => 'nullable|string|max:20',
-           'email' => 'required|email|unique:users,email'
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')->ignore($request->user()->id),
+            ],
         ]);
 
         $request->user()->update($validated);
@@ -416,11 +420,12 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Profil mis à jour',
             'data' => $request->user()->fresh()
-        ],200);
-       } catch (\Exception $e) {
+        ], 200);
+    } catch (\Exception $e) {
         return response()->json(['message' => 'Erreur : ' . $e->getMessage()], 500);
-       }
     }
+}
+
 
     public function changePassword(Request $request)
     {
