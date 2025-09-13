@@ -55,18 +55,24 @@ class VenteController extends Controller
                 $quantiteVendue = $data['quantite_medicament_lot'][$index];
 
                 $lot = lot::findOrFail($lot_id);
+                return $lot ;
 
                 if ($lot->quantite < $quantiteVendue) {
                     return response()->json([
                         'message' => "Quantité insuffisante pour le lot {$lot->numero_lot}"
                     ], 400);
                 }
+                   // Décrémenter le stock
+                  
 
                 // Attacher lot avec quantité (pivot table)
                 $vente->lots()->attach($lot_id, ['quantite_vendu' => $quantiteVendue]);
 
-                // Décrémenter le stock
-                $lot->decrement('quantite', $quantiteVendue);
+                $lot->quantite -= $quantiteVendue;
+                $lot->save();
+
+                return $lot;
+
             }
 
             return response()->json([

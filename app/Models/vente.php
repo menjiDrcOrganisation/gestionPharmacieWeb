@@ -22,7 +22,7 @@ class vente extends Model
 
     public function lots()
     {
-        return $this->belongsToMany(lot::class, 'lot_vente', 'id_lot', 'id_vente');
+        return $this->belongsToMany(lot::class, 'lot_vente','id_vente','id_lot');
     }
     public function pharmacie()
     {
