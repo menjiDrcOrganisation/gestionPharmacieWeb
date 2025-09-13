@@ -55,7 +55,7 @@ class VenteController extends Controller
                 $quantiteVendue = $data['quantite_medicament_lot'][$index];
 
                 $lot = lot::findOrFail($lot_id);
-                return $lot ;
+              
 
                 if ($lot->quantite < $quantiteVendue) {
                     return response()->json([
@@ -71,8 +71,7 @@ class VenteController extends Controller
                 $lot->quantite -= $quantiteVendue;
                 $lot->save();
 
-                return $lot;
-
+            
             }
 
             return response()->json([
