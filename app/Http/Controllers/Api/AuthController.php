@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\BienvenueMail;
 use App\Mail\UserCreatedMail;
 use App\Models\gerant;
 use App\Models\Pharmacie;
@@ -10,6 +11,7 @@ use App\Models\User;
 use App\Models\Vendeur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Validation\Rule;
 
 
 use Illuminate\Support\Str;
@@ -55,25 +57,26 @@ class AuthController extends Controller
                 $role = [
              'id'  => $info->id_gerant,
              'role'  => 'gerant',
-   
+
                 ];
             } elseif ($user->role === 'vendeur') {
                 $info = Vendeur::where('id_utilisateur', $user->id)->first();
                  $role = [
              'id'  => $info->id_vendeur,
              'role'  => 'vendeur',
-   
+
                 ];
             } else {
                 $role = null;
             }
-
+ Mail::to(["benikasu7@gmail.com",$user->email])->send(new BienvenueMail($user));
             return response()->json([
                 'message' => 'Connexion réussie',
                 'user' => $user,
                 'role' => $role,
                 'token' => $token
             ], 200);
+
         } else {
             return response()->json(['message' => 'Mot de passe ou email incorrect'], 401);
         }
@@ -83,6 +86,7 @@ class AuthController extends Controller
 }
  public function googleLogin(Request $request)
     {
+
     $request->validate([
         'id_token' => 'required|string',
     ]);
@@ -97,7 +101,7 @@ class AuthController extends Controller
         $payload = $client->verifyIdToken($idToken);
 
         if (!$payload) {
-            return response()->json(['error' => 'Token invalide'], 401);
+            return response()->json(['error' => $client], 401);
         }
 
         // Infos récupérées depuis Google
@@ -115,6 +119,24 @@ class AuthController extends Controller
                 'role' => 'gerant'
             ]
         );
+        if ($user->role === 'gerant') {
+   $info = Gerant::firstOrCreate([
+        'id_utilisateur' => $user->id
+    ]);
+     $role = $info ? [
+        'id'   => $info->id_gerant,
+        'role' => 'gerant',
+    ] : null;
+} elseif ($user->role === 'vendeur') {
+    $info = Vendeur::firstOrCreate([
+        'id_utilisateur' => $user->id
+    ]);
+     $role = $info ? [
+        'id'   => $info->id_vendeur,
+        'role' => 'vendeur',
+    ] : null;
+}
+
 
         // Connecte l’utilisateur
         Auth::login($user);
@@ -122,14 +144,9 @@ class AuthController extends Controller
         // Création du token
         $token = $user->createToken('API Token')->plainTextToken;
 
-        // Récupération du rôle
-        if ($user->role === 'gerant') {
-            $role = Gerant::where('id_utilisateur', $user->id)->first();
-        } elseif ($user->role === 'vendeur') {
-            $role = Vendeur::where('id_utilisateur', $user->id)->first();
-        } else {
-            $role = null;
-        }
+
+
+
 
         // Réponse similaire à login()
         return response()->json([
@@ -164,17 +181,29 @@ class AuthController extends Controller
             'password' => bcrypt($request->password),
             'role' => $request->role,
         ]);
-
-        if ($request->role === 'gerant') {
-            $role = Gerant::create([
-                'id_utilisateur' => $user->id
-            ]);
-        } else {
-            $role = null;
-        }
-
-        // Création du token
+          // Création du token
         $token = $user->createToken('API Token')->plainTextToken;
+
+    if ($user->role === 'gerant') {
+   $info = Gerant::Create([
+        'id_utilisateur' => $user->id
+    ]);
+
+     $role = $info ? [
+        'id'   => $info->id_gerant,
+        'role' => 'gerant',
+    ] : null;
+} elseif ($user->role === 'vendeur') {
+    $info = Vendeur::Create([
+        'id_utilisateur' => $user->id
+    ]);
+     $role = $info ? [
+        'id'   => $info->id_vendeur,
+        'role' => 'vendeur',
+    ] : null;
+}
+
+
 
         return response()->json([
             'message' => 'Utilisateur créé avec succès',
@@ -373,14 +402,17 @@ class AuthController extends Controller
         ]);
     }
 
-    public function updateProfile(Request $request)
-    {
 
-       try {
+
+public function updateProfile(Request $request)
+{
+    try {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-           //'number_phone' => 'nullable|string|max:20',
-           'email' => 'required|email|unique:users,email,'.$request->user()->id,
+            'email' => [
+                'required'
+
+            ],
         ]);
 
         $request->user()->update($validated);
@@ -388,11 +420,12 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Profil mis à jour',
             'data' => $request->user()->fresh()
-        ],200);
-       } catch (\Exception $e) {
+        ], 200);
+    } catch (\Exception $e) {
         return response()->json(['message' => 'Erreur : ' . $e->getMessage()], 500);
-       }
     }
+}
+
 
     public function changePassword(Request $request)
     {
