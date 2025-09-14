@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\gerant;
 use App\Models\Pharmacie;
 use Illuminate\Http\Request;
 
@@ -12,23 +13,35 @@ class PharmacieController extends Controller
      */
     public function index()
     {
-        //
+        $pharmacies = Pharmacie::with('gerant')
+            ->with('gerant.user')
+            ->get();
+
+        $gerants = gerant::with('user')->
+            get();
+
+        return view('pharmacies.index', compact('pharmacies', 'gerants'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+        try {
+
+            $pharmacie = Pharmacie::create($request->all());
+
+            return redirect()->back()->with('success', 'Pharmacie ajoutée avec succès ');
+
+        } catch (\Throwable $th) {
+
+        }
     }
 
     /**

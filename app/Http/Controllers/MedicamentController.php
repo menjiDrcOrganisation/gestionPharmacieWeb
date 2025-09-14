@@ -14,7 +14,9 @@ class MedicamentController extends Controller
      */
     public function index()
     {
-        //
+        $medicaments = Medicament::with('dose','forme')
+        ->get();
+        return view('medicaments.index', compact('medicaments'));
     }
 
     /**

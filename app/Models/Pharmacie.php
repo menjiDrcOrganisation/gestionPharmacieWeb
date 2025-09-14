@@ -12,7 +12,7 @@ class Pharmacie extends Model
     protected $table = 'pharmacies';
     public $incrementing = true;
     protected $keyType = 'int';
-    
+
     protected $fillable=[
         "nom",
         "adresse",
@@ -27,8 +27,13 @@ class Pharmacie extends Model
     return $this->belongsToMany(
         Medicament::class,
         'pharmacie_medicament',
-        'id_pharmacie',   
-        'id_medicament'    
+        'id_pharmacie',
+        'id_medicament'
     );
+}
+
+public function gerant()
+{
+    return $this->belongsTo(Gerant::class, 'id_gerant', 'id_gerant');
 }
 }

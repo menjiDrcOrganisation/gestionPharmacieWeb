@@ -12,7 +12,9 @@ class DoseController extends Controller
      */
     public function index()
     {
-        //
+        $doses = Dose::all();
+
+        return view('doses.index', compact('doses'));
     }
 
     /**

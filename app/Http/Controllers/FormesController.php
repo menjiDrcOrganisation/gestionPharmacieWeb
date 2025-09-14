@@ -12,7 +12,10 @@ class FormesController extends Controller
      */
     public function index()
     {
-        //
+        $formes = Formes::all();
+
+        return view('formes.index', compact('formes'));
+
     }
 
     /**
