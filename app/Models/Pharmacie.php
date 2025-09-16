@@ -34,6 +34,6 @@ class Pharmacie extends Model
 
 public function gerant()
 {
-    return $this->belongsTo(Gerant::class, 'id_gerant', 'id_gerant');
+    return $this->belongsTo(gerant::class, 'id_gerant', 'id_gerant');
 }
 }

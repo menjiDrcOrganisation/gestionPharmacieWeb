@@ -6,7 +6,7 @@ use App\Http\Controllers\MedicamentController;
 use App\Http\Controllers\PharmacieController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FormesController;
-use App\Http\Controllers\doseController;
+use App\Http\Controllers\DoseController;
 use App\Models\Pharmacie;
 use Illuminate\Support\Facades\Route;
 
@@ -35,10 +35,10 @@ Route::get('/medicaments', [MedicamentController::class, 'index'])->name('medica
 Route::get('/formes', [FormesController::class, 'index'])->name('formes.index');
 Route::post('/formes', [FormesController::class, 'store'])->name('formes.store');
 
-Route::get('/doses', [doseController::class, 'index'])->name('doses.index');
-Route::post('/doses', [doseController::class, 'store'])->name('doses.store');
-Route::post('/doses/supprime', [doseController::class, 'store'])->name('doses.destroy');
-Route::post('/doses/edit', [doseController::class, 'store'])->name('doses.edit');
+Route::get('/doses', [DoseController::class, 'index'])->name('doses.index');
+Route::post('/doses', [DoseController::class, 'store'])->name('doses.store');
+Route::post('/doses/supprime', [DoseController::class, 'store'])->name('doses.destroy');
+Route::post('/doses/edit', [DoseController::class, 'store'])->name('doses.edit');
 
 
 
