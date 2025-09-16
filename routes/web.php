@@ -30,19 +30,31 @@ Route::get('/auth/google', [AdminController::class, 'redirectToGoogle'])->name('
 Route::get('/auth/google/callback', [AdminController::class, 'handleGoogleCallback'])->name('google.callback');
 
 Route::get('/pharmacies', [PharmacieController::class, 'index'])->name('pharmacies.index');
+Route::post('/pharmacies', [PharmacieController::class, 'store'])->name('pharmacies.store');
+Route::patch('/pharmacies/{pharmacie}', [PharmacieController::class, 'uptade'])->name('pharmacies.update');
+Route::delete('/pharmacies/{pharmacie}', [PharmacieController::class, 'destroy'])->name('pharmacies.destroy');
+
+
+
 Route::get('/medicaments', [MedicamentController::class, 'index'])->name('medicaments.index');
+Route::post('/medicaments', [MedicamentController::class, 'store'])->name('medicaments.store');
+Route::patch('/medicaments/{medicament}', [MedicamentController::class, 'upadate'])->name('medicaments.update');
+Route::delete('/medicaments/{medicament}', [MedicamentController::class, 'destroy'])->name('medicaments.destroy');
 
 Route::get('/formes', [FormesController::class, 'index'])->name('formes.index');
 Route::post('/formes', [FormesController::class, 'store'])->name('formes.store');
+Route::patch('/formes', [FormesController::class, 'update'])->name('formes.upate');
+Route::delete('/formes', [FormesController::class, 'destroy'])->name('formes.destroy');
+
 
 Route::get('/doses', [DoseController::class, 'index'])->name('doses.index');
 Route::post('/doses', [DoseController::class, 'store'])->name('doses.store');
-Route::post('/doses/supprime', [DoseController::class, 'store'])->name('doses.destroy');
-Route::post('/doses/edit', [DoseController::class, 'store'])->name('doses.edit');
+Route::patch('/doses/supprime', [DoseController::class, 'update'])->name('doses.update');
+Route::delete('/doses/edit', [DoseController::class, 'destroy'])->name('doses.destroy');
 
 
 
 
-Route::post('/pharmacies', [PharmacieController::class, 'store'])->name('pharmacies.store');
-Route::post('/medicaments', [MedicamentController::class, 'store'])->name('medicaments.store');
+
+
 require __DIR__ . '/auth.php';

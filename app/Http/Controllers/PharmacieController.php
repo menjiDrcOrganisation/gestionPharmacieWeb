@@ -64,9 +64,18 @@ class PharmacieController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pharmacie $pharmacie)
-    {
-        //
+    public function update(Request $request, Pharmacie $pharmacie){
+
+    try {
+
+           $pharmacie->update($request->all());
+ 
+            return redirect()->back()->with('success', 'Pharmacie modifie avec succes');
+
+        } catch (\Throwable $th) {
+            
+            return redirect()->back()->with('error', 'erreur lors de la modification');
+        }
     }
 
     /**
@@ -74,6 +83,15 @@ class PharmacieController extends Controller
      */
     public function destroy(Pharmacie $pharmacie)
     {
-        //
+          try {
+
+           $pharmacie->delete();
+ 
+            return redirect()->back()->with('success', 'Pharmacie supprime avec succes');
+
+        } catch (\Throwable $th) {
+            
+            return redirect()->back()->with('error', 'erreur lors de la suppression');
+        }
     }
 }

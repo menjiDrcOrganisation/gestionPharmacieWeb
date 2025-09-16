@@ -64,7 +64,15 @@ class FormesController extends Controller
      */
     public function update(Request $request, Formes $formes)
     {
-        //
+        try {
+           $formes->update($request->all());
+ 
+            return redirect()->back()->with('success', 'Forme modifie avec succes');
+
+        } catch (\Throwable $th) {
+            
+            return redirect()->back()->with('error', 'erreur lors de la modification');
+        }
     }
 
     /**
@@ -72,6 +80,14 @@ class FormesController extends Controller
      */
     public function destroy(Formes $formes)
     {
-        //
+         try {
+           $formes->delete();
+ 
+            return redirect()->back()->with('success', 'Forme supprime avec succes');
+
+        } catch (\Throwable $th) {
+            
+            return redirect()->back()->with('error', 'erreur lors de la suppression');
+        }
     }
 }

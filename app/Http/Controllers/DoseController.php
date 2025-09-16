@@ -63,7 +63,16 @@ class DoseController extends Controller
      */
     public function update(Request $request, Dose $dose)
     {
-        //
+        try {
+
+         $dose->update($request->all());
+ 
+            return redirect()->back()->with('success', 'dose modifie avec succes');
+
+        } catch (\Throwable $th) {
+            
+            return redirect()->back()->with('error', 'erreur lors de la modification');
+        }
     }
 
     /**
@@ -71,6 +80,15 @@ class DoseController extends Controller
      */
     public function destroy(Dose $dose)
     {
-        //
+         try {
+
+         $dose->delete();
+ 
+            return redirect()->back()->with('success', 'dose supprime avec succes');
+
+        } catch (\Throwable $th) {
+            
+            return redirect()->back()->with('error', 'erreur lors de la suppression');
+        }
     }
 }
