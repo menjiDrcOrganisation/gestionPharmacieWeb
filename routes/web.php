@@ -38,7 +38,6 @@ Route::post('/formes', [FormesController::class, 'store'])->name('formes.store')
 Route::get('/doses', [DoseController::class, 'index'])->name('doses.index');
 Route::post('/doses', [DoseController::class, 'store'])->name('doses.store');
 Route::post('/doses/supprime', [DoseController::class, 'store'])->name('doses.destroy');
-Route::post('/doses/edit', [DoseController::class, 'store'])->name('doses.edit');
 
 
 
