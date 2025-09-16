@@ -57,8 +57,58 @@
                                                 class="text-xs text-slate-400 dark:text-white dark:opacity-80">{{ $forme->created_at }}</span>
                                         </td>
                                         <td class="p-2 text-center align-middle whitespace-nowrap">
-                                            <a href="javascript:;"
-                                                class="text-xs font-semibold text-slate-400 dark:text-white dark:opacity-80">Edit</a>
+                                            <!-- Bouton Edit -->
+                                            <button command="show-modal" commandfor="edit-forme-{{ $forme->id_forme }}"
+                                                class="inline-block px-3 py-1 text-xs font-semibold text-white bg-blue-500 rounded hover:bg-blue-400">
+                                                ✏️ Edit
+                                            </button>
+                                            @include('formes.edit')
+
+                                            <!-- Bouton Supprimer -->
+                                            <button type="button"
+                                                onclick="document.getElementById('delete-forme-{{ $forme->id_forme }}').showModal()"
+                                                class="inline-block px-3 py-1 text-xs font-semibold text-white bg-red-500 rounded hover:bg-red-400">
+                                                Supprimer
+                                            </button>
+
+                                            <!-- Modal Delete -->
+                                            <dialog id="delete-forme-{{ $forme->id_forme}}"
+                                                class="p-6 bg-white dark:bg-slate-800 rounded-2xl shadow-xl w-full max-w-md">
+
+                                                <!-- Header -->
+                                                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">
+                                                    Confirmation
+                                                </h3>
+
+                                                <!-- Message -->
+                                                <p class="text-sm text-gray-600 dark:text-gray-300 mb-6">
+                                                    Es-tu sûr de vouloir supprimer cette forme ?<br>
+                                                    Cette action est irréversible.
+                                                </p>
+
+                                                <!-- Actions -->
+                                                <div class="flex justify-end gap-3">
+                                                    <!-- Bouton Annuler -->
+                                                    <button type="button"
+                                                        onclick="document.getElementById('delete-forme-{{ $forme->id_forme }}').close()"
+                                                        class="px-4 py-2 text-sm bg-gray-200 dark:bg-slate-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-slate-600">
+                                                        Annuler
+                                                    </button>
+
+                                                    <!-- Bouton Confirmer -->
+                                                    <form action="{{ route('doses.destroy', $forme->id_forme) }}" method="POST"
+                                                        class="inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="px-4 py-2 text-sm font-semibold text-white bg-red-600 rounded hover:bg-red-500">
+                                                            Confirmer
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </dialog>
+
+
                                         </td>
                                     </tr>
                                 @endforeach
