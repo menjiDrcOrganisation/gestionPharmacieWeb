@@ -38,7 +38,7 @@ Route::delete('/pharmacies/{pharmacie}', [PharmacieController::class, 'destroy']
 
 Route::get('/medicaments', [MedicamentController::class, 'index'])->name('medicaments.index');
 Route::post('/medicaments', [MedicamentController::class, 'store'])->name('medicaments.store');
-Route::patch('/medicaments/{medicament}', [MedicamentController::class, 'upadate'])->name('medicaments.update');
+Route::put('/medicaments/{medicament}', [MedicamentController::class, 'update'])->name('medicaments.update');
 Route::delete('/medicaments/{medicament}', [MedicamentController::class, 'destroy'])->name('medicaments.destroy');
 
 

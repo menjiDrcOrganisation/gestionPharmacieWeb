@@ -94,8 +94,13 @@
                                                 class="text-xs text-slate-400 dark:text-white dark:opacity-80">{{ $medicament->created_at }}</span>
                                         </td>
                                         <td class="p-2 text-center align-middle whitespace-nowrap">
-                                            <a href="javascript:;"
-                                                class="text-xs font-semibold text-slate-400 dark:text-white dark:opacity-80">Edit</a>
+
+                                         <button command="show-modal" commandfor="edit-medicament-{{ $medicament->id_medicament }}"
+                                                    class="inline-block px-3 py-1 text-xs font-semibold text-white bg-blue-500 rounded hover:bg-blue-400">
+                                                    ✏️ Edit
+                                                </button>
+                                                 @include('medicaments.edit')
+                                
                                         </td>
                                     </tr>
                                 @endforeach
