@@ -29,10 +29,15 @@
 
                                     <!-- Nom -->
                                     <div class="sm:col-span-2">
-                                        <label class="block text-sm font-medium text-slate-200">Nom <span
-                                                class="text-rose-500">*</span></label>
-                                        <input type="text" name="nom" required
+                                        <label class="block text-sm font-medium text-slate-200">Nom <span class="text-rose-500">*</span></label>
+                                        <input list="noms_medicaments" name="nom" value="{{ old('nom', $medicament->nom ?? '') }}" required
                                             class="mt-1 block w-full rounded-md border border-slate-600 py-2 px-3 focus:ring-2 focus:ring-emerald-400">
+
+                                        <datalist id="noms_medicaments">
+                                            @foreach($medicaments as $medicament)
+                                                <option value="{{ $medicament->nom }}"></option>
+                                            @endforeach
+                                        </datalist>
                                     </div>
 
                                     <!-- Description -->

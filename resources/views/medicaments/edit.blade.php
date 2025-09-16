@@ -28,16 +28,16 @@
              focus:ring-2 focus:ring-emerald-400">{{ $medicament->description }}</textarea>
         </div>
 
-        <div>
-            <label class="block text-sm font-medium text-slate-200">Forme <span
-                                                class="text-rose-500">*</span></label>
+        <div> 
+            <label class="block text-sm 
+            font-medium text-slate-200">Forme <span class="text-rose-500">*</span></label>
                 <select name="id_forme" required
                             class="mt-1 block w-full rounded-md border border-slate-600 py-2 px-3 focus:ring-2 focus:ring-emerald-400">
-                                            @foreach($formes as $forme)
+                        @foreach($formes as $forme)
                             <option value="{{ $forme->id_forme }}"
                                 @if($medicament->id_forme == $forme->id_forme) selected @endif>
-                                {{ $forme->nom }}
-                            </option>
+                        {{ $forme->nom }}
+                            </option> 
                                                 
                                                 @endforeach
                 </select>
@@ -45,17 +45,15 @@
 
 
          <div>
-                                        <label class="block text-sm font-medium text-slate-200">Dose <span
-                                                class="text-rose-500">*</span></label>
-                                        <select name="id_dose" required
-                                            class="mt-1 block w-full rounded-md border border-slate-600 py-2 px-3 focus:ring-2 focus:ring-emerald-400">
+            <label class="block text-sm font-medium text-slate-200">Dose <span
+                 class="text-rose-500">*</span></label>
+                     <select name="id_dose" required
+                            class="mt-1 block w-full rounded-md border border-slate-600 py-2 px-3 focus:ring-2 focus:ring-emerald-400">
                                             @foreach($doses as $dose)
                                                 <option value="{{ $dose->id_dose }}"  @if($medicament->id_dose == $dose->id_dose) selected @endif>
                                                     {{ $dose->quantite }}
                                                     {{ $dose->unite }}
                                                 </option>
-
-                                            
                                             @endforeach
                                         </select>
             </div>

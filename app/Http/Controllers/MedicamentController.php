@@ -20,6 +20,8 @@ class MedicamentController extends Controller
             ->get();
         $formes = Formes::all();
         $doses = Dose::all();
+         
+
         return view('medicaments.index', compact('medicaments', 'doses', 'formes'));
     }
 
