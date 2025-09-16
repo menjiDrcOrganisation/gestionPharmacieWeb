@@ -31,7 +31,7 @@ Route::get('/auth/google/callback', [AdminController::class, 'handleGoogleCallba
 
 Route::get('/pharmacies', [PharmacieController::class, 'index'])->name('pharmacies.index');
 Route::post('/pharmacies', [PharmacieController::class, 'store'])->name('pharmacies.store');
-Route::patch('/pharmacies/{pharmacie}', [PharmacieController::class, 'uptade'])->name('pharmacies.update');
+Route::put('/pharmacies/{pharmacie}', [PharmacieController::class, 'update'])->name('pharmacies.update');
 Route::delete('/pharmacies/{pharmacie}', [PharmacieController::class, 'destroy'])->name('pharmacies.destroy');
 
 
