@@ -11,8 +11,8 @@ class Medicament extends Model
     protected $table = 'medicaments';
     public $incrementing = true;
     protected $keyType = 'int';
-    
-    protected $fillable =[
+
+    protected $fillable = [
         "nom",
         "description",
         "id_forme",

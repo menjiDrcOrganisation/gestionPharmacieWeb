@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dose;
+use App\Models\Formes;
 use App\Models\Medicament;
 use Illuminate\Http\Request;
 
@@ -14,9 +16,11 @@ class MedicamentController extends Controller
      */
     public function index()
     {
-        $medicaments = Medicament::with('dose','forme')
-        ->get();
-        return view('medicaments.index', compact('medicaments'));
+        $medicaments = Medicament::with('dose', 'forme')
+            ->get();
+        $formes = Formes::all();
+        $doses = Dose::all();
+        return view('medicaments.index', compact('medicaments', 'doses', 'formes'));
     }
 
     /**
@@ -30,13 +34,22 @@ class MedicamentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateMedicamentRequest $request)
+    public function store(Request $request)
     {
-        return $request->all();
+        try {
+
+            $medocs = Medicament::create($request->all());
+
+            return redirect()->back()->with('success', 'Medicament ajouté avec succès ');
+
+        } catch (\Throwable $th) {
+
+            return redirect()->back()->with('error', 'erreur lors de l enregistrement');
+        }
     }
 
 
-      /**
+    /**
      * get medicament.
      */
     public function get()

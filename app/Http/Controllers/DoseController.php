@@ -30,7 +30,16 @@ class DoseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+
+            $dose = Dose::create($request->all());
+
+            return redirect()->back()->with('success', 'Dose ajoutée avec succès ');
+
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+            return redirect()->back()->with('error', 'erreur lors de l enregistrement');
+        }
     }
 
     /**
@@ -46,7 +55,7 @@ class DoseController extends Controller
      */
     public function edit(Dose $dose)
     {
-        //
+
     }
 
     /**

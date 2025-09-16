@@ -33,7 +33,16 @@ Route::get('/pharmacies', [PharmacieController::class, 'index'])->name('pharmaci
 Route::get('/medicaments', [MedicamentController::class, 'index'])->name('medicaments.index');
 
 Route::get('/formes', [FormesController::class, 'index'])->name('formes.index');
+Route::post('/formes', [FormesController::class, 'store'])->name('formes.store');
+
 Route::get('/doses', [doseController::class, 'index'])->name('doses.index');
+Route::post('/doses', [doseController::class, 'store'])->name('doses.store');
+Route::post('/doses/supprime', [doseController::class, 'store'])->name('doses.destroy');
+Route::post('/doses/edit', [doseController::class, 'store'])->name('doses.edit');
+
+
+
 
 Route::post('/pharmacies', [PharmacieController::class, 'store'])->name('pharmacies.store');
+Route::post('/medicaments', [MedicamentController::class, 'store'])->name('medicaments.store');
 require __DIR__ . '/auth.php';

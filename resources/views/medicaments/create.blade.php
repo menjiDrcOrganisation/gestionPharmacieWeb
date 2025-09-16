@@ -1,5 +1,5 @@
 <el-dialog>
-    <dialog id="dialog" aria-labelledby="dialog-title"
+    <dialog id="dialog_medoc" aria-labelledby="dialog-title"
         class="fixed inset-0 m-0 size-auto max-h-none max-w-none overflow-y-auto bg-transparent p-0 backdrop:bg-transparent">
         <el-dialog-backdrop
             class="fixed inset-0 bg-gray-900/50 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"></el-dialog-backdrop>
@@ -23,7 +23,7 @@
                             <h3 id="dialog-title" class="text-base font-semibold text-white">Deactivate
                                 account</h3>
                             <div class="mt-2">
-                                <form action="{{ route('pharmacies.store') }}" method="POST"
+                                <form action="{{ route('medicaments.store') }}" method="POST"
                                     class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                                     @csrf
 
@@ -35,61 +35,45 @@
                                             class="mt-1 block w-full rounded-md border border-slate-600 py-2 px-3 focus:ring-2 focus:ring-emerald-400">
                                     </div>
 
-                                    <!-- Adresse -->
+                                    <!-- Description -->
                                     <div class="sm:col-span-2">
-                                        <label class="block text-sm font-medium text-slate-200">Adresse <span
-                                                class="text-rose-500">*</span></label>
-                                        <input type="text" name="adresse" required
-                                            class="mt-1 block w-full rounded-md border border-slate-600 py-2 px-3 focus:ring-2 focus:ring-emerald-400">
+                                        <label class="block text-sm font-medium text-slate-200">Description</label>
+                                        <textarea name="description" rows="3"
+                                            class="mt-1 block w-full rounded-md border border-slate-600 py-2 px-3 focus:ring-2 focus:ring-emerald-400"></textarea>
                                     </div>
 
-                                    <!-- Téléphone -->
+                                    <!-- Forme -->
                                     <div>
-                                        <label class="block text-sm font-medium text-slate-200">Téléphone <span
+                                        <label class="block text-sm font-medium text-slate-200">Forme <span
                                                 class="text-rose-500">*</span></label>
-                                        <input type="tel" name="telephone" required
+                                        <select name="id_forme" required
                                             class="mt-1 block w-full rounded-md border border-slate-600 py-2 px-3 focus:ring-2 focus:ring-emerald-400">
-                                    </div>
-
-                                    <!-- Indice -->
-                                    <div>
-                                        <label class="block text-sm font-medium text-slate-200">Indice</label>
-                                        <input type="text" name="indice"
-                                            class="mt-1 block w-full rounded-md border border-slate-600 py-2 px-3 focus:ring-2 focus:ring-emerald-400">
-                                    </div>
-
-                                    <!-- Gérant -->
-                                    <div class="sm:col-span-2">
-                                        <label class="block text-sm font-medium text-slate-200">Gérant</label>
-                                        <select name="id_gerant"
-                                            class="mt-1 block w-full rounded-md border border-slate-600 py-2 px-3 focus:ring-2 focus:ring-emerald-400">
-                                            @foreach ($gerants as $gerant)
-                                                <option value="{{ $gerant->id_gerant }}">{{ $gerant->user->email }}</option>
+                                            @foreach($formes as $forme)
+                                                <option value="{{ $forme->id_forme }}">{{ $forme->nom }}</option>
                                             @endforeach
                                         </select>
                                     </div>
 
-                                    <!-- Statut -->
-                                    {{-- <div class="sm:col-span-2">
-                                        <label class="block text-sm font-medium text-slate-200">Statut</label>
-                                        <select name="statut"
+                                    <!-- Dose -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-200">Dose <span
+                                                class="text-rose-500">*</span></label>
+                                        <select name="id_dose" required
                                             class="mt-1 block w-full rounded-md border border-slate-600 py-2 px-3 focus:ring-2 focus:ring-emerald-400">
-                                            <option value="actif">Actif</option>
-                                            <option value="inactif">Inactif</option>
+                                            @foreach($doses as $dose)
+                                                <option value="{{ $dose->id_dose }}">{{ $dose->quantite }}
+                                                    {{ $dose->unite }}
+                                                </option>
+                                            @endforeach
                                         </select>
-                                    </div> --}}
+                                    </div>
 
-                                    {{-- <!-- Buttons -->
-                                    <div class="sm:col-span-2 flex justify-end gap-2 mt-2">
+                                    <!-- Bouton Submit -->
+                                    <div class="sm:col-span-2">
                                         <button type="submit"
-                                            class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-md font-semibold">
-                                            Ajouter
-                                        </button>
-                                        <button type="button" command="close" commandfor="dialog"
-                                            class="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-md font-semibold ring-1 ring-white/20">
-                                            Annuler
-                                        </button>
-                                    </div> --}}
+                                            class="w-full py-2 px-4 bg-emerald-600 text-white rounded-md hover:bg-emerald-500">Ajouter</button>
+                                    </div>
+                                </form>
 
 
                             </div>
@@ -97,9 +81,9 @@
                     </div>
                 </div>
                 <div class="bg-gray-700/25 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                    <input type="submit" command="submit" commandfor="dialog" value="Enregistre"
+                    <input type="submit" command="submit" commandfor="dialog_medoc" value="Enregistre"
                         class="inline-flex w-full justify-center rounded-md bg-green-400-500 px-3 py-2 text-sm font-semibold text-white hover:bg-green-400 sm:ml-3 sm:w-auto">
-                    <button type="button" command="close" commandfor="dialog"
+                    <button type="button" command="close" commandfor="dialog_medoc"
                         class="mt-3 inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white ring-1 ring-inset ring-white/5 hover:bg-white/20 sm:mt-0 sm:w-auto">Cancel</button>
                 </div>
                 </form>

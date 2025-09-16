@@ -31,7 +31,16 @@ class FormesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+
+            $fomres = Formes::create($request->all());
+
+            return redirect()->back()->with('success', 'Forme ajoutée avec succès ');
+
+        } catch (\Throwable $th) {
+          
+            return redirect()->back()->with('error', 'erreur lors de l enregistrement');
+        }
     }
 
     /**

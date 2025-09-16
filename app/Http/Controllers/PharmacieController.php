@@ -40,7 +40,8 @@ class PharmacieController extends Controller
             return redirect()->back()->with('success', 'Pharmacie ajoutée avec succès ');
 
         } catch (\Throwable $th) {
-
+            
+            return redirect()->back()->with('error', 'erreur lors de l enregistrement');
         }
     }
 
