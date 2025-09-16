@@ -65,11 +65,11 @@
                                             @include('formes.edit')
 
                                             <!-- Bouton Supprimer -->
-                                            <button type="button"
+                                            <!-- <button type="button"
                                                 onclick="document.getElementById('delete-forme-{{ $forme->id_forme }}').showModal()"
                                                 class="inline-block px-3 py-1 text-xs font-semibold text-white bg-red-500 rounded hover:bg-red-400">
                                                 Supprimer
-                                            </button>
+                                            </button> -->
 
                                             <!-- Modal Delete -->
                                             <dialog id="delete-forme-{{ $forme->id_forme}}"
@@ -96,7 +96,7 @@
                                                     </button>
 
                                                     <!-- Bouton Confirmer -->
-                                                    <form action="{{ route('doses.destroy', $forme->id_forme) }}" method="POST"
+                                                    <form action="{{ route('formes.destroy', $forme->id_forme) }}" method="POST"
                                                         class="inline">
                                                         @csrf
                                                         @method('DELETE')

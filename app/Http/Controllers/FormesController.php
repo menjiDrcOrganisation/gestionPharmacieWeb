@@ -86,6 +86,7 @@ class FormesController extends Controller
             return redirect()->back()->with('success', 'Forme supprime avec succes');
 
         } catch (\Throwable $th) {
+            dd($th);
             
             return redirect()->back()->with('error', 'erreur lors de la suppression');
         }

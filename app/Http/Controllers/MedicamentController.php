@@ -80,7 +80,16 @@ class MedicamentController extends Controller
      */
     public function update(Request $request, Medicament $medicament)
     {
-        //
+           try {
+
+           $medicament->update($request->all());
+ 
+            return redirect()->back()->with('success', 'Pharmacie modifie avec succes');
+
+        } catch (\Throwable $th) {
+            
+            return redirect()->back()->with('error', 'erreur lors de la modification');
+        }
     }
 
     /**
@@ -88,6 +97,34 @@ class MedicamentController extends Controller
      */
     public function destroy(Medicament $medicament)
     {
-        //
+         try {
+
+           $medicament->delete();
+ 
+            return redirect()->back()->with('success', 'Pharmacie supprime avec succes');
+
+        } catch (\Throwable $th) {
+            
+            return redirect()->back()->with('error', 'erreur lors de la suppression');
+        }
     }
+
+     public function change_statut(Medicament $medicament,)
+    {
+
+        try {
+
+           $medicament->update($request->all());
+ 
+            return redirect()->back()->with('success', 'Le status est mise a jour');
+
+        } catch (\Throwable $th) {
+            
+            return redirect()->back()->with('error', 'erreur lors de la modification du status');
+        }
+    
+    }
+
+
+
 }

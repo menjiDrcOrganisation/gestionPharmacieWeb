@@ -4,8 +4,8 @@
     <h2 class="text-lg font-semibold mb-4 text-slate-700 dark:text-white">
         Modifier la dose
     </h2>
-
-    <form action="{{ route('doses.update', $dose->id) }}" method="POST" class="space-y-4">
+  
+    <form action="{{ route('doses.update', $dose->id_dose) }}" method="POST" class="space-y-4">
         @csrf
         @method('PUT')
 
@@ -34,7 +34,7 @@
                 Annuler
             </button>
             <button type="submit" class="px-4 py-2 rounded-md bg-emerald-500 text-white hover:bg-emerald-600">
-                ✅ Enregistrer
+                 Enregistrer
             </button>
         </div>
     </form>

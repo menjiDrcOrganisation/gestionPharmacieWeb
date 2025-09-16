@@ -63,14 +63,17 @@ class DoseController extends Controller
      */
     public function update(Request $request, Dose $dose)
     {
-        try {
 
-         $dose->update($request->all());
+
+        try {
+            
+          $dose->update($request->all());
  
             return redirect()->back()->with('success', 'dose modifie avec succes');
 
         } catch (\Throwable $th) {
-            
+            dd($th->getmessage());
+        
             return redirect()->back()->with('error', 'erreur lors de la modification');
         }
     }

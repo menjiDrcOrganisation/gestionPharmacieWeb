@@ -44,16 +44,16 @@ Route::delete('/medicaments/{medicament}', [MedicamentController::class, 'destro
 
 Route::get('/formes', [FormesController::class, 'index'])->name('formes.index');
 Route::post('/formes', [FormesController::class, 'store'])->name('formes.store');
-Route::patch('/formes', [FormesController::class, 'update'])->name('formes.upate');
-Route::delete('/formes', [FormesController::class, 'destroy'])->name('formes.destroy');
+Route::put('/formes/{formes}', [FormesController::class, 'update'])->name('formes.update');
+Route::delete('/formes/{formes}', [FormesController::class, 'destroy'])->name('formes.destroy');
 
 
 Route::get('/doses', [DoseController::class, 'index'])->name('doses.index');
 Route::post('/doses', [DoseController::class, 'store'])->name('doses.store');
-Route::patch('/doses/supprime', [DoseController::class, 'update'])->name('doses.update');
-Route::delete('/doses/edit', [DoseController::class, 'destroy'])->name('doses.destroy');
 
+Route::put('/doses/{dose}', [DoseController::class, 'update'])->name('doses.update');
 
+Route::delete('/doses/{dose}', [DoseController::class, 'destroy'])->name('doses.destroy');
 
 
 

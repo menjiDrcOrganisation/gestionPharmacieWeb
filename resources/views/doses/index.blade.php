@@ -70,11 +70,11 @@
                                                 @include('doses.edit')
 
                                                 <!-- Bouton Supprimer -->
-                                                <button type="button"
+                                                <!-- <button type="button"
                                                     onclick="document.getElementById('delete-dose-{{ $dose->id }}').showModal()"
                                                     class="inline-block px-3 py-1 text-xs font-semibold text-white bg-red-500 rounded hover:bg-red-400">
                                                     Supprimer
-                                                </button>
+                                                </button> -->
 
                                                 <!-- Modal Delete -->
                                                 <dialog id="delete-dose-{{ $dose->id }}"
@@ -101,7 +101,7 @@
                                                         </button>
 
                                                         <!-- Bouton Confirmer -->
-                                                        <form action="{{ route('doses.destroy', $dose->id) }}" method="POST"
+                                                        <form action="{{ route('doses.destroy', $dose->id_dose) }}" method="POST"
                                                             class="inline">
                                                             @csrf
                                                             @method('DELETE')
