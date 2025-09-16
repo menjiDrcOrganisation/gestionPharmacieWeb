@@ -41,6 +41,7 @@ Route::post('/medicaments', [MedicamentController::class, 'store'])->name('medic
 Route::patch('/medicaments/{medicament}', [MedicamentController::class, 'upadate'])->name('medicaments.update');
 Route::delete('/medicaments/{medicament}', [MedicamentController::class, 'destroy'])->name('medicaments.destroy');
 
+
 Route::get('/formes', [FormesController::class, 'index'])->name('formes.index');
 Route::post('/formes', [FormesController::class, 'store'])->name('formes.store');
 Route::patch('/formes', [FormesController::class, 'update'])->name('formes.upate');
