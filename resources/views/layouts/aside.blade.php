@@ -75,15 +75,15 @@
                 pages</h6>
         </li>
 
-        {{-- <li class="mt-0.5 w-full">
-            <a class="py-2.7 {{ request()->routeIs('users.*') ? 'bg-blue-500/13 font-semibold' : '' }} dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
-                href="{{ route('users.index') }}">
+        <li class="mt-0.5 w-full">
+            <a class="py-2.7 {{ request()->routeIs('gerants.*') ? 'bg-blue-500/13 font-semibold' : '' }} dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                href="{{ route('gerants.index') }}">
                 <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg text-center xl:p-2.5">
                     <i class="relative top-0 text-sm leading-normal text-slate-700 ni ni-single-02"></i>
                 </div>
-                <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Users</span>
+                <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Gerants</span>
             </a>
-        </li> --}}
+        </li>
 
         <li class="mt-0.5 w-full">
             <a class="py-2.7 {{ request()->routeIs('profile.*') ? 'bg-blue-500/13 font-semibold' : '' }} dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
