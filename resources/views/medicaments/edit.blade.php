@@ -39,7 +39,7 @@
                         {{ $forme->nom }}
                             </option> 
                                                 
-                                                @endforeach
+                                    @endforeach
                 </select>
         </div>
 
