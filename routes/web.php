@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FormesController;
 use App\Http\Controllers\DoseController;
 use App\Models\Pharmacie;
+
 use Illuminate\Support\Facades\Route;
 
 
@@ -55,7 +56,8 @@ Route::put('/doses/{dose}', [DoseController::class, 'update'])->name('doses.upda
 
 Route::delete('/doses/{dose}', [DoseController::class, 'destroy'])->name('doses.destroy');
 
-
-
+Route::get('/gerants', [AdminController::class, 'gerant'])->name('gerants.index');
+Route::put('/gerants/{gerant}', [AdminController::class, 'updategerant'])->name('gerants.update');
+Route::post('/gerants', [AdminController::class, 'store'])->name('gerants.store');
 
 require __DIR__ . '/auth.php';
