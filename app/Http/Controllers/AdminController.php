@@ -3,19 +3,86 @@
 namespace App\Http\Controllers;
 
 use App\Models\admin;
-
 use App\Models\gerant;
+use App\Models\Medicament;
 use App\Models\Pharmacie;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    
+ 
+
+public function dashboard()
+{
+    // Compteurs globaux
+    $totalAdmins = gerant::count();
+    $totalPharmacies = Pharmacie::count();
+    $totalMedicaments = Medicament::count();
+
+    // Médicaments ajoutés par mois
+    $medicamentsParMois = Medicament::select(
+            DB::raw('MONTH(created_at) as mois'),
+            DB::raw('COUNT(*) as total')
+        )
+        ->groupBy('mois')
+        ->orderBy('mois')
+        ->pluck('total', 'mois');
+
+    // Pharmacies ajoutées par mois
+    $pharmaciesParMois = Pharmacie::select(
+            DB::raw('MONTH(created_at) as mois'),
+            DB::raw('COUNT(*) as total')
+        )
+        ->groupBy('mois')
+        ->orderBy('mois')
+        ->pluck('total', 'mois');
+
+    // Admins ajoutés par mois
+    $adminsParMois = Gerant::select(
+            DB::raw('MONTH(created_at) as mois'),
+            DB::raw('COUNT(*) as total')
+        )
+        ->groupBy('mois')
+        ->orderBy('mois')
+        ->pluck('total', 'mois');
+
+    $moisNoms = [
+        1 => 'Jan', 2 => 'Fév', 3 => 'Mar', 4 => 'Avr',
+        5 => 'Mai', 6 => 'Juin', 7 => 'Juil', 8 => 'Août',
+        9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Déc'
+    ];
+
+    // Formater les données par mois
+    $medicamentsParMoisFormate = [];
+    $pharmaciesParMoisFormate = [];
+    $adminsParMoisFormate = [];
+
+    foreach ($moisNoms as $num => $nom) {
+        $medicamentsParMoisFormate[$nom] = $medicamentsParMois[$num] ?? 0;
+        $pharmaciesParMoisFormate[$nom] = $pharmaciesParMois[$num] ?? 0;
+        $adminsParMoisFormate[$nom] = $adminsParMois[$num] ?? 0;
+    }
+
+    return view('dashboard', compact(
+        'totalAdmins',
+        'totalPharmacies',
+        'totalMedicaments',
+        'medicamentsParMoisFormate',
+        'pharmaciesParMoisFormate',
+        'adminsParMoisFormate',
+        'moisNoms'
+    ));
+}
+
+
     public function index()
     {
 
@@ -99,20 +166,41 @@ class AdminController extends Controller
 
         $gerant->user->update($request->only(['name', 'email']));
 
-        // Réinitialiser les pharmacies du gérant
-        // Pharmacie::where('id_gerant', $gerant->id_gerant)->update(['id_gerant' => null]);
-
-        // // Réattribuer les pharmacies sélectionnées
-        // if ($request->filled('pharmacies')) {
-        //     Pharmacie::whereIn('id_pharmacie', $request->pharmacies)
-        //         ->update(['id_gerant' => $gerant->id_gerant]);
-        // }
-
+       
         return redirect()->back()->with('success', 'Gérant mis à jour avec succès');
     }
 
 
+        public function admin (){
+            $admins = admin::with('user')->get();   
+            return view('admins.index', compact('admins'));
+        }
+        public function storeadmin(Request $request)
+    { 
+        
+        try {
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt("opharma12345"),
+            'role' => 'admin',
+        ]);
+          $info = admin::Create([
+                'id_utilisateur' => $user->id
+            ]);
+          
+        return redirect()->back()->with('success', 'Admin mis à jour avec succès');
+    } catch (\Exception $e) {
+        return dd($e->getMessage());
+        return redirect()->back()->with('error', 'Erreur lors de la création de l\'admin');
+    }
+}
+        public function updateadmin(Request $request, admin $admin)
+    {   
+        $admin->user->update($request->only(['name', 'email']));
 
+        return redirect()->back()->with('success', 'Admin mis à jour avec succès');
+    }       
     public function store(Request $request)
     {
         $user = User::create([

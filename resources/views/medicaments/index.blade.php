@@ -77,7 +77,7 @@
                                     <tr class="hover:bg-slate-100 dark:hover:bg-slate-700">
                                         <td class="p-2 align-middle whitespace-nowrap">
                                             <div class="flex items-center px-2 py-1">
-                                                <img src="../assets/img/small-logos/logo-invision.svg"
+                                                <img src="{{ asset('assets/img/logo.png') }}"
                                                     class="inline-flex items-center justify-center mr-2 rounded-full h-9 w-9"
                                                     alt="logo" />
                                                 <span class="text-sm dark:text-white">{{ $medicament->nom }}</span>

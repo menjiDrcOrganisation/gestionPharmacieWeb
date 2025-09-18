@@ -6,7 +6,7 @@
             sidenav-close></i>
         <a class="block px-8 py-6 m-0 text-sm whitespace-nowrap dark:text-white text-slate-700"
             href="{{ route('medicaments.index') }}" target="_blank">
-            <img src="./assets/img/logo.png"
+            <img src="{{ asset('assets/img/logo.png') }}"s
                 class="inline h-full max-w-full transition-all duration-200 dark:hidden ease-nav-brand max-h-8"
                 alt="main_logo" />
             <img src="./assets/img/logo.png"
@@ -19,7 +19,7 @@
     <hr
         class="h-px mt-0 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent" />
 
-    {{-- <ul class="flex flex-col pl-0 mb-0">
+    <ul class="flex flex-col pl-0 mb-0">
         <li class="mt-0.5 w-full">
             <a class="py-2.7 {{ request()->routeIs('dashboard') ? 'bg-blue-500/13 font-semibold' : '' }} dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 transition-colors"
                 href="{{ route('dashboard') }}">
@@ -28,7 +28,7 @@
                 </div>
                 <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Tableau de bord</span>
             </a>
-        </li> --}}
+        </li>
 
         <li class="mt-0.5 w-full">
             <a class="py-2.7 {{ request()->routeIs('pharmacies.*') ? 'bg-blue-500/13 font-semibold' : '' }} dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
@@ -69,6 +69,15 @@
                 <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Autres</span>
             </a>
         </li> --}}
+ <li class="mt-0.5 w-full">
+            <a class="py-2.7 {{ request()->routeIs('gerants.*') ? 'bg-blue-500/13 font-semibold' : '' }} dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                href="{{ route('gerants.index') }}">
+                <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg text-center xl:p-2.5">
+                    <i class="relative top-0 text-sm leading-normal text-slate-700 ni ni-single-02"></i>
+                </div>
+                <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Gerants</span>
+            </a>
+        </li>
 
         <li class="w-full mt-4">
             <h6 class="pl-6 ml-2 text-xs font-bold leading-tight uppercase dark:text-white opacity-60">Account
@@ -76,12 +85,12 @@
         </li>
 
         <li class="mt-0.5 w-full">
-            <a class="py-2.7 {{ request()->routeIs('gerants.*') ? 'bg-blue-500/13 font-semibold' : '' }} dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
-                href="{{ route('gerants.index') }}">
+            <a class="py-2.7 {{ request()->routeIs('admins.*') ? 'bg-blue-500/13 font-semibold' : '' }} dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                href="{{ route('admins.index') }}">
                 <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg text-center xl:p-2.5">
                     <i class="relative top-0 text-sm leading-normal text-slate-700 ni ni-single-02"></i>
                 </div>
-                <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Gerants</span>
+                <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Admins</span>
             </a>
         </li>
 

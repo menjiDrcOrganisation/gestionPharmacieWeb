@@ -16,10 +16,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// });
+// ->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -59,5 +60,9 @@ Route::delete('/doses/{dose}', [DoseController::class, 'destroy'])->name('doses.
 Route::get('/gerants', [AdminController::class, 'gerant'])->name('gerants.index');
 Route::put('/gerants/{gerant}', [AdminController::class, 'updategerant'])->name('gerants.update');
 Route::post('/gerants', [AdminController::class, 'store'])->name('gerants.store');
+
+Route::get('/admins',[AdminController::class,'admin'])->name('admins.index');
+Route::post('/admins',[AdminController::class,'storeadmin'])->name('admins.store');
+Route::put('/admins/{admin}',[AdminController::class,'updateadmin'])->name('admins.update');
 
 require __DIR__ . '/auth.php';
