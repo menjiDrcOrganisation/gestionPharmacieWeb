@@ -105,13 +105,51 @@
         </li>
 
         <li class="mt-0.5 w-full">
-            <a class="py-2.7 {{ request()->routeIs('logout') ? 'bg-blue-500/13 font-semibold' : '' }} dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
-                href="{{ route('logout') }}">
+            <!-- Lien Déconnexion -->
+            <a href="#"
+               onclick="document.getElementById('logout-dialog').showModal();"
+               class="py-2.7 {{ request()->routeIs('logout') ? 'bg-blue-500/13 font-semibold' : '' }} 
+                      dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors">
                 <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg text-center xl:p-2.5">
                     <i class="relative top-0 text-sm leading-normal text-cyan-500 ni ni-collection"></i>
                 </div>
                 <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Déconnexion</span>
             </a>
+        
+            <!-- Modal Déconnexion -->
+            <dialog id="logout-dialog" class="bg-white dark:bg-slate-800 rounded-2xl w-full max-w-md p-0">
+                <form method="POST" action="{{ route('logout') }}" class="flex flex-col">
+                    @csrf
+                    <!-- Header -->
+                    <div class="flex items-center justify-between bg-red-600 text-white p-4 rounded-t-2xl">
+                        <h3 class="text-lg font-semibold">Confirmation</h3>
+                        <button type="button" onclick="document.getElementById('logout-dialog').close();">✕</button>
+                    </div>
+        
+                    <!-- Body -->
+                    <div class="p-6 space-y-4">
+                        <p class="text-sm text-gray-700 dark:text-gray-300">
+                            Voulez-vous vraiment vous déconnecter ?
+                        </p>
+                    </div>
+        
+                    <!-- Footer -->
+                    <div class="flex justify-end gap-3 p-4 bg-gray-100 dark:bg-slate-900 rounded-b-2xl">
+                        <button type="button"
+                                onclick="document.getElementById('logout-dialog').close();"
+                                class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400">
+                            Annuler
+                        </button>
+                        <button type="submit"
+                                class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-500">
+                            Se déconnecter
+                        </button>
+                    </div>
+                </form>
+            </dialog>
         </li>
+        
+        
+        
     </ul>
 </aside>
