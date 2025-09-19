@@ -22,10 +22,44 @@ class AdminController extends Controller
 
 public function dashboard()
 {
-    // Compteurs globaux
-    $totalAdmins = gerant::count();
+    // Totaux
+    $totalAdmins = Gerant::count();
     $totalPharmacies = Pharmacie::count();
-    $totalMedicaments = Medicament::count();
+
+    // Derniers 7 gérants
+    $gerants = Gerant::with('user', 'pharmacies')
+        ->latest()
+        ->take(7)
+        ->get();
+
+    // Dernières 7 pharmacies
+    $pharmacies = Pharmacie::with('gerant.user')
+        ->latest()
+        ->take(7)
+        ->get();
+
+    // Nouveaux pharmacies (créées dans les 14 derniers jours)
+    $nouveauxPharmacies = Pharmacie::where('created_at', '>=', now()->subDays(14))->count();
+
+    // Gérants inactifs (aucune activité depuis 30 jours)
+    $inactiveGerants = Gerant::where('updated_at', '<', now()->subDays(30))->count();
+
+    // Variation (%) sur 30 jours
+    $adminsLast30 = Gerant::where('created_at', '>=', now()->subDays(30))->count();
+    $pharmaciesLast30 = Pharmacie::where('created_at', '>=', now()->subDays(30))->count();
+
+    $adminsPrev30 = Gerant::whereBetween('created_at', [now()->subDays(60), now()->subDays(30)])->count();
+    $pharmaciesPrev30 = Pharmacie::whereBetween('created_at', [now()->subDays(60), now()->subDays(30)])->count();
+
+    $adminsVariation = $adminsPrev30 > 0 
+        ? (($adminsLast30 - $adminsPrev30) / $adminsPrev30) * 100 
+        : 100;
+
+    $pharmaciesVariation = $pharmaciesPrev30 > 0 
+        ? (($pharmaciesLast30 - $pharmaciesPrev30) / $pharmaciesPrev30) * 100 
+        : 100;
+
+
 
     // Médicaments ajoutés par mois
     $medicamentsParMois = Medicament::select(
@@ -72,13 +106,19 @@ public function dashboard()
     }
 
     return view('dashboard', compact(
-        'totalAdmins',
-        'totalPharmacies',
-        'totalMedicaments',
         'medicamentsParMoisFormate',
         'pharmaciesParMoisFormate',
         'adminsParMoisFormate',
-        'moisNoms'
+        'moisNoms',
+        'totalAdmins',
+        'totalPharmacies',
+        'nouveauxPharmacies',
+        'inactiveGerants',
+        'adminsVariation',
+        'pharmaciesVariation',
+        'gerants', 
+        'pharmacies'
+
     ));
 }
 
