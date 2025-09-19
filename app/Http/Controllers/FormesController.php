@@ -34,11 +34,26 @@ class FormesController extends Controller
         try {
 
             $fomres = Formes::create($request->all());
+           
 
             return redirect()->back()->with('success', 'Forme ajoutée avec succès ');
 
         } catch (\Throwable $th) {
-          
+
+            return redirect()->back()->with('error', 'erreur lors de l enregistrement');
+        }
+    }
+     public function storemedicament(Request $request)
+    {
+        try {
+
+            $fomres = Formes::create($request->all());
+            return response()->json($fomres); // pour Forme
+
+
+
+        } catch (\Throwable $th) {
+
             return redirect()->back()->with('error', 'erreur lors de l enregistrement');
         }
     }
@@ -66,11 +81,11 @@ class FormesController extends Controller
     {
         try {
            $formes->update($request->all());
- 
+
             return redirect()->back()->with('success', 'Forme modifie avec succes');
 
         } catch (\Throwable $th) {
-            
+
             return redirect()->back()->with('error', 'erreur lors de la modification');
         }
     }
@@ -82,12 +97,12 @@ class FormesController extends Controller
     {
          try {
            $formes->delete();
- 
+
             return redirect()->back()->with('success', 'Forme supprime avec succes');
 
         } catch (\Throwable $th) {
             dd($th);
-            
+
             return redirect()->back()->with('error', 'erreur lors de la suppression');
         }
     }
