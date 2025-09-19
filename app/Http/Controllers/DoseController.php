@@ -33,7 +33,7 @@ class DoseController extends Controller
         try {
 
             $dose = Dose::create($request->all());
-
+           
             return redirect()->back()->with('success', 'Dose ajoutée avec succès ');
 
         } catch (\Throwable $th) {
@@ -41,7 +41,19 @@ class DoseController extends Controller
             return redirect()->back()->with('error', 'erreur lors de l enregistrement');
         }
     }
+   public function storemedicament(Request $request)
+    {
+        try {
 
+            $dose = Dose::create($request->all());
+            return response()->json($dose);
+
+
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+            return redirect()->back()->with('error', 'erreur lors de l enregistrement');
+        }
+    }
     /**
      * Display the specified resource.
      */
@@ -66,14 +78,14 @@ class DoseController extends Controller
 
 
         try {
-            
+
           $dose->update($request->all());
- 
+
             return redirect()->back()->with('success', 'dose modifie avec succes');
 
         } catch (\Throwable $th) {
             dd($th->getmessage());
-        
+
             return redirect()->back()->with('error', 'erreur lors de la modification');
         }
     }
@@ -86,11 +98,11 @@ class DoseController extends Controller
          try {
 
          $dose->delete();
- 
+
             return redirect()->back()->with('success', 'dose supprime avec succes');
 
         } catch (\Throwable $th) {
-            
+
             return redirect()->back()->with('error', 'erreur lors de la suppression');
         }
     }
