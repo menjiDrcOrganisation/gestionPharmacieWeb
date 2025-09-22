@@ -1,143 +1,176 @@
 @extends('layouts.main')
+@section('title','Médicaments')
+
 @section('content')
-    <div class="w-full px-6 py-6 mx-auto">
-        <!-- Gestion des médicaments -->
-        <div class="flex flex-wrap -mx-3">
-            <div class="flex-none w-full max-w-full px-3">
-                <div
-                    class="relative flex flex-col min-w-0 mb-6 break-words dark:bg-slate-800 bg-blue-500 dark:bg-slate-850 shadow-xl rounded-2xl">
+<div class="bg-white dark:bg-slate-900 w-full px-6 py-6 mx-auto">
+    <div class="flex flex-wrap -mx-3">
+        <div class="flex-none w-full max-w-full px-3">
+            <div class="relative flex flex-col mb-6 bg-white dark:bg-slate-800 shadow-xl rounded-2xl">
 
-                    <!-- Header -->
-                    <div
-                        class="p-6 pb-0 mb-0 border-b-0 border-b-transparent rounded-t-2xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                        <h6 class="dark:text-white text-lg font-semibold">Gestion des médicaments</h6>
+                <!-- Header -->
+                <div class="p-6 border-b rounded-t-2xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <h6 class="dark:text-white text-xl font-semibold flex items-center gap-2">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2966/2966489.png" class="w-7 h-7" alt="icon">
+                        Gestion des médicaments
+                    </h6>
 
-                        <!-- Filtres -->
-                        <div class="flex flex-wrap gap-2">
-                            <!-- Recherche globale -->
+                    <div class="flex flex-wrap items-center gap-3">
+                        <!-- Recherche -->
+                        <div class="relative">
                             <input type="text" id="searchInput" placeholder="Rechercher..."
-                                class="rounded-md border border-slate-300 px-3 py-2 focus:ring-2 focus:ring-emerald-300 focus:outline-none">
-
-                            <!-- Filtre par forme -->
-                            <select id="filterForme"
-                                class="rounded-md border border-slate-300 px-3 py-2 focus:ring-2 focus:ring-emerald-300 focus:outline-none">
-                                <option value="">Toutes les formes</option>
-                                @foreach($formes as $forme)
-                                    <option value="{{ strtolower($forme->nom) }}">{{ $forme->nom }}</option>
-                                @endforeach
-                            </select>
-
-                            <!-- Filtre par dose -->
-                            <select id="filterDose"
-                                class="rounded-md border border-slate-300 px-3 py-2 focus:ring-2 focus:ring-emerald-300 focus:outline-none">
-                                <option value="">Toutes les doses</option>
-                                @foreach($doses as $dose)
-                                    <option value="{{ strtolower($dose->quantite . ' ' . $dose->unite) }}">
-                                        {{ $dose->quantite }} {{ $dose->unite }}
-                                    </option>
-                                @endforeach
-                            </select>
+                                class="w-72 rounded-lg border border-slate-300 pl-9 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-400 focus:outline-none dark:bg-slate-700 dark:text-white">
+                            <span class="absolute left-2.5 top-2.5">
+                                <img src="https://cdn-icons-png.flaticon.com/512/149/149852.png" class="w-4 h-4 opacity-70" alt="search">
+                            </span>
                         </div>
+
+                        <!-- Filtre par forme -->
+                        <select id="filterForme"
+                            class="rounded-lg border border-slate-300 px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-400 focus:outline-none dark:bg-slate-700 dark:text-white">
+                            <option value="">Toutes les formes</option>
+                            @foreach($formes as $forme)
+                                <option value="{{ strtolower($forme->nom) }}">{{ $forme->nom }}</option>
+                            @endforeach
+                        </select>
+
+                        <!-- Filtre par dose -->
+                        <select id="filterDose"
+                            class="rounded-lg border border-slate-300 px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-400 focus:outline-none dark:bg-slate-700 dark:text-white">
+                            <option value="">Toutes les doses</option>
+                            @foreach($doses as $dose)
+                                <option value="{{ strtolower($dose->quantite . ' ' . $dose->unite) }}">
+                                    {{ $dose->quantite }} {{ $dose->unite }}
+                                </option>
+                            @endforeach
+                        </select>
 
                         <!-- Bouton Ajouter -->
                         <button command="show-modal" commandfor="dialog_medoc"
-                            class="rounded-md bg-white/10 px-4 py-2 text-sm font-semibold text-blue-800 ring-1 ring-inset ring-white/5 hover:bg-white/20">
-                            ➕ Ajouter un Medicament
+                            class="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 shadow">
+                            <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" class="w-4 h-4" alt="add">
+                            Ajouter
                         </button>
                     </div>
+                </div>
 
-                    @include('medicaments.create')
+                @include('medicaments.create')
 
-                    <!-- Table scrollable -->
-                    <div class="flex-auto px-0 pt-4 pb-2 max-h-[500px] overflow-y-auto overflow-x-auto">
+                <!-- Table -->
+                <div class="flex-auto px-0 pt-4 pb-2">
+                    <div class="overflow-x-auto max-h-[500px] overflow-y-auto">
                         <table id="medicamentTable"
-                            class="min-w-full items-center mb-0 align-top border-collapse dark:border-white/40 text-slate-500">
-                            <thead class="align-bottom bg-slate-50 dark:bg-slate-800 sticky top-0 z-10">
-                                <tr>
-                                    <th
-                                        class="px-6 py-3 font-bold text-left uppercase text-xxs text-slate-400 dark:text-white tracking-none whitespace-nowrap">
-                                        Noms Medicaments
-                                    </th>
-                                    <th
-                                        class="px-6 py-3 font-bold text-left uppercase text-xxs text-slate-400 dark:text-white tracking-none whitespace-nowrap">
-                                        Forme & Dose
-                                    </th>
-                                    <th
-                                        class="px-6 py-3 font-bold text-center uppercase text-xxs text-slate-400 dark:text-white tracking-none whitespace-nowrap">
-                                        Date de création
-                                    </th>
-                                    <th
-                                        class="px-6 py-3 font-bold text-center uppercase text-xxs text-slate-400 dark:text-white tracking-none whitespace-nowrap">
-                                        Actions
-                                    </th>
+                            class="min-w-full border-collapse text-slate-600 dark:text-slate-200">
+                            <thead>
+                                <tr class="bg-slate-50 dark:bg-slate-700/50 sticky top-0 z-10">
+                                    <th class="px-6 py-3 text-left text-xs font-bold uppercase">Nom Médicament</th>
+                                    <th class="px-6 py-3 text-left text-xs font-bold uppercase">Forme & Dose</th>
+                                    <th class="px-6 py-3 text-center text-xs font-bold uppercase">Créé le</th>
+                                    <th class="px-6 py-3 text-center text-xs font-bold uppercase"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($medicaments as $medicament)
-                                    <tr class="hover:bg-slate-100 dark:hover:bg-slate-700">
-                                        <td class="p-2 align-middle whitespace-nowrap">
-                                            <div class="flex items-center px-2 py-1">
-                                                <img src="{{ asset('assets/img/logo.png') }}"
-                                                    class="inline-flex items-center justify-center mr-2 rounded-full h-9 w-9"
-                                                    alt="logo" />
-                                                <span class="text-sm dark:text-white">{{ $medicament->nom }}</span>
-                                            </div>
-                                        </td>
-                                        <td class="p-2 align-middle whitespace-nowrap">
-                                            <p class="text-xs font-semibold dark:text-white">{{ $medicament->forme->nom }}</p>
-                                            <p class="text-xs text-slate-400 dark:text-white dark:opacity-80">
-                                                {{ $medicament->dose->quantite }} {{ $medicament->dose->unite }}
-                                            </p>
-                                        </td>
-                                        <td class="p-2 text-center align-middle whitespace-nowrap">
-                                            <span
-                                                class="text-xs text-slate-400 dark:text-white dark:opacity-80">{{ $medicament->created_at }}</span>
-                                        </td>
-                                        <td class="p-2 text-center align-middle whitespace-nowrap">
+                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/70 transition">
+                                    <!-- Nom -->
+                                    <td class="p-4 border-b dark:border-slate-600">
+                                        <div class="flex items-center gap-3">
+                                            <img src="{{ asset('assets/img/logo.png') }}" class="w-6 h-6" alt="logo" />
+                                            <span class="text-sm font-semibold">{{ $medicament->nom }}</span>
+                                        </div>
+                                    </td>
 
-                                         <button command="show-modal" commandfor="edit-medicament-{{ $medicament->id_medicament }}"
-                                                    class="inline-block px-3 py-1 text-xs font-semibold text-white bg-blue-500 rounded hover:bg-blue-400">
-                                                    ✏️ Edit
-                                                </button>
-                                                 @include('medicaments.edit')
-                                
-                                        </td>
-                                    </tr>
+                                    <!-- Forme + Dose -->
+                                    <td class="p-4 border-b dark:border-slate-600">
+                                        <p class="text-sm font-medium">{{ $medicament->forme->nom }}</p>
+                                        <p class="text-xs text-slate-500 dark:text-slate-300">
+                                            {{ $medicament->dose->quantite }} {{ $medicament->dose->unite }}
+                                        </p>
+                                    </td>
+
+                                    <!-- Date -->
+                                    <td class="p-4 text-center border-b dark:border-slate-600">
+                                        <span class="text-xs text-slate-500 dark:text-slate-300">
+                                            {{ $medicament->created_at->format('d/m/Y') }}
+                                        </span>
+                                    </td>
+
+                                    <!-- Actions -->
+                                    <td class="p-4 text-center border-b dark:border-slate-600">
+                                        <button command="show-modal" commandfor="edit-medicament-{{ $medicament->id_medicament }}"
+                                            class="flex items-center gap-1 px-3 py-1 text-xs font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-400">
+                                            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" class="w-3 h-3" alt="edit">
+                                            Modifier
+                                        </button>
+                                        @include('medicaments.edit')
+                                    </td>
+                                </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
-
                 </div>
+
             </div>
         </div>
     </div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById('searchInput');
+    const filterForme = document.getElementById('filterForme');
+    const filterDose = document.getElementById('filterDose');
+    const table = document.getElementById('medicamentTable');
 
-    <script>
-        function filterTable() {
-            const searchValue = document.getElementById('searchInput').value.toLowerCase();
-            const formeValue = document.getElementById('filterForme').value.toLowerCase();
-            const doseValue = document.getElementById('filterDose').value.toLowerCase();
-            const rows = document.querySelectorAll('#medicamentTable tbody tr');
+    function normalize(str) {
+        return str ? str.toString().normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim() : "";
+    }
 
-            rows.forEach(row => {
-                const nom = row.cells[0].textContent.toLowerCase();
-                const forme = row.cells[1].children[0].textContent.toLowerCase();
-                const dose = row.cells[1].children[1].textContent.toLowerCase();
-
-                const matchesSearch = nom.includes(searchValue);
-                const matchesForme = forme.includes(formeValue) || formeValue === '';
-                const matchesDose = dose.includes(doseValue) || doseValue === '';
-
-                row.style.display = (matchesSearch && matchesForme && matchesDose) ? '' : 'none';
-            });
+    function ensureNoResultsRow() {
+        const tbody = table.querySelector('tbody');
+        let noRow = tbody.querySelector('.no-results-row');
+        if (!noRow) {
+            const colCount = table.querySelectorAll('thead th').length;
+            noRow = document.createElement('tr');
+            noRow.className = 'no-results-row';
+            noRow.innerHTML = `<td colspan="${colCount}" class="text-center italic py-4">Aucun résultat trouvé.</td>`;
+            tbody.appendChild(noRow);
         }
+        return noRow;
+    }
 
-        // Écouteurs sur les champs
-        document.getElementById('searchInput').addEventListener('keyup', filterTable);
-        document.getElementById('filterForme').addEventListener('change', filterTable);
-        document.getElementById('filterDose').addEventListener('change', filterTable);
-    </script>
+    function filterTable() {
+        const search = normalize(searchInput.value);
+        const forme = normalize(filterForme.value);
+        const dose = normalize(filterDose.value);
+
+        const rows = table.querySelectorAll('tbody tr');
+        let anyVisible = false;
+
+        rows.forEach(row => {
+            if (row.classList.contains('no-results-row')) return;
+
+            const rowText = normalize(row.innerText);
+            const matchSearch = !search || rowText.includes(search);
+            const matchForme = !forme || rowText.includes(forme);
+            const matchDose = !dose || rowText.includes(dose);
+
+            if (matchSearch && matchForme && matchDose) {
+                row.style.display = "";
+                anyVisible = true;
+            } else {
+                row.style.display = "none";
+            }
+        });
+
+        ensureNoResultsRow().style.display = anyVisible ? "none" : "";
+    }
+
+    searchInput.addEventListener("input", filterTable);
+    filterForme.addEventListener("change", filterTable);
+    filterDose.addEventListener("change", filterTable);
+
+    filterTable();
+});
+</script>
 @endsection
