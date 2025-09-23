@@ -66,12 +66,13 @@ class LotController extends Controller
         $lot = lot::create([
             "date_expiration" => $request->date_expiration,
             "quantite" => $request->quantite,
+            "quantite_reel" => $request->quantite, // Initialiser quantite_reel avec la valeur de quantite
             "prix_achat" => $request->prix_achat,
             "prix_unitaire" => $prix_unitaire,
             "numero_lot" => $numero_lot,
             "id_pharmacie" => $request->id_pharmacie,
             "id_medicament" => $request->id_medicament
-        ]); 
+        ]);
 
         return response()->json($lot, 201);
 
@@ -167,6 +168,7 @@ public function getlostmedicament(string $id_pharmacie, request $request)
         $lot->quantite = $request->quantite;
         $lot->date_expiration = $request->date_expiration;
         $lot->prix_achat = $request->prix_achat;
+        $lot->quantite_reel = $request->quantite; // Initialiser quantite_reel avec la valeur de quantite
 
         // Calculer le prix unitaire
         $pharmacie = Pharmacie::find($lot->id_pharmacie);
@@ -215,8 +217,8 @@ public function getlostmedicament(string $id_pharmacie, request $request)
     public function getallmedicament(){
         try{
             $medicaments = Medicament::with([
-                'forme', 
-                'dose', 
+                'forme',
+                'dose',
                 ])->get();;
             return response()->json($medicaments,200);
         }
