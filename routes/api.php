@@ -3,8 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PharmacieController;
+use App\Http\Controllers\api\RapportVenteController;
 
-Route::get("/RapportVente",[App\Http\Controllers\api\RapportVenteController::class,'getRapportVente']);
+Route::get("/RapportVente",[RapportVenteController::class,'getRapportVente']);
 
 
 require __DIR__.'/apiAuth.php';

@@ -90,7 +90,7 @@
                                     <!-- Date -->
                                     <td class="p-4 text-center border-b dark:border-slate-600">
                                         <span class="text-xs text-slate-500 dark:text-slate-300">
-                                            {{ $medicament->created_at->format('d/m/Y') }}
+                                            {{ $medicament->created_at }}
                                         </span>
                                     </td>
 
