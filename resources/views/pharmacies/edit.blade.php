@@ -17,16 +17,17 @@
 
         <!-- Nom -->
         <div>
-            <label class="block text-sm font-medium text-slate-700 dark:text-slate-200">
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-200 text-left">
                 Nom <span class="text-rose-500">*</span>
             </label>
+            
             <input type="text" name="nom" value="{{ $pharmacie->nom }}" required
                 class="mt-1 block w-full rounded-lg border border-slate-300 dark:border-slate-600 py-2 px-3 text-sm focus:ring-2 focus:ring-emerald-400 focus:outline-none dark:bg-slate-700 dark:text-white">
         </div>
 
         <!-- Adresse -->
         <div>
-            <label class="block text-sm font-medium text-slate-700 dark:text-slate-200">
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-200 text-left">
                 Adresse <span class="text-rose-500">*</span>
             </label>
             <input type="text" name="adresse" value="{{ $pharmacie->adresse }}" required
@@ -35,7 +36,7 @@
 
         <!-- Téléphone -->
         <div>
-            <label class="block text-sm font-medium text-slate-700 dark:text-slate-200">
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-200 text-left">
                 Téléphone <span class="text-rose-500">*</span>
             </label>
             <input type="text" name="telephone" value="{{ $pharmacie->telephone }}" required
@@ -44,7 +45,7 @@
 
         <!-- Indice -->
         <div>
-            <label class="block text-sm font-medium text-slate-700 dark:text-slate-200">
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-200 text-left">
                 Indice
             </label>
             <input type="text" name="indice" value="{{ $pharmacie->indice }}"
@@ -53,7 +54,7 @@
 
         <!-- Gérant -->
         <div>
-            <label class="block text-sm font-medium text-slate-700 dark:text-slate-200">
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-200 text-left">
                 Gérant
             </label>
             <select name="id_gerant"
@@ -75,8 +76,9 @@
             </button>
 
             <button type="submit"
-                class="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-500 shadow">
-                Enregistrer
+                class="px-4 py-2 text-sm font-semibold text-white bg-emerald-600 
+                rounded-lg hover:bg-emerald-500 shadow">
+                Mettre à jour
             </button>
         </div>
     </form>

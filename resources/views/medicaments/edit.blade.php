@@ -17,21 +17,21 @@
 
         <!-- Nom -->
         <div>
-            <label class="block text-sm font-medium text-slate-700 dark:text-slate-200">Nom <span class="text-rose-500">*</span></label>
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-200 text-left">Nom <span class="text-rose-500">*</span></label>
             <input type="text" name="nom" value="{{ $medicament->nom }}" required
                 class="mt-1 block w-full rounded-lg border border-slate-300 dark:border-slate-600 py-2 px-3 text-sm focus:ring-2 focus:ring-emerald-400 focus:outline-none dark:bg-slate-700 dark:text-white">
         </div>
 
         <!-- Description -->
         <div>
-            <label class="block text-sm font-medium text-slate-700 dark:text-slate-200">Description</label>
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-200 text-left">Description</label>
             <textarea name="description" rows="3"
                 class="mt-1 block w-full rounded-lg border border-slate-300 dark:border-slate-600 py-2 px-3 text-sm focus:ring-2 focus:ring-emerald-400 focus:outline-none dark:bg-slate-700 dark:text-white">{{ $medicament->description }}</textarea>
         </div>
 
         <!-- Forme -->
         <div>
-            <label class="block text-sm font-medium text-slate-700 dark:text-slate-200">Forme <span class="text-rose-500">*</span></label>
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-200 text-left">Forme <span class="text-rose-500">*</span></label>
             <select name="id_forme" required
                 class="mt-1 block w-full rounded-lg border border-slate-300 dark:border-slate-600 py-2 px-3 text-sm focus:ring-2 focus:ring-emerald-400 focus:outline-none dark:bg-slate-700 dark:text-white">
                 @foreach($formes as $forme)
@@ -44,7 +44,7 @@
 
         <!-- Dose -->
         <div>
-            <label class="block text-sm font-medium text-slate-700 dark:text-slate-200">Dose <span class="text-rose-500">*</span></label>
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-200 text-left">Dose <span class="text-rose-500">*</span></label>
             <select name="id_dose" required
                 class="mt-1 block w-full rounded-lg border border-slate-300 dark:border-slate-600 py-2 px-3 text-sm focus:ring-2 focus:ring-emerald-400 focus:outline-none dark:bg-slate-700 dark:text-white">
                 @foreach($doses as $dose)
@@ -64,8 +64,9 @@
             </button>
 
             <button type="submit"
-                class="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-500 shadow">
-                Enregistrer
+                class="px-4 py-2 text-sm font-semibold text-white bg-emerald-600 
+                rounded-lg hover:bg-emerald-500 shadow">
+                Mettre à jour
             </button>
         </div>
     </form>
