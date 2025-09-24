@@ -16,14 +16,16 @@ class RapportVenteController extends Controller
                 'id_pharmacie' => 'required|integer|exists:pharmacies,id_pharmacie',
             ]);
 
-           $rapportvente = vente::with(['lots.medicament.forme','lots.medicament.dose'])
-        ->whereHas('lots', function ($query) use ($request) {
-            $query->where('id_pharmacie', $request->id_pharmacie);
-        })
-        ->selectRaw('ventes.*, DATE(date_vente) as date_simple')
-        ->groupBy('date_simple', 'ventes.id_vente') // groupBy la date et id pour éviter le conflit
-        ->get()
-        ->groupBy('date_simple'); // maintenant tu regroupes par ta colonne calculé
+        $rapportvente = vente::with(['lots.medicament.forme','lots.medicament.dose'])
+    ->whereHas('lots', function ($query) use ($request) {
+        $query->where('id_pharmacie', $request->id_pharmacie);
+    })
+    // 🔹 condition sur la date
+    ->selectRaw('ventes.*, DATE(date_vente) as date_simple')
+    ->groupBy('date_simple', 'ventes.id_vente')
+    ->get()
+    ->groupBy('date_simple');
+ // maintenant tu regroupes par ta colonne calculé
 
                    return response()->json($rapportvente, 200);
 
