@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -61,55 +62,80 @@ public function dashboard()
 
 
 
-    // Médicaments ajoutés par mois
-    $medicamentsParMois = Medicament::select(
-            DB::raw('MONTH(created_at) as mois'),
-            DB::raw('COUNT(*) as total')
-        )
-        ->groupBy('mois')
-        ->orderBy('mois')
-        ->pluck('total', 'mois');
+     // --- PÉRIODE MOIS : derniers 12 mois (chronologique, oldest -> newest)
+     $startMonth = Carbon::now()->startOfMonth()->subMonths(11);
 
-    // Pharmacies ajoutées par mois
-    $pharmaciesParMois = Pharmacie::select(
-            DB::raw('MONTH(created_at) as mois'),
-            DB::raw('COUNT(*) as total')
-        )
-        ->groupBy('mois')
-        ->orderBy('mois')
-        ->pluck('total', 'mois');
-
-    // Admins ajoutés par mois
-    $adminsParMois = Gerant::select(
-            DB::raw('MONTH(created_at) as mois'),
-            DB::raw('COUNT(*) as total')
-        )
-        ->groupBy('mois')
-        ->orderBy('mois')
-        ->pluck('total', 'mois');
-
-    $moisNoms = [
-        1 => 'Jan', 2 => 'Fév', 3 => 'Mar', 4 => 'Avr',
-        5 => 'Mai', 6 => 'Juin', 7 => 'Juil', 8 => 'Août',
-        9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Déc'
-    ];
-
-    // Formater les données par mois
-    $medicamentsParMoisFormate = [];
-    $pharmaciesParMoisFormate = [];
-    $adminsParMoisFormate = [];
-
-    foreach ($moisNoms as $num => $nom) {
-        $medicamentsParMoisFormate[$nom] = $medicamentsParMois[$num] ?? 0;
-        $pharmaciesParMoisFormate[$nom] = $pharmaciesParMois[$num] ?? 0;
-        $adminsParMoisFormate[$nom] = $adminsParMois[$num] ?? 0;
-    }
+     $medicamentsParMoisRaw = Medicament::where('created_at', '>=', $startMonth)
+         ->select(DB::raw("DATE_FORMAT(created_at, '%Y-%m') as ym"), DB::raw('COUNT(*) as total'))
+         ->groupBy('ym')->orderBy('ym')
+         ->pluck('total','ym');
+ 
+     $pharmaciesParMoisRaw = Pharmacie::where('created_at', '>=', $startMonth)
+         ->select(DB::raw("DATE_FORMAT(created_at, '%Y-%m') as ym"), DB::raw('COUNT(*) as total'))
+         ->groupBy('ym')->orderBy('ym')
+         ->pluck('total','ym');
+ 
+     $adminsParMoisRaw = Gerant::where('created_at', '>=', $startMonth)
+         ->select(DB::raw("DATE_FORMAT(created_at, '%Y-%m') as ym"), DB::raw('COUNT(*) as total'))
+         ->groupBy('ym')->orderBy('ym')
+         ->pluck('total','ym');
+ 
+     $moisNoms = [
+         1 => 'Jan', 2 => 'Fév', 3 => 'Mar', 4 => 'Avr',
+         5 => 'Mai', 6 => 'Juin', 7 => 'Juil', 8 => 'Août',
+         9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Déc'
+     ];
+ 
+     $monthsLabels = [];
+     $medicamentsParMoisFormate = [];
+     $pharmaciesParMoisFormate = [];
+     $adminsParMoisFormate = [];
+ 
+     for ($i = 0; $i < 12; $i++) {
+         $date = $startMonth->copy()->addMonths($i);          // oldest -> newest
+         $ym = $date->format('Y-m');
+         $monthNum = intval($date->format('n'));
+         $label = $moisNoms[$monthNum];                      // affiche 'Jan','Fév',...
+         $monthsLabels[] = $label;
+         $medicamentsParMoisFormate[] = $medicamentsParMoisRaw[$ym] ?? 0;
+         $pharmaciesParMoisFormate[] = $pharmaciesParMoisRaw[$ym] ?? 0;
+         $adminsParMoisFormate[] = $adminsParMoisRaw[$ym] ?? 0;
+     }
+ 
+     // --- PÉRIODE JOURS : derniers 30 jours (chronologique)
+     $startDay = Carbon::now()->startOfDay()->subDays(29);
+ 
+     $medicamentsParJoursRaw = Medicament::where('created_at', '>=', $startDay)
+         ->select(DB::raw("DATE(created_at) as day"), DB::raw('COUNT(*) as total'))
+         ->groupBy('day')->orderBy('day')
+         ->pluck('total','day');
+ 
+     $pharmaciesParJoursRaw = Pharmacie::where('created_at', '>=', $startDay)
+         ->select(DB::raw("DATE(created_at) as day"), DB::raw('COUNT(*) as total'))
+         ->groupBy('day')->orderBy('day')
+         ->pluck('total','day');
+ 
+     $adminsParJoursRaw = Gerant::where('created_at', '>=', $startDay)
+         ->select(DB::raw("DATE(created_at) as day"), DB::raw('COUNT(*) as total'))
+         ->groupBy('day')->orderBy('day')
+         ->pluck('total','day');
+ 
+     $joursLabels = [];
+     $medicamentsParJoursFormate = [];
+     $pharmaciesParJoursFormate = [];
+     $adminsParJoursFormate = [];
+ 
+     for ($i = 0; $i < 30; $i++) {
+         $date = $startDay->copy()->addDays($i);
+         $key = $date->format('Y-m-d');
+         $joursLabels[] = intval($date->format('d')); // affiche le numéro du jour (1..31)
+         $medicamentsParJoursFormate[] = $medicamentsParJoursRaw[$key] ?? 0;
+         $pharmaciesParJoursFormate[] = $pharmaciesParJoursRaw[$key] ?? 0;
+         $adminsParJoursFormate[] = $adminsParJoursRaw[$key] ?? 0;
+     }
+ 
 
     return view('dashboard', compact(
-        'medicamentsParMoisFormate',
-        'pharmaciesParMoisFormate',
-        'adminsParMoisFormate',
-        'moisNoms',
         'totalAdmins',
         'totalPharmacies',
         'nouveauxPharmacies',
@@ -117,7 +143,15 @@ public function dashboard()
         'adminsVariation',
         'pharmaciesVariation',
         'gerants', 
-        'pharmacies'
+        'pharmacies',
+        'monthsLabels',
+        'medicamentsParMoisFormate',
+        'pharmaciesParMoisFormate',
+        'adminsParMoisFormate',
+        'joursLabels',
+        'medicamentsParJoursFormate',
+        'pharmaciesParJoursFormate',
+        'adminsParJoursFormate'
 
     ));
 }

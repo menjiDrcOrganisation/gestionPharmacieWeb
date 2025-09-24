@@ -1,174 +1,286 @@
 @extends('layouts.main')
+@section('title','Pharmacies')
+
 @section('content')
-    <div class="bg-blue-500 dark:bg-slate-900 w-full px-6 py-6 mx-auto">
-        <div class="flex flex-wrap -mx-3">
-            <div class="flex-none w-full max-w-full px-3">
-                <div class="relative flex flex-col mb-6 bg-blue-500 dark:bg-slate-800 shadow-xl rounded-2xl">
+<div class="bg-white dark:bg-slate-900 w-full px-6 py-6 mx-auto">
+    <div class="flex flex-wrap -mx-3">
+        <div class="flex-none w-full max-w-full px-3">
+            <div class="relative flex flex-col mb-6 bg-white dark:bg-slate-800 shadow-xl rounded-2xl">
 
-                    <!-- Header -->
-                    <div
-                        class="p-6 pb-0 mb-0 border-b rounded-t-2xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                        <h6 class="dark:text-white text-lg font-semibold">Gestion des pharmacies</h6>
+                <!-- Header -->
+                <div class="p-6 border-b rounded-t-2xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <h6 class="dark:text-white text-xl font-semibold flex items-center gap-2">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2966/2966489.png" class="w-7 h-7" alt="icon">
+                        Gestion des pharmacies
+                    </h6>
 
-                        {{-- <div class="flex gap-2 items-center">
-                            <!-- Bouton Ajouter -->
-                            <button command="show-modal" commandfor="dialog"
-                                class="rounded-md bg-white/10 px-4 py-2 text-sm font-semibold text-blue-800 ring-1 ring-inset ring-white/5 hover:bg-white/20">
-                                ➕ Ajouter une pharmacie
-                            </button>
-
-                            <!-- Input recherche -->
-                            <input type="text" id="searchInput" placeholder="Rechercher..."
-                                class="rounded-md border border-slate-300 px-3 py-2 focus:ring-2 focus:ring-emerald-300 focus:outline-none">
-                        </div> --}}
-                        <!-- Bouton Ajouter -->
-                        <button command="show-modal" commandfor="dialog"
-                            class="rounded-md bg-white/10 px-4 py-2 text-sm font-semibold text-blue-800 ring-1 ring-inset ring-white/5 hover:bg-white/20">
-                            ➕ Ajouter une pharmacie
-                        </button>
+                    <div class="flex flex-wrap items-center gap-3">
 
                         <!-- Input recherche -->
-                        <input type="text" id="searchInput" placeholder="Rechercher..."
-                            class="rounded-md border border-slate-300 px-3 py-2 focus:ring-2 focus:ring-emerald-300 focus:outline-none">
+                        <div class="relative">
+                            <input type="text" id="searchInput" placeholder="Rechercher..."
+                                class="w-72 rounded-lg border border-slate-300 pl-9 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-400 focus:outline-none dark:bg-slate-700 dark:text-white">
+                            <span class="absolute left-2.5 top-2.5">
+                                <img src="https://cdn-icons-png.flaticon.com/512/149/149852.png" class="w-4 h-4 opacity-70" alt="search">
+                            </span>
+                        </div>
 
                         <!-- Select statut -->
-
-
                         <select id="statusFilter"
-                            class="rounded-md border border-slate-300 px-3 py-2 focus:ring-2 focus:ring-emerald-300 focus:outline-none">
+                            class="rounded-lg border border-slate-300 px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-400 focus:outline-none dark:bg-slate-700 dark:text-white">
                             <option value="">Tous les statuts</option>
-                            <option value="valide">valide</option>
-                            <option value="ferme">ferme</option>
-                            <option value="en_attent">En attent</option>
+                            <option value="valide">Valide</option>
+                            <option value="ferme">Fermé</option>
+                            <option value="en_attente">En attente</option>
                         </select>
+
+                        <!-- Bouton Ajouter -->
+                        <button command="show-modal" commandfor="dialog"
+                            class="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 shadow">
+                            <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" class="w-4 h-4" alt="add">
+                            Ajouter
+                        </button>
                     </div>
-
-                    @include("pharmacies.create")
-
-                    <!-- Table -->
-                    <div class="flex-auto px-0 pt-4 pb-2">
-                        <div class="overflow-x-auto">
-                            <table id="pharmacyTable"
-                                class="min-w-full items-center mb-0 border-collapse text-slate-500 dark:border-white/40">
-                                <thead>
-                                    <tr>
-                                        <th
-                                            class="px-6 py-3 text-left text-xxs font-bold uppercase text-slate-400 dark:text-white">
-                                            Nom pharmacie</th>
-                                        <th
-                                            class="px-6 py-3 text-left text-xxs font-bold uppercase text-slate-400 dark:text-white">
-                                            Adresse & Téléphone</th>
-                                        <th
-                                            class="px-6 py-3 text-center text-xxs font-bold uppercase text-slate-400 dark:text-white">
-                                            Statut</th>
-                                        <th
-                                            class="px-6 py-3 text-center text-xxs font-bold uppercase text-slate-400 dark:text-white">
-                                            Date création</th>
-                                        <th class="px-6 py-3"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($pharmacies as $pharmacie)
-                                        <tr class="hover:bg-slate-100 dark:hover:bg-slate-700">
-                                            <td class="p-2 align-middle border-b dark:border-white/40">
-                                                <h6 class="mb-0 text-sm dark:text-white">{{ $pharmacie->nom }}</h6>
-                                                <p class="mb-0 text-xs text-slate-400 dark:text-white dark:opacity-80">
-                                                    Créé par : {{ $pharmacie->gerant->user->name }}
-                                                    ({{ $pharmacie->gerant->user->email }})
-                                                </p>
-                                            </td>
-                                            <td class="p-2 align-middle border-b dark:border-white/40">
-                                                <p class="mb-0 text-xs font-semibold dark:text-white">{{ $pharmacie->adresse }}
-                                                </p>
-                                                <p class="mb-0 text-xs text-slate-400 dark:text-white dark:opacity-80">
-                                                    {{ $pharmacie->telephone }}
-                                                </p>
-                                            </td>
-                                            <td class="p-2 text-center border-b dark:border-white/40">
-                                                @php
-                                                    switch ($pharmacie->statut) {
-                                                        case 'valide':
-                                                            $btnClass = 'bg-emerald-500 hover:bg-emerald-400';
-                                                            break;
-                                                        case 'ferme':
-                                                            $btnClass = 'bg-red-500 hover:bg-red-400';
-                                                            break;
-                                                        case 'en_attent':
-                                                            $btnClass = 'bg-yellow-500 hover:bg-yellow-400';
-                                                            break;
-                                                        default:
-                                                            $btnClass = 'bg-gray-500 hover:bg-gray-400';
-                                                    }
-                                                @endphp
-
-                                                <button command="show-modal"
-                                                    commandfor="edit-statut-{{ $pharmacie->id_pharmacie }}"
-                                                    class="px-2.5 py-1.5 text-xs font-bold uppercase text-white rounded {{ $btnClass }}">
-                                                    {{ $pharmacie->statut }}
-                                                </button>
-
-                                                @include('pharmacies.editestatut')
-                                            </td>
-
-                                            <td class="p-2 text-center border-b dark:border-white/40">
-                                                <span
-                                                    class="text-xs text-slate-400 dark:text-white dark:opacity-80">{{ $pharmacie->created_at }}</span>
-                                            </td>
-                                            <td class="p-2 align-middle border-b dark:border-white/40">
-                                                <!-- Bouton Edit -->
-                                                <button command="show-modal"
-                                                    commandfor="edit-pharmacie-{{ $pharmacie->id_pharmacie }}"
-                                                    class="inline-block px-3 py-1 text-xs font-semibold text-white bg-blue-500 rounded hover:bg-blue-400">
-                                                    Edit
-                                                </button>
-                                                @include('pharmacies.edit')
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
                 </div>
+
+                @include("pharmacies.create")
+
+                <!-- Table -->
+                <div class="flex-auto px-0 pt-4 pb-2">
+                    <div class="overflow-x-auto">
+                        <table id="pharmacyTable"
+                            class="min-w-full border-collapse text-slate-600 dark:text-slate-200">
+                            <thead>
+                                <tr class="bg-slate-50 dark:bg-slate-700/50">
+                                    <th class="px-6 py-3 text-left text-xs font-bold uppercase">Pharmacie</th>
+                                    <th class="px-6 py-3 text-left text-xs font-bold uppercase">Adresse & Téléphone</th>
+                                    <th class="px-6 py-3 text-center text-xs font-bold uppercase">Statut</th>
+                                    <th class="px-6 py-3 text-center text-xs font-bold uppercase">Créée le</th>
+                                    <th class="px-6 py-3 text-center"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($pharmacies as $pharmacie)
+                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/70 transition"
+                                    data-status="{{ $pharmacie->statut }}">
+                                    <!-- Nom + Gérant -->
+                                    <td class="p-4 border-b dark:border-slate-600">
+                                        <div class="flex items-start gap-3">
+                                            <img src="{{ asset('assets/img/logo.png') }}" class="w-6 h-6" alt="pharmacy">
+                                            <div>
+                                                <h6 class="text-sm font-semibold">{{ $pharmacie->nom }}</h6>
+                                                <p class="text-xs text-slate-500 dark:text-slate-300">
+                                                    👤 {{ $pharmacie->gerant->user->name }}<br>
+                                                    📧 {{ $pharmacie->gerant->user->email }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <!-- Adresse + Téléphone -->
+                                    <td class="p-4 border-b dark:border-slate-600">
+                                        <p class="text-sm font-medium">{{ $pharmacie->adresse }}</p>
+                                        <p class="text-xs text-slate-500 dark:text-slate-300">📞 {{ $pharmacie->telephone }}</p>
+                                    </td>
+
+                                    <!-- Statut -->
+                                    <td class="p-4 text-center border-b dark:border-slate-600">
+                                        @php
+                                            switch ($pharmacie->statut) {
+                                                case 'valide': $btnClass = 'bg-emerald-100 text-emerald-700'; break;
+                                                case 'ferme': $btnClass = 'bg-red-100 text-red-700'; break;
+                                                case 'en_attent': $btnClass = 'bg-yellow-100 text-yellow-700'; break;
+                                                default: $btnClass = 'bg-gray-100 text-gray-700';
+                                            }
+                                        @endphp
+
+                                        <button command="show-modal" commandfor="edit-statut-{{ $pharmacie->id_pharmacie }}"
+                                            class="px-3 py-1 rounded-full text-xs font-semibold {{ $btnClass }}">
+                                            {{ ucfirst($pharmacie->statut) }}
+                                        </button>
+                                        @include('pharmacies.editestatut')
+                                    </td>
+
+                                    <!-- Date -->
+                                    <td class="p-4 text-center border-b dark:border-slate-600">
+                                        <span class="text-xs text-slate-500 dark:text-slate-300">
+                                            {{ $pharmacie->created_at->format('d/m/Y') }}
+                                        </span>
+                                    </td>
+
+                                    <!-- Actions -->
+                                    <td class="p-4 text-center border-b dark:border-slate-600">
+                                        <button command="show-modal" commandfor="edit-pharmacie-{{ $pharmacie->id_pharmacie }}"
+                                            class="flex items-center gap-1 px-3 py-1 text-xs font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-400">
+                                            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" class="w-3 h-3" alt="edit">
+                                            Modifier
+                                        </button>
+                                        @include('pharmacies.edit')
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
+<!-- Script recherche -->
+{{-- <script>
+document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById('searchInput');
+    const statusFilter = document.getElementById('statusFilter');
+    const table = document.getElementById('pharmacyTable');
 
-    <!-- Script recherche simple -->
-    <script>
-        document.getElementById('searchInput').addEventListener('keyup', function () {
-            const filter = this.value.toLowerCase();
-            const rows = document.querySelectorAll('#pharmacyTable tbody tr');
+    function debounce(fn, delay = 150) {
+        let t;
+        return (...args) => {
+            clearTimeout(t);
+            t = setTimeout(() => fn(...args), delay);
+        };
+    }
 
-            rows.forEach(row => {
-                const text = row.textContent.toLowerCase();
-                row.style.display = text.includes(filter) ? '' : 'none';
-            });
+    function normalize(str) {
+        if (!str) return "";
+        return str
+            .toString()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .toLowerCase()
+            .trim();
+    }
+
+    function ensureNoResultsRow() {
+        let tbody = table.querySelector('tbody');
+        let noRow = table.querySelector('.no-results-row');
+        if (!noRow) {
+            const colCount = table.querySelectorAll('thead th').length || (table.rows[0] ? table.rows[0].cells.length : 1);
+            noRow = document.createElement('tr');
+            noRow.className = 'no-results-row';
+            const td = document.createElement('td');
+            td.colSpan = colCount;
+            td.style.textAlign = 'center';
+            td.style.fontStyle = 'italic';
+            td.textContent = 'Aucun résultat trouvé.';
+            noRow.appendChild(td);
+            tbody.appendChild(noRow);
+        }
+        return noRow;
+    }
+
+    function filterTable() {
+        const rawSearch = normalize(searchInput.value || '');
+        const searchTokens = rawSearch.split(/\s+/).filter(Boolean);
+        const rawStatus = normalize(statusFilter.value || '');
+
+        const rows = table.querySelectorAll('tbody tr');
+        let anyVisible = false;
+
+        rows.forEach(row => {
+            if (row.classList.contains('no-results-row')) return;
+
+            const cells = row.getElementsByTagName('td');
+            if (cells.length === 0) {
+                row.style.display = 'none';
+                return;
+            }
+
+            // Statut basé sur data-status
+            const statutText = row.dataset && row.dataset.status ? normalize(row.dataset.status) : "";
+
+            const rowText = normalize(row.textContent);
+
+            const matchSearch = searchTokens.length === 0 || searchTokens.every(tok => rowText.includes(tok));
+            const matchStatus = rawStatus === '' || rawStatus === 'all' || statutText.includes(rawStatus);
+
+            if (matchSearch && matchStatus) {
+                row.style.display = '';
+                anyVisible = true;
+            } else {
+                row.style.display = 'none';
+            }
         });
-    </script>
-    <!-- Select statut -->
 
+        const noRow = ensureNoResultsRow();
+        noRow.style.display = anyVisible ? 'none' : '';
+    }
 
-    <script>
-        document.getElementById('statusFilter').addEventListener('change', function () {
-            const filter = this.value.toLowerCase();
-            const rows = document.querySelectorAll('#pharmacyTable tbody tr');
+    searchInput.addEventListener('input', debounce(filterTable, 120));
+    statusFilter.addEventListener('change', filterTable);
 
+    const observer = new MutationObserver(debounce(filterTable, 120));
+    const tbody = table.querySelector('tbody');
+    if (tbody) {
+        observer.observe(tbody, { childList: true, subtree: true });
+    }
+
+    filterTable();
+});
+</script> --}}
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const searchInput = document.getElementById('searchInput');
+        const statusFilter = document.getElementById('statusFilter');
+        const table = document.getElementById('pharmacyTable');
+    
+        function normalize(str) {
+            return str
+                ? str.toString().normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim()
+                : "";
+        }
+    
+        function ensureNoResultsRow() {
+            const tbody = table.querySelector('tbody');
+            let noRow = tbody.querySelector('.no-results-row');
+            if (!noRow) {
+                const colCount = table.querySelectorAll('thead th').length;
+                noRow = document.createElement('tr');
+                noRow.className = 'no-results-row';
+                noRow.innerHTML = `<td colspan="${colCount}" class="text-center italic py-4">Aucun résultat trouvé.</td>`;
+                tbody.appendChild(noRow);
+            }
+            return noRow;
+        }
+    
+        function filterTable() {
+            const search = normalize(searchInput.value);
+            const status = normalize(statusFilter.value);
+    
+            const rows = table.querySelectorAll('tbody tr');
+            let anyVisible = false;
+    
             rows.forEach(row => {
-                // On récupère la cellule contenant le statut (ici la 3ème colonne)
-                const statutCell = row.cells[2];
-                const statutText = statutCell.textContent.toLowerCase();
-
-                // Affiche la ligne si le filtre est vide ou si le texte correspond
-                row.style.display = (!filter || statutText.includes(filter)) ? '' : 'none';
+                if (row.classList.contains('no-results-row')) return;
+    
+                const rowText = normalize(row.innerText);
+                const rowStatus = normalize(row.dataset.status);
+    
+                const matchSearch = search === "" || rowText.includes(search);
+                const matchStatus = status === "" || rowStatus === status;
+    
+                if (matchSearch && matchStatus) {
+                    row.style.display = "";
+                    anyVisible = true;
+                } else {
+                    row.style.display = "none";
+                }
             });
-        });
+    
+            // Afficher/masquer "aucun résultat"
+            const noRow = ensureNoResultsRow();
+            noRow.style.display = anyVisible ? "none" : "";
+        }
+    
+        searchInput.addEventListener("input", filterTable);
+        statusFilter.addEventListener("change", filterTable);
+    
+        filterTable(); // initial
+    });
     </script>
-
-
-
-
+    
 @endsection
