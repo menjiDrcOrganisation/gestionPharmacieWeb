@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\vente;
@@ -20,7 +20,7 @@ class RapportVenteController extends Controller
     ->whereHas('lots', function ($query) use ($request) {
         $query->where('id_pharmacie', $request->id_pharmacie);
     })
-    // 🔹 condition sur la date
+ // 🔹 condition sur la date
     ->selectRaw('ventes.*, DATE(date_vente) as date_simple')
     ->groupBy('date_simple', 'ventes.id_vente')
     ->get()
