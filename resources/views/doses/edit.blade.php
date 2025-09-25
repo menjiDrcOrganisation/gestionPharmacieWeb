@@ -2,7 +2,7 @@
 <dialog id="edit-dose-{{ $dose->id }}" class="p-6 bg-white dark:bg-slate-800 rounded-2xl shadow-xl w-full max-w-md">
 
     <div class="flex items-center gap-3 border-b pb-3 mb-4">
-        <img src="https://cdn-icons-png.flaticon.com/512/2966/2966489.png" alt="icon" class="w-6 h-6">
+        {{-- <img src="https://cdn-icons-png.flaticon.com/512/2966/2966489.png" alt="icon" class="w-6 h-6"> --}}
         <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-100">
             Modifier la dose
         </h3>

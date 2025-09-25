@@ -13,7 +13,7 @@
                     
                     <!-- Titre -->
                     <h6 class="dark:text-white text-xl font-semibold flex items-center gap-2">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2966/2966489.png" class="w-7 h-7" alt="icon"> 
+                        {{-- <img src="https://cdn-icons-png.flaticon.com/512/2966/2966489.png" class="w-7 h-7" alt="icon">  --}}
                         Gestion des Doses
                     </h6>
 
@@ -38,7 +38,10 @@
                         <!-- Bouton Ajouter -->
                         <button onclick="document.getElementById('modal_medoc').classList.remove('hidden')"
                             class="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 shadow">
-                            <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" class="w-4 h-4" alt="add">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M12 4v16m8-8H4"/>
+                            </svg>
                             Ajouter
                         </button>
                     </div>
@@ -60,8 +63,8 @@
                                 @forelse ($doses as $dose)
                                     @if (!request('unite') || request('unite') == $dose->unite)
                                         <tr class="hover:bg-slate-50 dark:hover:bg-slate-700 transition">
-                                            <td class="px-6 py-3 text-sm text-slate-700 dark:text-white">{{ $dose->quantite }}</td>
-                                            <td class="px-6 py-3 text-sm text-slate-700 dark:text-white">{{ $dose->unite }}</td>
+                                            <td class="px-6 py-3 text-sm font-light  text-slate-700 dark:text-white">{{ $dose->quantite }}</td>
+                                            <td class="px-6 py-3 text-sm  font-light text-slate-700 dark:text-white">{{ $dose->unite }}</td>
                                             <td class="px-6 py-3 text-center text-sm text-slate-500 dark:text-slate-300">
                                                 {{ $dose->created_at->format('d/m/Y') }}
                                             </td>
