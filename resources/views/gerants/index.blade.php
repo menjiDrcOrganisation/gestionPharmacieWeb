@@ -11,14 +11,14 @@
                 <div class="p-6 border-b rounded-t-2xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     
                     <h6 class="dark:text-white text-xl font-semibold flex items-center gap-2 ">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2966/2966489.png" class="w-7 h-7" alt="icon">
+                        {{-- <img src="https://cdn-icons-png.flaticon.com/512/2966/2966489.png" class="w-7 h-7" alt="icon"> --}}
                         Gestion des gérants</h6>
 
                     <div class="flex items-center gap-3">
                         <!-- Recherche -->
                         <div class="relative">
                         <input type="text" id="searchInput" placeholder="Rechercher (nom, email, pharmacie)..."
-                            class="w-72 rounded-lg border border-slate-300 pl-9 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-400 focus:outline-none dark:bg-slate-700 dark:text-white"
+                            class="w-96 rounded-lg border border-slate-300 pl-9 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-400 focus:outline-none dark:bg-slate-700 dark:text-white"
                         >
                         <span class="absolute left-2.5 top-2.5">
                             <img src="https://cdn-icons-png.flaticon.com/512/149/149852.png" class="w-4 h-4 opacity-70" alt="search">
@@ -27,7 +27,10 @@
                         <!-- Bouton Ajouter -->
                         <button command="show-modal" commandfor="add-gerant-dialog"
                         class="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 shadow">
-                        <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" class="w-4 h-4" alt="add">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M12 4v16m8-8H4"/>
+                        </svg>
                              Ajouter 
                         </button>
                     </div>
@@ -54,12 +57,12 @@
                                     <tr class="hover:bg-slate-50 dark:hover:bg-slate-700">
                                         <!-- Nom du gérant -->
                                         <td class="p-4 align-middle border-b dark:border-slate-600">
-                                            <h6 class="mb-0 text-sm dark:text-white">{{ $gerant->user->name }}</h6>
+                                            <h6 class="mb-0 text-sm dark:text-white">{{ ucfirst(strtolower($gerant->user->name ))}}</</h6>
                                         </td>
 
                                         <!-- Email -->
                                         <td class="p-4 align-middle border-b dark:border-slate-600">
-                                            <p class="mb-0 text-xs text-slate-500 dark:text-slate-300">{{ $gerant->user->email }}</p>
+                                            <p class="mb-0 text-xs text-slate-500 dark:text-slate-300">{{ ucfirst(strtolower($gerant->user->email ))}}</p>
                                         </td>
 
                                         <!-- Pharmacies : affiche 2 puis "Voir plus" -->
@@ -78,7 +81,7 @@
                                                 <div class="flex items-center justify-between px-6 py-4 border-b bg-blue-600 rounded-t-2xl">
                                                     <h3 class="text-lg font-semibold text-white flex items-center gap-2">
                                                         <img src="https://cdn-icons-png.flaticon.com/512/3063/3063828.png" class="w-5 h-5" alt="pharmacy">
-                                                        Pharmacies de {{ $gerant->user->name }}
+                                                        Pharmacies de {{ ucfirst(strtolower($gerant->user->name ))}}
                                                     </h3>
                                                     <button type="button"
                                                         onclick="document.getElementById('pharmacies-{{ $gerant->id_gerant }}').close();"
@@ -92,9 +95,9 @@
                                                     <ul class="space-y-4">
                                                         @forelse($gerant->pharmacies as $pharmacie)
                                                             <li class="p-4 border border-slate-200 dark:border-slate-600 rounded-xl bg-slate-50 dark:bg-slate-700 shadow-sm">
-                                                                <p class="font-semibold text-slate-800 dark:text-white">{{ $pharmacie->nom }}</p>
-                                                                <p class="text-sm text-slate-600 dark:text-slate-300">📍 {{ $pharmacie->adresse }}</p>
-                                                                <p class="text-sm text-slate-600 dark:text-slate-300">📞 {{ $pharmacie->telephone }}</p>
+                                                                <p class="font-semibold text-slate-800 dark:text-white">{{ ucfirst(strtolower($pharmacie->nom ))}}</p>
+                                                                <p class="text-sm text-slate-600 dark:text-slate-300"> {{ ucfirst(strtolower($pharmacie->adresse ))}}</p>
+                                                                <p class="text-sm text-slate-600 dark:text-slate-300">{{ ucfirst(strtolower($pharmacie->telephone ))}}</p>
                                                             </li>
                                                         @empty
                                                             <li class="text-center italic text-slate-500 dark:text-slate-300 py-6">
@@ -117,8 +120,12 @@
                                             @else
                                                 <div class="text-xs text-slate-400">Aucune pharmacie</div>
                                                 <button command="show-modal" commandfor="dialog"
-                                                    class="mt-2 inline-block rounded-md bg-emerald-500 px-3 py-1 text-xs font-semibold text-white hover:bg-emerald-400">
-                                                    ➕ Ajouter
+                                                    class=" flex mt-2 inline-block rounded-md bg-emerald-500 px-3 py-1 text-xs font-semibold text-white hover:bg-emerald-400">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                              d="M12 4v16m8-8H4"/>
+                                                    </svg>
+                                                    Ajouter
                                                 </button>
                                             @endif
                                         </td>

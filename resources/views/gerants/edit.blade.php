@@ -5,7 +5,7 @@
     <!-- Header -->
     <div class="flex items-center justify-between px-6 pt-4 border-b bg-white rounded-t-2xl">
         <h2 class="text-lg font-semibold text-dark flex items-center gap-2">
-            <img src="https://cdn-icons-png.flaticon.com/512/2966/2966489.png" alt="icon" class="w-6 h-6">
+            {{-- <img src="https://cdn-icons-png.flaticon.com/512/2966/2966489.png" alt="icon" class="w-6 h-6"> --}}
             Modifier le gérant
         </h2>
         <button type="button" onclick="document.getElementById('edit-gerant-{{ $gerant->id_gerant }}').close();"
