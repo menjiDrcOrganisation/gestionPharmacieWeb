@@ -18,7 +18,7 @@
                 <h3 class="text-sm font-roboto font-bold text-slate-500 dark:text-white">Gérants</h3>
                 <p class="text-2xl font-roboto font-bold dark:text-white">{{ $totalAdmins }}</p>
                 <p class="text-xs font-roboto text-slate-500 mt-2">
-                    Last 30 days
+                    Derniers 30 jours
                     <span class="px-2 py-1 rounded-full text-xs font-semibold {{ $adminsVariation >= 0 ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600' }}">
                         {{ number_format($adminsVariation, 2) }}%
                     </span>
@@ -36,7 +36,7 @@
                 <h3 class="text-sm font-roboto font-bold text-slate-500 dark:text-white">Pharmacies</h3>
                 <p class="text-2xl font-bold dark:text-white">{{ $totalPharmacies }}</p>
                 <p class="text-xs font-roboto text-slate-500 mt-2">
-                    Last 30 days
+                    Derniers 30 jours
                     <span class="px-2 py-1 rounded-full text-xs font-semibold {{ $pharmaciesVariation >= 0 ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600' }}">
                         {{ number_format($pharmaciesVariation, 2) }}%
                     </span>
@@ -261,7 +261,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <!-- Derniers gérants -->
             <div class="bg-white rounded-xl p-6">
                 <div class="flex justify-between items-center mb-4">
-                    <h6 class="text-lg font-roboto text-gray-700">Latest Managers</h6>
+                    <h6 class="text-lg font-roboto text-gray-700">Gestionnaires récents</h6>
                 </div>
         
                 <div class="overflow-x-auto">
@@ -278,10 +278,10 @@ document.addEventListener("DOMContentLoaded", () => {
                             @foreach($gerants as $gerant)
                                 <tr class="hover:bg-gray-50">
                                     <td class="px-4 py-2  font-roboto font-light  text-gray-700">
-                                        {{ $gerant->user->name }}
+                                        {{ ucfirst(strtolower($gerant->user->name)) }}
                                     </td>
                                     <td class="px-4 py-2  font-roboto font-light text-gray-500">
-                                        {{ $gerant->user->email }}
+                                        {{ ucfirst(strtolower($gerant->user->email)) }}
                                     </td>
                                     <td class="px-4 py-2 font-roboto font-light  text-center text-gray-500">
                                         {{ $gerant->created_at->format('m/d/Y') }}
@@ -308,7 +308,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <!-- Dernières pharmacies -->
             <div class="bg-white rounded-xl p-6">
                 <div class="flex justify-between items-center mb-4">
-                    <h6 class="text-lg font-roboto text-gray-700">Latest Pharmacies</h6>
+                    <h6 class="text-lg font-roboto text-gray-700">Pharmacies récentes</h6>
                 </div>
         
                 <div class="overflow-x-auto">
@@ -325,10 +325,10 @@ document.addEventListener("DOMContentLoaded", () => {
                             @foreach($pharmacies as $pharmacie)
                                 <tr class="hover:bg-gray-50">
                                     <td class="px-4 py-2  font-roboto font-light text-gray-700">
-                                        {{ $pharmacie->nom }}
+                                        {{ ucfirst(strtolower($pharmacie->nom))}}
                                     </td>
                                     <td class="px-4 py-2 font-roboto font-light text-gray-500">
-                                        {{ $pharmacie->adresse }}
+                                        {{ ucfirst(strtolower($pharmacie->adresse))}}
                                     </td>
                                     <td class="p-4 text-center border-b dark:border-slate-600">
                                         @php
