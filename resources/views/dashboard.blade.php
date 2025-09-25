@@ -324,10 +324,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         <tbody>
                             @foreach($pharmacies as $pharmacie)
                                 <tr class="hover:bg-gray-50">
-                                    <td class="px-4 py-2  font-roboto font-light text-gray-700">
+                                    <td class="px-4 py-2  font-light text-gray-700">
                                         {{ ucfirst(strtolower($pharmacie->nom))}}
                                     </td>
-                                    <td class="px-4 py-2 font-roboto font-light text-gray-500">
+                                    <td class="px-4 py-2 font-light text-gray-500">
                                         {{ ucfirst(strtolower($pharmacie->adresse))}}
                                     </td>
                                     <td class="p-4 text-center border-b dark:border-slate-600">

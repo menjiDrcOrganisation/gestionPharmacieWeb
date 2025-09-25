@@ -10,7 +10,7 @@
                 <!-- Header -->
                 <div class="p-6 border-b rounded-t-2xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <h6 class="dark:text-white text-xl font-semibold flex items-center gap-2">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2966/2966489.png" class="w-7 h-7" alt="icon">
+                        {{-- <img src="https://cdn-icons-png.flaticon.com/512/2966/2966489.png" class="w-7 h-7" alt="icon"> --}}
                         Gestion des pharmacies
                     </h6>
 
@@ -19,7 +19,7 @@
                         <!-- Input recherche -->
                         <div class="relative">
                             <input type="text" id="searchInput" placeholder="Rechercher..."
-                                class="w-72 rounded-lg border border-slate-300 pl-9 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-400 focus:outline-none dark:bg-slate-700 dark:text-white">
+                                class="w-96 rounded-lg border border-slate-300 pl-9 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-400 focus:outline-none dark:bg-slate-700 dark:text-white">
                             <span class="absolute left-2.5 top-2.5">
                                 <img src="https://cdn-icons-png.flaticon.com/512/149/149852.png" class="w-4 h-4 opacity-70" alt="search">
                             </span>
@@ -37,7 +37,10 @@
                         <!-- Bouton Ajouter -->
                         <button command="show-modal" commandfor="dialog"
                             class="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 shadow">
-                            <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" class="w-4 h-4" alt="add">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M12 4v16m8-8H4"/>
+                            </svg>
                             Ajouter
                         </button>
                     </div>
@@ -68,10 +71,12 @@
                                         <div class="flex items-start gap-3">
                                             <img src="{{ asset('assets/img/logo.png') }}" class="w-6 h-6" alt="pharmacy">
                                             <div>
-                                                <h6 class="text-sm font-semibold">{{ $pharmacie->nom }}</h6>
-                                                <p class="text-xs text-slate-500 dark:text-slate-300">
-                                                    👤 {{ $pharmacie->gerant->user->name }}<br>
-                                                    📧 {{ $pharmacie->gerant->user->email }}
+                                                <h6 class="text-sm font-light">{{ ucfirst(strtolower($pharmacie->nom))}}</h6>
+                                                <p class="text-xs text-slate-500 font-light dark:text-slate-300">
+                                                    Gérant : 
+                                                    {{ ucfirst(strtolower($pharmacie->gerant->user->name))}} <br>
+                                                    {{ ucfirst(strtolower($pharmacie->gerant->user->email))}}
+                                                     
                                                 </p>
                                             </div>
                                         </div>
@@ -79,8 +84,8 @@
 
                                     <!-- Adresse + Téléphone -->
                                     <td class="p-4 border-b dark:border-slate-600">
-                                        <p class="text-sm font-medium">{{ $pharmacie->adresse }}</p>
-                                        <p class="text-xs text-slate-500 dark:text-slate-300">📞 {{ $pharmacie->telephone }}</p>
+                                        <p class="text-sm font-light">{{ ucfirst(strtolower($pharmacie->adresse))}}</p>
+                                        <p class="text-xs text-slate-500 dark:text-slate-300">  {{ $pharmacie->telephone }}</p>
                                     </td>
 
                                     <!-- Statut -->
