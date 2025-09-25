@@ -89,8 +89,8 @@
                                             switch ($pharmacie->statut) {
                                                 case 'valide': $btnClass = 'bg-emerald-100 text-emerald-700'; break;
                                                 case 'ferme': $btnClass = 'bg-red-100 text-red-700'; break;
-                                                case 'en_attent': $btnClass = 'bg-yellow-100 text-yellow-700'; break;
-                                                default: $btnClass = 'bg-gray-100 text-gray-700';
+                                                case 'en_attent': $btnClass = 'bg-orange-100 text-orange-400'; break;
+                                                default: $btnClass = 'bg-orange-100 text-orange-400';
                                             }
                                         @endphp
 

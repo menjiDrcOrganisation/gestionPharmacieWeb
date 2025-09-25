@@ -20,7 +20,10 @@ class="fixed inset-y-0 left-0 z-50 w-64 transform -translate-x-full md:translate
     <!-- Exemple d'item : on maintient la logique request()->routeIs pour l'active state -->
     <a href="{{ route('dashboard') }}"
        class="flex items-center gap-3 px-4 py-2 rounded-lg text-sm transition-colors
-              {{ request()->routeIs('dashboard') ? 'bg-gradient-to-r from-purple-600 to-blue-500 text-white' : 'text-gray-700 hover:bg-gradient-to-r hover:from-purple-100 hover:to-blue-50' }}">
+              {{ request()->routeIs('dashboard') ? 'bg-gradient-to-r from-green-200 to-green-200/70 p-4 rounded-lg  text-dark' : 'text-gray-700 hover:bg-gradient-to-r
+            hover:from-[#28a745]
+            hover:to-[#28a745]/70
+            transition-all duration-300' }}">
         <img src="{{ asset('icons/dashboard.png') }}" class="w-5 h-5 " alt="Dashboard">
       <span>Tableau de bord</span>
     </a>

@@ -7,17 +7,17 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
 
             <!-- Gérants -->
-            <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl shadow animate-fadeInScale">
-                <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-purple-100 text-purple-600 mb-3">
+            <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl animate-fadeInScale">
+                <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-green-200 text-dark mb-3">
                     <!-- Icon -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                               d="M17 20h5v-2a4 4 0 00-3-3.87M9 20h6M3 20h5v-2a4 4 0 00-3-3.87M12 12a4 4 0 100-8 4 4 0 000 8z"/>
                     </svg>
                 </div>
-                <h3 class="text-sm font-medium text-slate-500 dark:text-white">Gérants</h3>
-                <p class="text-2xl font-bold dark:text-white">{{ $totalAdmins }}</p>
-                <p class="text-xs text-slate-500 mt-2">
+                <h3 class="text-sm font-roboto font-bold text-slate-500 dark:text-white">Gérants</h3>
+                <p class="text-2xl font-roboto font-bold dark:text-white">{{ $totalAdmins }}</p>
+                <p class="text-xs font-roboto text-slate-500 mt-2">
                     Last 30 days
                     <span class="px-2 py-1 rounded-full text-xs font-semibold {{ $adminsVariation >= 0 ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600' }}">
                         {{ number_format($adminsVariation, 2) }}%
@@ -26,16 +26,16 @@
             </div>
         
             <!-- Pharmacies -->
-            <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl shadow animate-fadeInScale">
-                <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-purple-100 text-purple-600 mb-3">
+            <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl  animate-fadeInScale">
+                <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-green-200 text-dark mb-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                               d="M3 21h18M9 8h6m-6 4h6m-6 4h6m6 5V3a1 1 0 00-1-1H4a1 1 0 00-1 1v18"/>
                     </svg>
                 </div>
-                <h3 class="text-sm font-medium text-slate-500 dark:text-white">Pharmacies</h3>
+                <h3 class="text-sm font-roboto font-bold text-slate-500 dark:text-white">Pharmacies</h3>
                 <p class="text-2xl font-bold dark:text-white">{{ $totalPharmacies }}</p>
-                <p class="text-xs text-slate-500 mt-2">
+                <p class="text-xs font-roboto text-slate-500 mt-2">
                     Last 30 days
                     <span class="px-2 py-1 rounded-full text-xs font-semibold {{ $pharmaciesVariation >= 0 ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600' }}">
                         {{ number_format($pharmaciesVariation, 2) }}%
@@ -44,29 +44,29 @@
             </div>
         
             <!-- Nouveaux Pharmacies -->
-            <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl shadow animate-fadeInScale">
-                <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-purple-100 text-purple-600 mb-3">
+            <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl animate-fadeInScale">
+                <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-green-200 text-dark mb-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                               d="M12 4v16m8-8H4"/>
                     </svg>
                 </div>
-                <h3 class="text-sm font-medium text-slate-500 dark:text-white">Nouveaux Pharmacies</h3>
-                <p class="text-2xl font-bold dark:text-white">{{ $nouveauxPharmacies }}</p>
-                <p class="text-xs text-slate-500 mt-2">Ajoutés sur les 14 derniers jours</p>
+                <h3 class="text-sm font-roboto font-bold text-slate-500 dark:text-white">Nouveaux Pharmacies</h3>
+                <p class="text-2xl font-roboto font-bold dark:text-white">{{ $nouveauxPharmacies }}</p>
+                <p class="text-xs font-roboto text-slate-500 mt-2">Ajoutés sur les 14 derniers jours</p>
             </div>
         
             <!-- Gérants Inactifs -->
-            <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl shadow animate-fadeInScale">
-                <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-purple-100 text-purple-600 mb-3">
+            <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl animate-fadeInScale">
+                <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-green-200 text-dark mb-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                               d="M15 12h6m-9-7a4 4 0 100 8 4 4 0 000-8zM4 20h8a4 4 0 00-8 0z"/>
                     </svg>
                 </div>
-                <h3 class="text-sm font-medium text-slate-500 dark:text-white">Gérants Inactifs</h3>
-                <p class="text-2xl font-bold dark:text-white">{{ $inactiveGerants }}</p>
-                <p class="text-xs text-slate-500 mt-2">Pas d’activité depuis 30 jours</p>
+                <h3 class="text-sm font-roboto font-bold text-slate-500 dark:text-white">Gérants Inactifs</h3>
+                <p class="text-2xl font-roboto font-bold dark:text-white">{{ $inactiveGerants }}</p>
+                <p class="text-xs font-roboto  text-slate-500 mt-2">Pas d’activité depuis 30 jours</p>
             </div>
         
         </div>
@@ -97,9 +97,9 @@
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
 
     <!-- Bar chart (mois) -->
-    <div class="bg-white p-6 rounded-2xl shadow-md">
+    <div class="bg-white p-6 rounded-2xl ">
         <div class="flex justify-between items-center mb-4">
-            <h2 class="text-lg font-semibold text-gray-800">Évolution des Médicaments / Pharmacies / Admins par Mois</h2>
+            <h2 class="text-lg font-roboto  text-gray-800">Évolution mensuelle</h2>
             <select id="moisFilter" class="border rounded px-2 py-1 text-sm">
                 <option value="3">3 mois</option>
                 <option value="6" selected>6 mois</option>
@@ -110,9 +110,9 @@
     </div>
 
     <!-- Line chart (jours) -->
-    <div class="bg-white p-6 rounded-2xl shadow-md">
+    <div class="bg-white p-6 rounded-2xl ">
         <div class="flex justify-between items-center mb-4">
-            <h2 class="text-lg font-semibold text-gray-800">Évolution des Médicaments / Pharmacies / Admins par Jour</h2>
+            <h2 class="text-lg font-roboto  text-gray-800">Évolution journalière</h2>
             <select id="joursFilter" class="border rounded px-2 py-1 text-sm">
                 <option value="10" selected>10 jours</option>
                 <option value="20">20 jours</option>
@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
             labels: labelsMo,
             datasets: [
                 { label: "Médicaments", data: dataMo[0], backgroundColor: 'rgba(99,102,241,0.85)', borderRadius: 12 },
-                { label: "Pharmacies",   data: dataMo[1], backgroundColor: 'rgba(16,185,129,0.85)', borderRadius: 12 },
+                { label: "Pharmacies",   data: dataMo[1], backgroundColor: 'rgba(187,247,208,0.85)', borderRadius: 12 },
                 { label: "Admins",       data: dataMo[2], backgroundColor: 'rgba(245,158,11,0.85)', borderRadius: 12 }
             ]
         },
@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
             labels: labelsJ,
             datasets: [
                 { label: 'Médicaments', data: dataJ[0], borderColor: '#6366f1',   backgroundColor: 'rgba(99,102,241,0.15)', pointRadius: 3, fill: true, tension: 0.3 },
-                { label: 'Pharmacies',   data: dataJ[1], borderColor: '#10b981',   backgroundColor: 'rgba(16,185,129,0.12)',  pointRadius: 3, fill: true, tension: 0.3 },
+                { label: 'Pharmacies',   data: dataJ[1], borderColor: '#bbf7d0',   backgroundColor: 'rgba(187,247,208,0.12)',  pointRadius: 3, fill: true, tension: 0.3 },
                 { label: 'Admins',       data: dataJ[2], borderColor: '#f59e0b',   backgroundColor: 'rgba(245,158,11,0.12)',  pointRadius: 3, fill: true, tension: 0.3 }
             ]
         },
@@ -259,40 +259,40 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
 
             <!-- Derniers gérants -->
-            <div class="bg-white shadow rounded-xl p-6">
+            <div class="bg-white rounded-xl p-6">
                 <div class="flex justify-between items-center mb-4">
-                    <h6 class="text-lg font-semibold text-gray-700">Latest Managers</h6>
+                    <h6 class="text-lg font-roboto text-gray-700">Latest Managers</h6>
                 </div>
         
                 <div class="overflow-x-auto">
                     <table class="min-w-full text-sm">
                         <thead>
-                            <tr class="text-gray-400 uppercase text-xs font-bold">
-                                <th class="px-4 py-2 text-left">Name</th>
-                                <th class="px-4 py-2 text-left">Email</th>
-                                <th class="px-4 py-2 text-center">Reg. Date</th>
-                                <th class="px-4 py-2 text-right">Actions</th>
+                            <tr class="text-gray-400 text-xs font-roboto ">
+                                <th class="px-4 py-2 font-roboto text-left ">Name</th>
+                                <th class="px-4 py-2 font-roboto text-left ">Email</th>
+                                <th class="px-4 py-2 font-roboto text-center ">Reg. Date</th>
+                                <th class="px-4 py-2 font-roboto text-right ">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($gerants as $gerant)
                                 <tr class="hover:bg-gray-50">
-                                    <td class="px-4 py-2 font-medium text-gray-700">
+                                    <td class="px-4 py-2  font-roboto font-light  text-gray-700">
                                         {{ $gerant->user->name }}
                                     </td>
-                                    <td class="px-4 py-2 text-gray-500">
+                                    <td class="px-4 py-2  font-roboto font-light text-gray-500">
                                         {{ $gerant->user->email }}
                                     </td>
-                                    <td class="px-4 py-2 text-center text-gray-500">
+                                    <td class="px-4 py-2 font-roboto font-light  text-center text-gray-500">
                                         {{ $gerant->created_at->format('m/d/Y') }}
                                     </td>
-                                    <td class="px-4 py-2 text-right">
+                                    <td class="px-4 py-2 font-roboto font-thin  text-right">
                                         {{-- <a href="{{ route('gerants.update', $gerant->id_gerant) }}"
                                            class="px-3 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-600 hover:bg-purple-200">
                                             View
                                         </a> --}}
                                         <button command="show-modal" commandfor="edit-gerant-{{ $gerant->id_gerant }}"
-                                            class="px-3 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-600 hover:bg-purple-200">
+                                            class="px-3 py-1 text-xs font-roboto font-light rounded-full bg-green-200 text-gray-600 hover:bg-purple-200">
                                             Edit
                                         </button>
 
@@ -306,15 +306,15 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
         
             <!-- Dernières pharmacies -->
-            <div class="bg-white shadow rounded-xl p-6">
+            <div class="bg-white rounded-xl p-6">
                 <div class="flex justify-between items-center mb-4">
-                    <h6 class="text-lg font-semibold text-gray-700">Latest Pharmacies</h6>
+                    <h6 class="text-lg font-roboto text-gray-700">Latest Pharmacies</h6>
                 </div>
         
                 <div class="overflow-x-auto">
                     <table class="min-w-full text-sm">
                         <thead>
-                            <tr class="text-gray-400 uppercase text-xs font-bold">
+                            <tr class="text-gray-400 text-xs font-roboto font-light">
                                 <th class="px-4 py-2 text-left">Name</th>
                                 <th class="px-4 py-2 text-left">Address</th>
                                 <th class="px-4 py-2 text-center">Status</th>
@@ -324,24 +324,24 @@ document.addEventListener("DOMContentLoaded", () => {
                         <tbody>
                             @foreach($pharmacies as $pharmacie)
                                 <tr class="hover:bg-gray-50">
-                                    <td class="px-4 py-2 font-medium text-gray-700">
+                                    <td class="px-4 py-2  font-roboto font-light text-gray-700">
                                         {{ $pharmacie->nom }}
                                     </td>
-                                    <td class="px-4 py-2 text-gray-500">
+                                    <td class="px-4 py-2 font-roboto font-light text-gray-500">
                                         {{ $pharmacie->adresse }}
                                     </td>
-                                    <td class="px-4 py-2 text-center">
+                                    <td class="p-4 text-center border-b dark:border-slate-600">
                                         @php
                                             $statusMap = [
-                                                'valide' => ['Validé', 'text-green-600'],
-                                                'en_attent' => ['En_attent', 'text-purple-600'],
-                                                'ferme' => ['Fermé', 'text-red-600'],
+                                                'valide' => ['Validé', 'bg-emerald-100 text-emerald-700'],
+                                                'en_attent' => ['En_attent', 'bg-orange-100 text-orange-700'],
+                                                'ferme' => ['Fermé', 'bg-red-100 text-red-700'],
                                             ];
-                                            [$label, $color] = $statusMap[$pharmacie->statut] ?? ['En_attent', 'text-gray-500'];
+                                            [$label, $color] = $statusMap[$pharmacie->statut] ?? ['En_attent', 'bg-orange-100 text-orange-400'];
                                         @endphp
-                                        <span class="font-semibold {{ $color }}">{{ $label }}</span>
+                                        <span class="px-3 py-1 rounded-full text-xs font-semibold {{ $color }}">{{ $label }}</span>
                                     </td>
-                                    <td class="px-4 py-2 text-center text-gray-500">
+                                    <td class="px-4 font-roboto font-light py-2 text-center text-gray-500">
                                         {{ $pharmacie->created_at->format('m/d/Y') }}
                                     </td>
                                 </tr>

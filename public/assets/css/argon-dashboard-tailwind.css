@@ -48,6 +48,11 @@
 3. Use a more readable tab size.
 4. Use the user's configured `sans` font-family by default.
 */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
 
 html {
   line-height: 1.5;

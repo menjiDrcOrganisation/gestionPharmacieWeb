@@ -9,6 +9,16 @@
     <title>Gestion Pharmacies</title>
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+  </style>
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <!-- Nucleo Icons -->
@@ -39,7 +49,7 @@
 </head>
 
 <body
-    class="m-0 font-sans text-base antialiased font-normal dark:bg-slate-900 leading-default bg-gray-50 text-slate-500">
+    class="m-0 font-roboto  text-base antialiased font-normal dark:bg-slate-900 leading-default bg-gray-50 text-slate-500">
     {{-- <div class="absolute w-full bg-blue-500 dark:hidden min-h-12"></div> --}}
     <!-- sidenav  -->
     {{-- <header class="flex items-center justify-between px-4 py-3 bg-white shadow md:hidden">
