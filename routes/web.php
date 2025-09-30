@@ -45,13 +45,15 @@ Route::delete('/medicaments/{medicament}', [MedicamentController::class, 'destro
 
 
 Route::get('/formes', [FormesController::class, 'index'])->name('formes.index');
-Route::post('/formes', [FormesController::class, 'store'])->name('formes.store');
+Route::post('/forme', [FormesController::class, 'store'])->name('formes.store');
+Route::post('/formes', [FormesController::class, 'storemedicament'])->name('medicaments.formes.store');
 Route::put('/formes/{formes}', [FormesController::class, 'update'])->name('formes.update');
 Route::delete('/formes/{formes}', [FormesController::class, 'destroy'])->name('formes.destroy');
 
 
 Route::get('/doses', [DoseController::class, 'index'])->name('doses.index');
-Route::post('/doses', [DoseController::class, 'store'])->name('doses.store');
+Route::post('/dose', [DoseController::class, 'store'])->name('doses.store');
+Route::post('/doses', [DoseController::class, 'storemedicament'])->name('medicaments.doses.store');
 
 Route::put('/doses/{dose}', [DoseController::class, 'update'])->name('doses.update');
 
