@@ -75,47 +75,82 @@
                                         
                                             <!-- Modal : Pharmacies du Gérant -->
                                             <dialog id="pharmacies-{{ $gerant->id_gerant }}"
-                                                class="rounded-2xl shadow-xl w-full max-w-lg p-0 bg-white dark:bg-slate-800 backdrop:bg-black/40">
+                                                    class="rounded-2xl shadow-2xl w-full max-w-lg p-0 bg-white dark:bg-slate-800 backdrop:bg-black/50 transition-all duration-300 ease-out">
 
-                                                <!-- Header -->
-                                                <div class="flex items-center justify-between px-6 py-4 border-b bg-blue-600 rounded-t-2xl">
-                                                    <h3 class="text-lg font-semibold text-white flex items-center gap-2">
-                                                        <img src="https://cdn-icons-png.flaticon.com/512/3063/3063828.png" class="w-5 h-5" alt="pharmacy">
-                                                        Pharmacies de {{ ucfirst(strtolower($gerant->user->name ))}}
-                                                    </h3>
-                                                    <button type="button"
-                                                        onclick="document.getElementById('pharmacies-{{ $gerant->id_gerant }}').close();"
-                                                        class="text-white hover:text-gray-200">
-                                                        ✕
-                                                    </button>
-                                                </div>
+                                                    <!-- Header -->
+                                                    <div class="flex items-center justify-between px-6 py-4 border-b bg-gradient-to-r from-blue-600 to-blue-500 rounded-t-2xl">
+                                                        <h3 class="text-lg font-semibold text-white flex items-center gap-2">
+                                                            <img src="https://cdn-icons-png.flaticon.com/512/3063/3063828.png" class="w-5 h-5" alt="pharmacy">
+                                                            Pharmacies de {{ ucfirst(strtolower($gerant->user->name ))}}
+                                                        </h3>
+                                                        <button type="button"
+                                                            onclick="closePharmaciesModal('{{ $gerant->id_gerant }}')"
+                                                            class="text-white hover:text-gray-200 transition">
+                                                            ✕
+                                                        </button>
+                                                    </div>
 
-                                                <!-- Body (scroll seulement si débordement) -->
-                                                <div class="px-6 py-6 max-h-[420px] overflow-y-auto">
-                                                    <ul class="space-y-4">
-                                                        @forelse($gerant->pharmacies as $pharmacie)
-                                                            <li class="p-4 border border-slate-200 dark:border-slate-600 rounded-xl bg-slate-50 dark:bg-slate-700 shadow-sm">
-                                                                <p class="font-semibold text-slate-800 dark:text-white">{{ ucfirst(strtolower($pharmacie->nom ))}}</p>
-                                                                <p class="text-sm text-slate-600 dark:text-slate-300"> {{ ucfirst(strtolower($pharmacie->adresse ))}}</p>
-                                                                <p class="text-sm text-slate-600 dark:text-slate-300">{{ ucfirst(strtolower($pharmacie->telephone ))}}</p>
-                                                            </li>
-                                                        @empty
-                                                            <li class="text-center italic text-slate-500 dark:text-slate-300 py-6">
-                                                                Aucune pharmacie associée.
-                                                            </li>
-                                                        @endforelse
-                                                    </ul>
-                                                </div>
+                                                    <!-- Body -->
+                                                    <div id="pharmacies-body-{{ $gerant->id_gerant }}" class="px-6 py-6">
+                                                        <ul class="space-y-4">
+                                                            @forelse($gerant->pharmacies as $pharmacie)
+                                                                <li class="p-4 border border-slate-200 dark:border-slate-600 rounded-xl bg-slate-50 dark:bg-slate-700 shadow-sm hover:shadow-md transition">
+                                                                    <p class="font-semibold text-slate-800 dark:text-white">{{ ucfirst(strtolower($pharmacie->nom ))}}</p>
+                                                                    <p class="text-sm text-slate-600 dark:text-slate-300">{{ ucfirst(strtolower($pharmacie->adresse ))}}</p>
+                                                                    <p class="text-sm text-slate-600 dark:text-slate-300">{{ ucfirst(strtolower($pharmacie->telephone ))}}</p>
+                                                                </li>
+                                                            @empty
+                                                                <li class="text-center italic text-slate-500 dark:text-slate-300 py-6">
+                                                                    Aucune pharmacie associée.
+                                                                </li>
+                                                            @endforelse
+                                                        </ul>
+                                                    </div>
 
-                                                <!-- Footer -->
-                                                <div class="flex justify-end px-6 py-4 border-t border-slate-200 dark:border-slate-700 rounded-b-2xl">
-                                                    <button type="button"
-                                                        onclick="document.getElementById('pharmacies-{{ $gerant->id_gerant }}').close();"
-                                                        class="px-4 py-2 text-sm font-medium bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 dark:bg-slate-600 dark:text-white dark:hover:bg-slate-500">
-                                                        Fermer
-                                                    </button>
-                                                </div>
-                                            </dialog>
+                                                    <!-- Footer -->
+                                                    <div class="flex justify-end px-6 py-4 border-t border-slate-200 dark:border-slate-700 rounded-b-2xl">
+                                                        <button type="button"
+                                                            onclick="closePharmaciesModal('{{ $gerant->id_gerant }}')"
+                                                            class="px-4 py-2 text-sm font-medium bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 dark:bg-slate-600 dark:text-white dark:hover:bg-slate-500 transition">
+                                                            Fermer
+                                                        </button>
+                                                    </div>
+                                                </dialog>
+
+                                                <!-- JS pour scroll dynamique et animations -->
+                                                <script>
+                                                function openPharmaciesModal(id) {
+                                                    const dialog = document.getElementById(`pharmacies-${id}`);
+                                                    const body = document.getElementById(`pharmacies-body-${id}`);
+                                                    
+                                                    // Activer scroll si plus de 3 pharmacies
+                                                    const items = body.querySelectorAll('li');
+                                                    if (items.length > 3) {
+                                                        body.classList.add('max-h-[420px]', 'overflow-y-auto', 'custom-scroll');
+                                                    } else {
+                                                        body.classList.remove('max-h-[420px]', 'overflow-y-auto', 'custom-scroll');
+                                                    }
+
+                                                    // Ouvrir modal avec animation
+                                                    if (dialog && typeof dialog.showModal === 'function') {
+                                                        dialog.showModal();
+                                                        setTimeout(() => {
+                                                            dialog.classList.remove("scale-95", "opacity-0");
+                                                            dialog.classList.add("scale-100", "opacity-100");
+                                                        }, 10);
+                                                    }
+                                                }
+
+                                                function closePharmaciesModal(id) {
+                                                    const dialog = document.getElementById(`pharmacies-${id}`);
+                                                    if (dialog) {
+                                                        dialog.classList.add("scale-95", "opacity-0");
+                                                        setTimeout(() => dialog.close(), 200);
+                                                    }
+                                                }
+                                                </script>
+
+
 
                                             @else
                                                 <div class="text-xs text-slate-400">Aucune pharmacie</div>

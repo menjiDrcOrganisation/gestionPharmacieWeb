@@ -125,6 +125,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const filterDose = document.getElementById('filterDose');
     const table = document.getElementById('medicamentTable');
 
+    // Création d'un conteneur pour les suggestions
+    const suggestionBox = document.createElement("div");
+    suggestionBox.className = "absolute bg-white border border-slate-300 rounded-md shadow max-h-48 overflow-y-auto z-50 hidden";
+    searchInput.parentNode.appendChild(suggestionBox);
+
     function normalize(str) {
         return str ? str.toString().normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim() : "";
     }
@@ -153,10 +158,13 @@ document.addEventListener("DOMContentLoaded", () => {
         rows.forEach(row => {
             if (row.classList.contains('no-results-row')) return;
 
-            const rowText = normalize(row.innerText);
-            const matchSearch = !search || rowText.includes(search);
-            const matchForme = !forme || rowText.includes(forme);
-            const matchDose = !dose || rowText.includes(dose);
+            const nomMedoc = normalize(row.querySelector("td:nth-child(1)")?.innerText || "");
+            const formeText = normalize(row.querySelector("td:nth-child(2) p.text-sm")?.innerText || "");
+            const doseText = normalize(row.querySelector("td:nth-child(2) p.text-xs")?.innerText || "");
+
+            const matchSearch = !search || nomMedoc.includes(search) || formeText.includes(search) || doseText.includes(search);
+            const matchForme = !forme || formeText.includes(forme);
+            const matchDose = !dose || doseText.includes(dose);
 
             if (matchSearch && matchForme && matchDose) {
                 row.style.display = "";
@@ -169,11 +177,65 @@ document.addEventListener("DOMContentLoaded", () => {
         ensureNoResultsRow().style.display = anyVisible ? "none" : "";
     }
 
-    searchInput.addEventListener("input", filterTable);
+    function showSuggestions() {
+        const query = normalize(searchInput.value);
+        suggestionBox.innerHTML = "";
+        if (!query) {
+            suggestionBox.classList.add("hidden");
+            return;
+        }
+
+        const suggestions = new Set();
+        table.querySelectorAll("tbody tr").forEach(row => {
+            if (row.classList.contains('no-results-row')) return;
+            const nomMedoc = row.querySelector("td:nth-child(1)")?.innerText || "";
+            const formeText = row.querySelector("td:nth-child(2) p.text-sm")?.innerText || "";
+            const doseText = row.querySelector("td:nth-child(2) p.text-xs")?.innerText || "";
+
+            [nomMedoc, formeText, doseText].forEach(val => {
+                if (normalize(val).includes(query)) {
+                    suggestions.add(val.trim());
+                }
+            });
+        });
+
+        if (suggestions.size === 0) {
+            suggestionBox.classList.add("hidden");
+            return;
+        }
+
+        suggestions.forEach(s => {
+            const option = document.createElement("div");
+            option.className = "px-3 py-2 hover:bg-slate-100 cursor-pointer text-sm";
+            option.textContent = s;
+            option.addEventListener("click", () => {
+                searchInput.value = s;
+                suggestionBox.classList.add("hidden");
+                filterTable();
+            });
+            suggestionBox.appendChild(option);
+        });
+
+        suggestionBox.classList.remove("hidden");
+    }
+
+    searchInput.addEventListener("input", () => {
+        filterTable();
+        showSuggestions();
+    });
+
     filterForme.addEventListener("change", filterTable);
     filterDose.addEventListener("change", filterTable);
+
+    document.addEventListener("click", (e) => {
+        if (!suggestionBox.contains(e.target) && e.target !== searchInput) {
+            suggestionBox.classList.add("hidden");
+        }
+    });
 
     filterTable();
 });
 </script>
+
+
 @endsection
