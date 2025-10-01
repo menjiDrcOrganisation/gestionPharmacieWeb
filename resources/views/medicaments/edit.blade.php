@@ -4,7 +4,7 @@
 
     <!-- Header -->
     <div class="flex items-center gap-3 border-b pb-3 mb-4">
-        <img src="https://cdn-icons-png.flaticon.com/512/2966/2966489.png" alt="icon" class="w-6 h-6">
+        {{-- <img src="https://cdn-icons-png.flaticon.com/512/2966/2966489.png" alt="icon" class="w-6 h-6"> --}}
         <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-100">
             Modifier le médicament
         </h3>

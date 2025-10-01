@@ -9,7 +9,7 @@
 
             <!-- Header -->
             <div class="flex items-center gap-3 px-6 pt-6 pb-4 border-b border-slate-200 dark:border-slate-700">
-                <img src="https://cdn-icons-png.flaticon.com/512/2966/2966489.png" alt="icon" class="w-6 h-6">
+                {{-- <img src="https://cdn-icons-png.flaticon.com/512/2966/2966489.png" alt="icon" class="w-6 h-6"> --}}
                 <h3 class="text-lg font-semibold text-slate-800 dark:text-white">
                     Modifier la Forme
                 </h3>

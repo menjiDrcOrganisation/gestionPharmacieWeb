@@ -9,7 +9,7 @@
         <!-- Header -->
         <div class="flex items-center justify-between px-5 py-4 border-b dark:border-slate-700 rounded-t-2xl">
             <h2 class="text-lg font-semibold flex items-center gap-2">
-                <img src="https://cdn-icons-png.flaticon.com/512/2966/2966489.png" alt="icon" class="w-6 h-6">
+                {{-- <img src="https://cdn-icons-png.flaticon.com/512/2966/2966489.png" alt="icon" class="w-6 h-6"> --}}
                 Modifier l’administrateur
             </h2>
             <button type="button" 

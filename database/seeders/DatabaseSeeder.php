@@ -2,22 +2,37 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
+use App\Models\Forme;
+use App\Models\Dose;
+use App\Models\Medicament;
+use App\Models\Gerant;
+use App\Models\Admin;
+use App\Models\Pharmacie;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // 🔹 Créer des Admins
+        // Admin::factory(3)->create();
+
+        // 🔹 Créer des Gérants avec Pharmacies
+        Gerant::factory(5)
+            ->has(Pharmacie::factory()->count(2)) // chaque gérant a 2 pharmacies
+            ->create();
+
+        // 🔹 Créer des Formes & Doses
+        $formes = Forme::factory(5)->create();
+        $doses = Dose::factory(5)->create();
+
+        // 🔹 Créer des Médicaments (liés aux formes et doses existants)
+        Medicament::factory(20)->make()->each(function ($medicament) use ($formes, $doses) {
+            $medicament->id_forme = $formes->random()->id_forme;
+            $medicament->id_dose = $doses->random()->id_dose;
+            $medicament->save();
+        });
     }
 }

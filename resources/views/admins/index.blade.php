@@ -2,6 +2,26 @@
 @section('title','Administrateurs')
 
 @section('content')
+
+@if (session('success'))
+    <div id="alert-message" class="mb-4 p-3 rounded-lg bg-green-100 text-green-800 shadow">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if (session('error'))
+    <div id="alert-message" class="mb-4 p-3 rounded-lg bg-red-100 text-red-800 shadow">
+        {{ session('error') }}
+    </div>
+@endif
+
+@if (session('info'))
+    <div id="alert-message" class="mb-4 p-3 rounded-lg bg-blue-100 text-blue-800 shadow">
+        {{ session('info') }}
+    </div>
+@endif
+
+
 <div class="bg-white dark:bg-slate-900 w-full px-6 py-6 mx-auto">
     <div class="flex flex-wrap -mx-3">
         <div class="flex-none w-full max-w-full px-3">
@@ -10,7 +30,7 @@
                 <!-- Header -->
                 <div class="p-6 border-b rounded-t-2xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <h6 class="dark:text-white text-xl font-semibold flex items-center gap-2">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2966/2966489.png" class="w-7 h-7" alt="icon"> 
+                        {{-- <img src="https://cdn-icons-png.flaticon.com/512/2966/2966489.png" class="w-7 h-7" alt="icon">  --}}
                         Gestion des administrateurs
                     </h6>
 
@@ -18,7 +38,7 @@
                         <!-- Recherche -->
                         <div class="relative">
                             <input type="text" id="searchInput" placeholder="Rechercher..."
-                                class="w-72 rounded-lg border border-slate-300 pl-9 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-400 focus:outline-none dark:bg-slate-700 dark:text-white">
+                                class="w-96 rounded-lg border border-slate-300 pl-9 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-400 focus:outline-none dark:bg-slate-700 dark:text-white">
                             <span class="absolute left-2.5 top-2.5">
                                 <img src="https://cdn-icons-png.flaticon.com/512/149/149852.png" class="w-4 h-4 opacity-70" alt="search">
                             </span>
@@ -27,7 +47,10 @@
                         <!-- Bouton Ajouter -->
                         <button command="show-modal" commandfor="add-admin-dialogg"
                             class="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 shadow">
-                            <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" class="w-4 h-4" alt="add">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M12 4v16m8-8H4"/>
+                            </svg>
                             Ajouter
                         </button>
                     </div>
@@ -53,12 +76,12 @@
                                 <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/70 transition">
                                     <!-- Nom -->
                                     <td class="p-4 border-b dark:border-slate-600">
-                                        <span class="text-sm font-semibold">{{ $aadmin->user->name ?? ' ' }}</span>
+                                        <span class="text-sm font-light">{{ ucfirst(strtolower($aadmin->user->name ?? ' ' ))}}</</span>
                                     </td>
 
                                     <!-- Email -->
                                     <td class="p-4 border-b dark:border-slate-600">
-                                        <p class="text-sm">{{ $aadmin->user->email ?? ' ' }}</p>
+                                        <p class="text-sm font-light">{{ ucfirst(strtolower($aadmin->user->email ?? ' ' ))}}</p>
                                     </td>
 
                                     <!-- Date création -->
@@ -134,4 +157,19 @@ document.addEventListener("DOMContentLoaded", () => {
     filterTable();
 });
 </script>
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const alert = document.getElementById("alert-message");
+        if (alert) {
+            setTimeout(() => {
+                alert.style.transition = "opacity 0.5s ease";
+                alert.style.opacity = "0";
+                setTimeout(() => alert.remove(), 500); // Supprime après animation
+            }, 3000); // 3 secondes
+        }
+    });
+</script>
+
 @endsection
