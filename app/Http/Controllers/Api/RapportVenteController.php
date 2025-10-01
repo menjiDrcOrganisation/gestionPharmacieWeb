@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Api;
-
 use App\Http\Controllers\Controller;
 use App\Models\vente;
 use Illuminate\Http\Request;
@@ -15,10 +13,10 @@ class RapportVenteController extends Controller
             $request->validate([
                 'id_pharmacie' => 'required|integer|exists:pharmacies,id_pharmacie',
             ]);
-$rapportvente = vente::with(['lots.medicament.forme', 'lots.medicament.dose'])
-    ->whereHas('lots', function ($query) use ($request) {
-        $query->where('id_pharmacie', $request->id_pharmacie);
-    })
+            $rapportvente = vente::with(['lots.medicament.forme', 'lots.medicament.dose'])
+                ->whereHas('lots', function ($query) use ($request) {
+                    $query->where('id_pharmacie', $request->id_pharmacie);
+                })
    
     ->get()
     ->groupBy(function ($vente) {
