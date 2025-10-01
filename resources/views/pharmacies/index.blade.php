@@ -2,6 +2,28 @@
 @section('title','Pharmacies')
 
 @section('content')
+
+@if (session('success'))
+    <div id="alert-message" class="mb-4 p-3 rounded-lg bg-green-100 text-green-800 shadow">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if (session('error'))
+    <div id="alert-message" class="mb-4 p-3 rounded-lg bg-red-100 text-red-800 shadow">
+        {{ session('error') }}
+    </div>
+@endif
+
+@if (session('info'))
+    <div id="alert-message" class="mb-4 p-3 rounded-lg bg-blue-100 text-blue-800 shadow">
+        {{ session('info') }}
+    </div>
+@endif
+
+
+
+
 <div class="bg-white dark:bg-slate-900 w-full px-6 py-6 mx-auto">
     <div class="flex flex-wrap -mx-3">
         <div class="flex-none w-full max-w-full px-3">
@@ -287,5 +309,19 @@ document.addEventListener("DOMContentLoaded", () => {
         filterTable(); // initial
     });
     </script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const alert = document.getElementById("alert-message");
+        if (alert) {
+            setTimeout(() => {
+                alert.style.transition = "opacity 0.5s ease";
+                alert.style.opacity = "0";
+                setTimeout(() => alert.remove(), 500); // Supprime après animation
+            }, 3000); // 3 secondes
+        }
+    });
+</script>
+
     
 @endsection
