@@ -1,4 +1,5 @@
 @extends('layouts.main') 
+@section('title', 'Gestion  Doses')
 @section('content')
 
 @if (session('success'))

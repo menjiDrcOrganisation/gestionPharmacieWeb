@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','Médicaments')
+@section('title',' Gestion Médicaments')
 
 @section('content')
 
