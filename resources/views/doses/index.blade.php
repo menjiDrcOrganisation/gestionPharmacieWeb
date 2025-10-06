@@ -87,7 +87,12 @@
                                             <td class="px-6 py-3 text-sm font-light  text-slate-700 dark:text-white">{{ $dose->quantite }}</td>
                                             <td class="px-6 py-3 text-sm  font-light text-slate-700 dark:text-white">{{ $dose->unite }}</td>
                                             <td class="px-6 py-3 text-center text-sm text-slate-500 dark:text-slate-300">
-                                                {{ $dose->created_at->format('d/m/Y') }}
+                                                @if($dose->created_at)
+                                                    {{ $dose->created_at->format('d/m/Y') }}
+                                                @else
+                                                    -
+                                                @endif
+
                                             </td>
                                             <td class="px-6 py-3 text-center text-sm flex justify-center gap-2">
                                                 
