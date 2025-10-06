@@ -29,33 +29,37 @@
             <div class="relative flex flex-col mb-6 bg-white dark:bg-slate-800 shadow-xl rounded-2xl">
 
                 <!-- Header -->
-                <div class="p-6 border-b rounded-t-2xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                    
-                    <h6 class="dark:text-white text-xl font-semibold flex items-center gap-2 ">
-                        {{-- <img src="https://cdn-icons-png.flaticon.com/512/2966/2966489.png" class="w-7 h-7" alt="icon"> --}}
-                        Gestion des gérants</h6>
+                <div class="p-4 sm:p-6 border-b rounded-t-2xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
 
-                    <div class="flex items-center gap-3">
+                    <h6 class="dark:text-white text-lg sm:text-xl font-semibold flex items-center gap-2">
+                        Gestion des gérants
+                    </h6>
+
+                    <!-- ✅ Responsive : stack sur mobile, align horizontal sur desktop -->
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
+
                         <!-- Recherche -->
-                        <div class="relative">
-                        <input type="text" id="searchInput" placeholder="Rechercher (nom, email, pharmacie)..."
-                            class="w-96 rounded-lg border border-slate-300 pl-9 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-400 focus:outline-none dark:bg-slate-700 dark:text-white"
-                        >
-                        <span class="absolute left-2.5 top-2.5">
-                            <img src="https://cdn-icons-png.flaticon.com/512/149/149852.png" class="w-4 h-4 opacity-70" alt="search">
-                        </span>
-                    </div>
+                        <div class="relative w-full sm:w-80">
+                            <input type="text" id="searchInput" placeholder="Rechercher (nom, email, pharmacie)..."
+                                class="w-full rounded-lg border border-slate-300 pl-9 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-400 focus:outline-none dark:bg-slate-700 dark:text-white"
+                            >
+                            <span class="absolute left-2.5 top-2.5">
+                                <img src="https://cdn-icons-png.flaticon.com/512/149/149852.png" class="w-4 h-4 opacity-70" alt="search">
+                            </span>
+                        </div>
+
                         <!-- Bouton Ajouter -->
                         <button command="show-modal" commandfor="add-gerant-dialog"
-                        class="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 shadow">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M12 4v16m8-8H4"/>
-                        </svg>
-                             Ajouter 
+                            class="flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 shadow w-full sm:w-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 4v16m8-8H4"/>
+                            </svg>
+                            Ajouter
                         </button>
                     </div>
                 </div>
+
 
                 @include("gerants.create")
 
