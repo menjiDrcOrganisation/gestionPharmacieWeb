@@ -11,9 +11,6 @@ use App\Models\Pharmacie;
 
 class VenteController extends Controller
 {
-    /**
-     * Liste des ventes d'une pharmacie
-     */
     public function index($id_pharmacie)
     {
         try {
@@ -36,12 +33,13 @@ class VenteController extends Controller
             ], 500);
         }
     }
-
     /**
      * Créer une nouvelle vente
      */
     public function store(Request $request, $id_pharmacie)
     {
+
+       
         try {
             $data = $request->all();
             $data['id_pharmacie'] = $id_pharmacie;
@@ -53,10 +51,8 @@ class VenteController extends Controller
             // Attacher les lots avec quantités vendues
             foreach ($data['lots_ids'] as $index => $lot_id) {
                 $quantiteVendue = $data['quantite_medicament_lot'][$index];
-
                 $lot = lot::findOrFail($lot_id);
-              
-
+        
                 if ($lot->quantite < $quantiteVendue) {
                     return response()->json([
                         'message' => "Quantité insuffisante pour le lot {$lot->numero_lot}"
@@ -70,6 +66,8 @@ class VenteController extends Controller
 
                 $lot->quantite -= $quantiteVendue;
                 $lot->save();
+
+                return $lot;
 
             
             }
