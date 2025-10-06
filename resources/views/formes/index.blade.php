@@ -1,4 +1,5 @@
 @extends('layouts.main')
+@section('title', 'Gestion Formes')
 @section('content')
 
 @if (session('success'))

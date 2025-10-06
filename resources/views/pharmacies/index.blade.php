@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','Pharmacies')
+@section('title','Gestion Pharmacies')
 
 @section('content')
 

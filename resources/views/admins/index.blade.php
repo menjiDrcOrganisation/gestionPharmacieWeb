@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','Administrateurs')
+@section('title','Gestion Administrateurs')
 
 @section('content')
 
