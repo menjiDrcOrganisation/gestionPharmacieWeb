@@ -8,29 +8,31 @@ class RapportVenteController extends Controller
 {
  
     public function getRapportVente(Request $request)
-    {
-        try{
-            $request->validate([
-                'id_pharmacie' => 'required|integer|exists:pharmacies,id_pharmacie',
-            ]);
-            $rapportvente = vente::with(['lots.medicament.forme', 'lots.medicament.dose'])
-                ->whereHas('lots', function ($query) use ($request) {
-                    $query->where('id_pharmacie', $request->id_pharmacie);
-                })
-   
-    ->get()
-    ->groupBy(function ($vente) {
-        return $vente->date_vente; // groupement par jour
-    });
+{
+    try {
+        $request->validate([
+            'id_pharmacie' => 'required|integer|exists:pharmacies,id_pharmacie',
+        ]);
 
- // maintenant tu regroupes par ta colonne calculé
+        $rapportvente = vente::with(['lots.medicament.forme', 'lots.medicament.dose'])
+            ->whereHas('lots', function ($query) use ($request) {
+                $query->where('id_pharmacie', $request->id_pharmacie);
+            })
+            ->get()
+            ->groupBy(function ($vente) {
+                return $vente->date_vente; // groupement par jour
+            });
 
-                   return response()->json($rapportvente, 200);
+        // Si vide, renvoyer un objet vide pour garder un format JSON cohérent
+        $rapportVente = $rapportvente->isEmpty() ? new \stdClass() : $rapportvente;
 
-        }catch(\Exception $e){
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+        return response()->json($rapportVente, 200);
+        
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
     }
+}
+
 
     /**
      * Store a newly created resource in storage.
