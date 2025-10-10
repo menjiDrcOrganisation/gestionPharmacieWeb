@@ -42,15 +42,17 @@
                 <!-- Unité -->
                 <div>
                     <label class="block text-sm font-medium text-gray-800">
-                        Forme <span class="text-rose-500">*</span>
+                        Unité <span class="text-rose-500">*</span>
                     </label>
-                    <select name="unite" required
+                    <input type="text" name="unite" required
+                        class="mt-1 block w-full rounded-lg border border-slate-300 dark:border-slate-600 py-2 px-3 text-sm focus:ring-2 focus:ring-emerald-400 focus:outline-none dark:bg-slate-700 dark:text-white">
+                    {{-- <select name="unite" required
                         class="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-gray-800 focus:ring-2 focus:ring-emerald-400">
                         <option value="">Sélectionnez une unité</option>
                         @foreach($formes as $forme)
                             <option value="{{ $forme }}">{{ $forme }}</option>
                         @endforeach
-                    </select>
+                    </select> --}}
                 </div>
 
                 <!-- Footer -->

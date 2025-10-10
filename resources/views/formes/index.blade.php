@@ -50,6 +50,12 @@
                             </svg>
                             Ajouter
                         </button>
+                        <!-- Bouton Dose -->
+                        <button h
+                            class="flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 shadow w-full sm:w-auto">
+                            
+                            <a href="{{ route('doses.index') }}">Dose</a>
+                        </button>
                     </div>
                 </div>
 
@@ -76,7 +82,7 @@
                                         </div>
                                     </td>
                                     <td class="p-3 sm:p-4 text-center border-b dark:border-slate-600">
-                                        <span class="text-xs sm:text-sm font-light text-slate-500 dark:text-slate-300">{{ $forme->created_at->format('d/m/Y') }}</span>
+                                        <span class="text-xs sm:text-sm font-light text-slate-500 dark:text-slate-300">{{ $forme->created_at->format('d/m/Y') ?? ' ' }}</span>
                                     </td>
                                     <td class="p-3 sm:p-4 text-center border-b dark:border-slate-600 flex justify-center gap-2 sm:gap-3 flex-col sm:flex-row">
                                         <button command="show-modal" commandfor="edit-forme-{{ $forme->id_forme }}"
