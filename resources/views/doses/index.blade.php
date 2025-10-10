@@ -62,6 +62,12 @@
                             </svg>
                             Ajouter
                         </button>
+                         <!-- Bouton Forme -->
+                        <button h
+                            class="flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 shadow w-full sm:w-auto">
+                            
+                            <a href="{{ route('formes.index') }}">Forme</a>
+                        </button>
                     </div>
                 </div>
 
@@ -83,7 +89,7 @@
                                         <td class="px-4 py-2 text-sm font-light text-slate-700 dark:text-white">{{ $dose->quantite }}</td>
                                         <td class="px-4 py-2 text-sm font-light text-slate-700 dark:text-white">{{ $dose->unite }}</td>
                                         <td class="px-4 py-2 text-center text-sm text-slate-500 dark:text-slate-300">
-                                            {{ $dose->created_at->format('d/m/Y') }}
+                                            {{ $dose->created_at->format('d/m/Y') ?? ' ' }}
                                         </td>
                                         <td class="px-4 py-2 text-center text-sm flex flex-col sm:flex-row justify-center gap-2">
                                             <!-- Bouton Edit -->
