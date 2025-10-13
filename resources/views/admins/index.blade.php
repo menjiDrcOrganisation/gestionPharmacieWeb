@@ -68,10 +68,10 @@
                         <table id="adminTable" class="min-w-full border-collapse text-slate-600 dark:text-slate-200 text-sm">
                             <thead>
                                 <tr class="bg-slate-50 dark:bg-slate-700/50 sticky top-0 z-10">
-                                    <th class="px-4 sm:px-6 py-3 text-left text-xs font-bold uppercase">Nom</th>
-                                    <th class="px-4 sm:px-6 py-3 text-left text-xs font-bold uppercase">Email</th>
-                                    <th class="px-4 sm:px-6 py-3 text-center text-xs font-bold uppercase">Date création</th>
-                                    <th class="px-4 sm:px-6 py-3 text-center text-xs font-bold uppercase"></th>
+                                    <th class="px-4 sm:px-6 py-3 text-left text-xs font-bold ">Nom</th>
+                                    <th class="px-4 sm:px-6 py-3 text-left text-xs font-bold ">Email</th>
+                                    <th class="px-4 sm:px-6 py-3 text-center text-xs font-bold ">Date création</th>
+                                    <th class="px-4 sm:px-6 py-3 text-center text-xs font-bold "></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -102,7 +102,7 @@
                                             class="flex items-center justify-center gap-1 px-3 py-1 text-xs font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-400 mx-auto"
                                         >
                                             <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" class="w-3 h-3" alt="edit">
-                                            Modifier
+                                            {{-- Modifier --}}
                                         </button>
                                         @include('admins.edit')
                                     </td>

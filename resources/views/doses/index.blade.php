@@ -32,7 +32,7 @@
                     
                     <!-- Titre -->
                     <h6 class="dark:text-white text-lg sm:text-xl font-semibold flex items-center gap-2">
-                        Gestion des Doses
+                         {{ ucfirst(strtolower("Gestion des Doses"))}}
                     </h6>
 
                     <!-- Actions (filtre + ajouter) -->
@@ -76,10 +76,10 @@
                     <table class="min-w-full table-auto text-slate-500">
                         <thead>
                             <tr class="bg-slate-100 dark:bg-slate-700">
-                                <th class="px-4 py-2 text-left text-xs font-bold text-slate-600 dark:text-slate-300 uppercase">Quantité</th>
-                                <th class="px-4 py-2 text-left text-xs font-bold text-slate-600 dark:text-slate-300 uppercase">Unité</th>
-                                <th class="px-4 py-2 text-center text-xs font-bold text-slate-600 dark:text-slate-300 uppercase">Créée le</th>
-                                <th class="px-4 py-2 text-center text-xs font-bold text-slate-600 dark:text-slate-300 uppercase"></th>
+                                <th class="px-4 py-2 text-left text-xs font-bold text-slate-600 dark:text-slate-300 ">Quantité</th>
+                                <th class="px-4 py-2 text-left text-xs font-bold text-slate-600 dark:text-slate-300 ">Unité</th>
+                                <th class="px-4 py-2 text-center text-xs font-bold text-slate-600 dark:text-slate-300 ">Créée le</th>
+                                <th class="px-4 py-2 text-center text-xs font-bold text-slate-600 dark:text-slate-300 "></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -87,7 +87,7 @@
                                 @if (!request('unite') || request('unite') == $dose->unite)
                                     <tr class="hover:bg-slate-50 dark:hover:bg-slate-700 transition">
                                         <td class="px-4 py-2 text-sm font-light text-slate-700 dark:text-white">{{ $dose->quantite }}</td>
-                                        <td class="px-4 py-2 text-sm font-light text-slate-700 dark:text-white">{{ $dose->unite }}</td>
+                                        <td class="px-4 py-2 text-sm font-light text-slate-700 dark:text-white">{{ ucfirst(strtolower($dose->unite))}}</td>
                                         <td class="px-4 py-2 text-center text-sm text-slate-500 dark:text-slate-300">
                                             {{ $dose->created_at->format('d/m/Y') ?? ' ' }}
                                         </td>
@@ -96,7 +96,7 @@
                                             <button command="show-modal" commandfor="edit-dose-{{ $dose->id }}"
                                                 class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-400 shadow">
                                                 <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" class="w-3 h-3" alt="edit">
-                                                Modifier
+                                                {{-- Modifier --}}
                                             </button>
                                             @include('doses.edit')
                                         </td>

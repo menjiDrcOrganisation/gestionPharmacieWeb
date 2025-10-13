@@ -31,7 +31,7 @@
                 <!-- Header -->
                 <div class="p-4 sm:p-6 border-b rounded-t-2xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
                     <h6 class="dark:text-white text-lg sm:text-xl font-semibold flex items-center gap-2">
-                        Gestion des pharmacies
+                        {{ ucfirst(strtolower("Gestion des pharmacies"))}}
                     </h6>
 
                     <div class="flex flex-col sm:flex-row w-full sm:w-auto gap-2 sm:gap-3">
@@ -79,10 +79,10 @@
                                 class="min-w-[700px] w-full border-collapse text-slate-600 dark:text-slate-200 text-sm sm:text-base">
                                 <thead>
                                     <tr class="bg-slate-50 dark:bg-slate-700/50 text-xs sm:text-sm">
-                                        <th class="px-4 sm:px-6 py-3 text-left font-bold uppercase">Pharmacie</th>
-                                        <th class="px-4 sm:px-6 py-3 text-left font-bold uppercase">Adresse & Téléphone</th>
-                                        <th class="px-4 sm:px-6 py-3 text-center font-bold uppercase">Statut</th>
-                                        <th class="px-4 sm:px-6 py-3 text-center font-bold uppercase">Créée le</th>
+                                        <th class="px-4 sm:px-6 py-3 text-left font-bold">{{ ucfirst(strtolower("Pharmacie "))}}</th>
+                                        <th class="px-4 sm:px-6 py-3 text-left font-bold"> {{ ucfirst(strtolower("Adresse & Téléphone "))}}</</th>
+                                        <th class="px-4 sm:px-6 py-3 text-center font-bold">{{ ucfirst(strtolower("Statut "))}}</</th>
+                                        <th class="px-4 sm:px-6 py-3 text-center font-bold">{{ ucfirst(strtolower("Créée le "))}}</th>
                                         <th class="px-4 sm:px-6 py-3 text-center"></th>
                                     </tr>
                                 </thead>
@@ -91,7 +91,7 @@
                                     <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/70 transition" data-status="{{ $pharmacie->statut }}">
                                         <td class="p-3 sm:p-4 border-b dark:border-slate-600">
                                             <div class="flex items-start gap-2 sm:gap-3">
-                                                <img src="{{ asset('assets/img/logo.png') }}" class="w-6 h-6" alt="pharmacy">
+                                                {{-- <img src="{{ asset('assets/img/logo.png') }}" class="w-6 h-6" alt="pharmacy"> --}}
                                                 <div>
                                                     <h6 class="text-sm font-light break-words">{{ ucfirst(strtolower($pharmacie->nom))}}</h6>
                                                     <p class="text-xs text-slate-500 font-light dark:text-slate-300">
@@ -135,7 +135,7 @@
                                             <button command="show-modal" commandfor="edit-pharmacie-{{ $pharmacie->id_pharmacie }}"
                                                 class="flex items-center justify-center gap-1 px-3 py-1 text-xs font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-400">
                                                 <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" class="w-3 h-3" alt="edit">
-                                                Modifier
+                                                {{-- Modifier --}}
                                             </button>
                                             @include('pharmacies.edit')
                                         </td>

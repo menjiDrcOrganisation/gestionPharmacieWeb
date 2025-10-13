@@ -32,7 +32,7 @@
                 <div class="p-4 sm:p-6 border-b rounded-t-2xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
 
                     <h6 class="dark:text-white text-lg sm:text-xl font-semibold flex items-center gap-2">
-                        Gestion des gérants
+                        {{ ucfirst(strtolower("Gestion des gérants"))}}
                     </h6>
 
                     <!-- ✅ Responsive : stack sur mobile, align horizontal sur desktop -->
@@ -69,10 +69,10 @@
                         <table id="gerantTable" class="min-w-full items-center mb-0 border-collapse text-slate-500 dark:border-white/40">
                             <thead class="bg-slate-100 dark:bg-slate-700">
                                 <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-bold uppercase text-slate-600 dark:text-slate-200">Nom du gérant</th>
-                                    <th class="px-6 py-3 text-left text-xs font-bold uppercase text-slate-600 dark:text-slate-200">Email</th>
-                                    <th class="px-6 py-3 text-left text-xs font-bold uppercase text-slate-600 dark:text-slate-200">Pharmacies</th>
-                                    <th class="px-6 py-3 text-center text-xs font-bold uppercase text-slate-600 dark:text-slate-200">Date création</th>
+                                    <th class="px-6 py-3 text-left text-xs font-bold  text-slate-600 dark:text-slate-200">{{ ucfirst(strtolower("Nom du gérant"))}}</th>
+                                    <th class="px-6 py-3 text-left text-xs font-bold  text-slate-600 dark:text-slate-200">{{ ucfirst(strtolower("Emai"))}}</th>
+                                    <th class="px-6 py-3 text-left text-xs font-bold  text-slate-600 dark:text-slate-200">{{ ucfirst(strtolower("Pharmacies"))}}</th>
+                                    <th class="px-6 py-3 text-center text-xs font-bold  text-slate-600 dark:text-slate-200">{{ ucfirst(strtolower("Date création"))}}</</th>
                                     <th class="px-6 py-3"></th>
                                 </tr>
                             </thead>
@@ -200,7 +200,7 @@
                                             <button command="show-modal" commandfor="edit-gerant-{{ $gerant->id_gerant }}"
                                                 class="inline-block flex items-center px-3 py-1 text-xs font-semibold text-white bg-blue-500 rounded hover:bg-blue-400">
                                                 <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" class="w-3 h-3" alt="edit">
-                                                 Modifier
+                                                 {{-- Modifier --}}
                                             </button>
 
                                             @include('gerants.edit', ['gerant' => $gerant, 'pharmacies' => $pharmacies])
