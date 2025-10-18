@@ -28,7 +28,7 @@
                 <!-- Header -->
                 <div class="p-4 sm:p-6 border-b rounded-t-2xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <h6 class="dark:text-white text-lg sm:text-xl font-semibold flex items-center gap-2">
-                        Gestion des Formes
+                        {{ ucfirst(strtolower("Gestion des Formes"))}}
                     </h6>
 
                     <div class="flex flex-col sm:flex-row sm:items-center gap-3 w-full sm:w-auto">
@@ -67,9 +67,9 @@
                         <table id="formeTable" class="min-w-full table-auto border-collapse text-slate-600 dark:text-slate-200">
                             <thead>
                                 <tr class="bg-slate-50 dark:bg-slate-700/50 sticky top-0 z-10">
-                                    <th class="px-4 py-2 text-left text-xs font-bold uppercase">Nom</th>
-                                    <th class="px-4 py-2 text-center text-xs font-bold uppercase">Créé le</th>
-                                    <th class="px-4 py-2 text-center text-xs font-bold uppercase"></th>
+                                    <th class="px-4 py-2 text-left text-xs font-bold ">{{ ucfirst(strtolower("Nom"))}}</th>
+                                    <th class="px-4 py-2 text-center text-xs font-bold ">{{ ucfirst(strtolower("Créé le"))}}</th>
+                                    <th class="px-4 py-2 text-center text-xs font-bold "></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -77,7 +77,7 @@
                                 <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/70 transition">
                                     <td class="p-3 sm:p-4 border-b dark:border-slate-600">
                                         <div class="flex items-center gap-2 sm:gap-3">
-                                            <img src="{{ asset('assets/img/logo.png') }}" class="w-5 h-5 sm:w-6 sm:h-6" alt="logo" />
+                                            {{-- <img src="{{ asset('assets/img/logo.png') }}" class="w-5 h-5 sm:w-6 sm:h-6" alt="logo" /> --}}
                                             <span class="text-sm sm:text-base font-light">{{ ucfirst(strtolower($forme->nom))}}</span>
                                         </div>
                                     </td>
@@ -88,7 +88,7 @@
                                         <button command="show-modal" commandfor="edit-forme-{{ $forme->id_forme }}"
                                                 class="flex items-center gap-1 px-3 py-1 text-xs sm:text-sm font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-400">
                                             <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" class="w-3 h-3" alt="edit">
-                                            Modifier
+                                            {{-- Modifier --}}
                                         </button>
                                         @include('formes.edit')
                                     </td>

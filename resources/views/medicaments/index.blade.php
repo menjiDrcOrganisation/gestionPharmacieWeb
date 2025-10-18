@@ -21,7 +21,7 @@
                 <div
                     class="p-4 sm:p-6 border-b rounded-t-2xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sticky top-0 bg-white dark:bg-slate-800 z-20">
                     <h6 class="dark:text-white text-lg sm:text-xl font-semibold">
-                        Gestion des médicaments
+                        {{ ucfirst(strtolower("Gestion des médicaments"))}}
                     </h6>
 
                     <div class="flex flex-wrap sm:flex-nowrap items-center gap-3 justify-between w-full sm:w-auto">
@@ -77,10 +77,10 @@
                             class="min-w-full border-collapse text-slate-600 dark:text-slate-200">
                             <thead>
                                 <tr class="bg-slate-50 dark:bg-slate-700/50 sticky top-0 z-10">
-                                    <th class="px-6 py-3 text-left text-xs font-bold uppercase whitespace-nowrap">Nom Médicament</th>
-                                    <th class="px-6 py-3 text-left text-xs font-bold uppercase whitespace-nowrap">Forme & Dose</th>
-                                    <th class="px-6 py-3 text-center text-xs font-bold uppercase whitespace-nowrap">Créé le</th>
-                                    <th class="px-6 py-3 text-center text-xs font-bold uppercase whitespace-nowrap"></th>
+                                    <th class="px-6 py-3 text-left text-xs font-bold  whitespace-nowrap">{{ ucfirst(strtolower("Nom Médicament"))}}</th>
+                                    <th class="px-6 py-3 text-left text-xs font-bold  whitespace-nowrap">{{ ucfirst(strtolower("Forme & Dose"))}}</th>
+                                    <th class="px-6 py-3 text-center text-xs font-bold  whitespace-nowrap">{{ ucfirst(strtolower("Créé le"))}}</th>
+                                    <th class="px-6 py-3 text-center text-xs font-bold  whitespace-nowrap"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -88,7 +88,7 @@
                                 <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/70 transition">
                                     <td class="p-4 border-b dark:border-slate-600 whitespace-nowrap">
                                         <div class="flex items-center gap-3">
-                                            <img src="{{ asset('assets/img/logo.png') }}" class="w-6 h-6" alt="logo" />
+                                            {{-- <img src="{{ asset('assets/img/logo.png') }}" class="w-6 h-6" alt="logo" /> --}}
                                             <span class="text-sm font-light">{{ ucfirst(strtolower($medicament->nom)) }}</span>
                                         </div>
                                     </td>
@@ -108,7 +108,7 @@
                                             class="flex items-center justify-center gap-1 px-3 py-1 text-xs font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-400">
                                             <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png"
                                                  class="w-3 h-3" alt="edit">
-                                            Modifier
+                                            {{-- Modifier --}}
                                         </button>
                                         @include('medicaments.edit')
                                     </td>
