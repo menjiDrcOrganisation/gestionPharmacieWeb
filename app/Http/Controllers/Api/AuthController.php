@@ -69,12 +69,13 @@ class AuthController extends Controller
             }
 
 //  Mail::to(["benikasu7@gmail.com",$user->email])->send(new BienvenueMail($user));
-//             return response()->json([
-//                 'message' => 'Connexion réussie',
-//                 'user' => $user,
-//                 'role' => $role,
-//                 'token' => $token
-//             ], 200);
+
+            return response()->json([
+                'message' => 'Connexion réussie',
+                'user' => $user,
+                'role' => $role,
+                'token' => $token
+            ], 200);
 
 
         } else {
