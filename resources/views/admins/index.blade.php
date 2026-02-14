@@ -1,180 +1,112 @@
 @extends('layouts.main')
-@section('title','Gestion Administrateurs')
-
 @section('content')
+    <div class="bg-blue-500 dark:bg-slate-900 w-full px-6 py-6 mx-auto">
+        <div class="flex flex-wrap -mx-3">
+            <div class="flex-none w-full max-w-full px-3">
+                <div class="relative flex flex-col mb-6 bg-blue-500 dark:bg-slate-800 shadow-xl rounded-2xl">
 
-@if (session('success'))
-    <div id="alert-message" class="mb-4 p-3 rounded-lg bg-green-100 text-green-800 shadow text-sm sm:text-base">
-        {{ session('success') }}
-    </div>
-@endif
-
-@if (session('error'))
-    <div id="alert-message" class="mb-4 p-3 rounded-lg bg-red-100 text-red-800 shadow text-sm sm:text-base">
-        {{ session('error') }}
-    </div>
-@endif
-
-@if (session('info'))
-    <div id="alert-message" class="mb-4 p-3 rounded-lg bg-blue-100 text-blue-800 shadow text-sm sm:text-base">
-        {{ session('info') }}
-    </div>
-@endif
-
-<div class="bg-white dark:bg-slate-900 w-full px-3 sm:px-6 py-6 mx-auto">
-    <div class="flex flex-wrap -mx-3">
-        <div class="flex-none w-full max-w-full px-3">
-            <div class="relative flex flex-col mb-6 bg-white dark:bg-slate-800 shadow-xl rounded-2xl overflow-hidden">
-
-                <!-- Header -->
-                <div class="p-4 sm:p-6 border-b rounded-t-2xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
-                    <h6 class="dark:text-white text-lg sm:text-xl font-semibold flex items-center gap-2 text-center sm:text-left">
-                        Gestion des administrateurs
-                    </h6>
-
-                    <div class="flex flex-col sm:flex-row sm:items-center gap-3 w-full sm:w-auto">
-                        <!-- Recherche -->
-                        <div class="relative w-full sm:w-72 md:w-80">
-                            <input 
-                                type="text" 
-                                id="searchInput" 
-                                placeholder="Rechercher..." 
-                                class="w-full rounded-lg border border-slate-300 pl-9 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-400 focus:outline-none dark:bg-slate-700 dark:text-white"
-                            >
-                            <span class="absolute left-2.5 top-2.5">
-                                <img src="https://cdn-icons-png.flaticon.com/512/149/149852.png" class="w-4 h-4 opacity-70" alt="search">
-                            </span>
-                        </div>
+                    <!-- Header -->
+                    <div
+                        class="p-6 pb-0 mb-0 border-b rounded-t-2xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <h6 class="dark:text-white text-lg font-semibold">Gestion des administrateurs</h6>
 
                         <!-- Bouton Ajouter -->
-                        <button 
-                            command="show-modal" 
-                            commandfor="add-admin-dialogg"
-                            class="flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 shadow w-full sm:w-auto"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                            </svg>
-                            Ajouter
+                        <button type="button" onclick="document.getElementById('add-admin-dialogg').showModal();"
+                            class="rounded-md bg-white/10 px-4 py-2 text-sm font-semibold text-blue-800 ring-1 ring-inset ring-white/5 hover:bg-white/20">
+                            ➕ Ajouter un administrateur
                         </button>
+
+
+                        <!-- Input recherche -->
+                        <input type="text" id="searchInput" placeholder="Rechercher..."
+                            class="rounded-md border border-slate-300 px-3 py-2 focus:ring-2 focus:ring-emerald-300 focus:outline-none">
                     </div>
-                </div>
 
-                @include('admins.create')
+                    @include('admins.create')
 
-                <!-- Table -->
-                <div class="flex-auto px-0 pt-4 pb-2">
-                    <div class="overflow-x-auto max-h-[500px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 dark:scrollbar-thumb-slate-600 dark:scrollbar-track-slate-800">
-                        <table id="adminTable" class="min-w-full border-collapse text-slate-600 dark:text-slate-200 text-sm">
-                            <thead>
-                                <tr class="bg-slate-50 dark:bg-slate-700/50 sticky top-0 z-10">
-                                    <th class="px-4 sm:px-6 py-3 text-left text-xs font-bold ">Nom</th>
-                                    <th class="px-4 sm:px-6 py-3 text-left text-xs font-bold ">Email</th>
-                                    <th class="px-4 sm:px-6 py-3 text-center text-xs font-bold ">Date création</th>
-                                    <th class="px-4 sm:px-6 py-3 text-center text-xs font-bold "></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($admins as $aadmin)
-                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/70 transition">
-                                    <!-- Nom -->
-                                    <td class="p-3 sm:p-4 border-b dark:border-slate-600">
-                                        <span class="text-sm font-light">{{ ucfirst(strtolower($aadmin->user->name ?? ' ' ))}}</span>
-                                    </td>
+                    <!-- Table -->
+                    <div class="flex-auto px-0 pt-4 pb-2">
+                        <div class="overflow-x-auto">
+                            <table id="adminTable"
+                                class="min-w-full items-center mb-0 border-collapse text-slate-500 dark:border-white/40">
+                                <thead>
+                                    <tr>
+                                        <th
+                                            class="px-6 py-3 text-left text-xxs font-bold uppercase text-slate-400 dark:text-white">
+                                            Nom</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xxs font-bold uppercase text-slate-400 dark:text-white">
+                                            Email</th>
+                                        <th
+                                            class="px-6 py-3 text-center text-xxs font-bold uppercase text-slate-400 dark:text-white">
+                                            Date création</th>
+                                        <th class="px-6 py-3"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($admins as $aadmin)
+                                        <tr class="hover:bg-slate-100 dark:hover:bg-slate-700">
+                                            <!-- Nom -->
+                                            <td class="p-2 align-middle border-b dark:border-white/40">
+                                                <h6 class="mb-0 text-sm dark:text-white">{{ $aadmin->user->name ?? ' ' }}
+                                                </h6>
+                                            </td>
 
-                                    <!-- Email -->
-                                    <td class="p-3 sm:p-4 border-b dark:border-slate-600">
-                                        <p class="text-sm font-light break-all">{{ ucfirst(strtolower($aadmin->user->email ?? ' ' ))}}</p>
-                                    </td>
+                                            <!-- Email -->
+                                            <td class="p-2 align-middle border-b dark:border-white/40">
+                                                <p class="mb-0 text-xs text-slate-400 dark:text-white dark:opacity-80">
+                                                    {{ $aadmin->user->email ?? ' ' }}
+                                                </p>
+                                            </td>
 
-                                    <!-- Date création -->
-                                    <td class="p-3 sm:p-4 text-center border-b dark:border-slate-600">
-                                        <span class="text-xs text-slate-500 dark:text-slate-300">
-                                            {{ $aadmin->created_at?->format('d/m/Y') ?? 'N/A' }}
-                                        </span>
-                                    </td>
+                                            <!-- Date création -->
+                                            <td class="p-2 text-center border-b dark:border-white/40">
+                                                <span class="text-xs text-slate-400 dark:text-white dark:opacity-80">
+                                                    {{ $aadmin->created_at?->format('d/m/Y') ?? 'N/A' }}
+                                                </span>
+                                            </td>
 
-                                    <!-- Actions -->
-                                    <td class="p-3 sm:p-4 text-center border-b dark:border-slate-600">
-                                        <button 
-                                            command="show-modal" 
-                                            commandfor="edit-admin-{{ $aadmin->id_admin }}"
-                                            class="flex items-center justify-center gap-1 px-3 py-1 text-xs font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-400 mx-auto"
-                                        >
-                                            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" class="w-3 h-3" alt="edit">
-                                            {{-- Modifier --}}
-                                        </button>
-                                        @include('admins.edit')
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                            <!-- Actions -->
+                                            <td class="p-2 align-middle border-b dark:border-white/40">
+                                                <button command="show-modal" commandfor="edit-admin-{{ $aadmin->id_admin }}"
+                                                    class="inline-block px-3 py-1 text-xs font-semibold text-white bg-blue-500 rounded hover:bg-blue-400">
+                                                    Edit
+                                                </button>
+
+                                                @include('admins.edit')
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
 
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const searchInput = document.getElementById('searchInput');
-    const table = document.getElementById('adminTable');
-
-    function normalize(str) {
-        return str ? str.toString().normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim() : "";
-    }
-
-    function ensureNoResultsRow() {
-        const tbody = table.querySelector('tbody');
-        let noRow = tbody.querySelector('.no-results-row');
-        if (!noRow) {
-            const colCount = table.querySelectorAll('thead th').length;
-            noRow = document.createElement('tr');
-            noRow.className = 'no-results-row';
-            noRow.innerHTML = `<td colspan="${colCount}" class="text-center italic py-4">Aucun résultat trouvé.</td>`;
-            tbody.appendChild(noRow);
-        }
-        return noRow;
-    }
-
-    function filterTable() {
-        const search = normalize(searchInput.value);
-        const rows = table.querySelectorAll('tbody tr');
-        let anyVisible = false;
-
-        rows.forEach(row => {
-            if (row.classList.contains('no-results-row')) return;
-            const rowText = normalize(row.innerText);
-            if (!search || rowText.includes(search)) {
-                row.style.display = "";
-                anyVisible = true;
-            } else {
-                row.style.display = "none";
-            }
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll("[command='show-modal']").forEach(button => {
+                button.addEventListener("click", () => {
+                    const targetId = button.getAttribute("commandfor");
+                    const dialog = document.getElementById(targetId);
+                    if (dialog) dialog.showModal();
+                });
+            });
         });
 
-        ensureNoResultsRow().style.display = anyVisible ? "none" : "";
-    }
-
-    searchInput.addEventListener("input", filterTable);
-    filterTable();
-});
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const alert = document.getElementById("alert-message");
-    if (alert) {
-        setTimeout(() => {
-            alert.style.transition = "opacity 0.5s ease";
-            alert.style.opacity = "0";
-            setTimeout(() => alert.remove(), 500);
-        }, 3000);
-    }
-});
-</script>
-
+        // Recherche
+        document.getElementById('searchInput').addEventListener('keyup', function() {
+            const filter = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#adminTable tbody tr');
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(filter) ? '' : 'none';
+            });
+        });
+    </script>
 @endsection

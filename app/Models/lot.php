@@ -19,11 +19,10 @@ class lot extends Model
         "prix_unitaire",
         "numero_lot",
         "id_pharmacie",
-        "id_medicament",
-        "quantite_reel"
+        "id_medicament"
     ];
 
-
+     
     public function ventes()
     {
         return $this->belongsToMany(Vente::class, 'lot_vente', 'id_lot', 'id_vente');

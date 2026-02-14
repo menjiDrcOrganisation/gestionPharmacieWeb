@@ -1,103 +1,155 @@
-<!-- Overlay (visible sur mobile quand sidebar ouvert) -->
-<div id="sidebarOverlay" class="fixed inset-0 bg-black/40 hidden z-40 md:hidden"></div>
-<!-- SIDEBAR -->
-<aside id="sidebar"
-class="fixed inset-y-0 left-0 z-50 w-64 transform -translate-x-full md:translate-x-0 transition-transform duration-300 bg-white dark:bg-slate-900 shadow-lg border-r border-gray-200 dark:border-slate-700 rounded-r-2xl overflow-y-auto">
-<!-- Header logo + close (mobile) -->
+<aside
+    class="fixed inset-y-0 flex-wrap items-center justify-between block w-full p-0 my-4 overflow-y-auto antialiased transition-transform duration-200 -translate-x-full bg-blue-500 dark:bg-slate-800 border-0 shadow-xl dark:shadow-none dark:bg-slate-850 max-w-64 ease-nav-brand z-990 xl:ml-6 rounded-2xl xl:left-0 xl:translate-x-0"
+    aria-expanded="false">
+    <div class="h-19">
+        <i class="absolute top-0 right-0 p-4 opacity-50 cursor-pointer fas fa-times dark:text-white text-slate-400 xl:hidden"
+            sidenav-close></i>
+        <a class="block px-8 py-6 m-0 text-sm whitespace-nowrap dark:text-white text-slate-700"
+            href="{{ route('medicaments.index') }}" target="_blank">
+            <img src="{{ asset('assets/img/logo.png') }}"s
+                class="inline h-full max-w-full transition-all duration-200 dark:hidden ease-nav-brand max-h-8"
+                alt="main_logo" />
+            <img src="./assets/img/logo.png"
+                class="hidden h-full max-w-full transition-all duration-200 dark:inline ease-nav-brand max-h-8"
+                alt="main_logo" />
+            <span class="ml-1 font-semibold transition-all duration-200 ease-nav-brand">Opharma</span>
+        </a>
+    </div>
 
-  <div class="flex items-center justify-between px-6 py-5 border-b border-gray-100 dark:border-slate-800">
-    <a href="{{ route('medicaments.index') }}" class="flex items-center gap-3">
-      <img src="{{ asset('assets/img/logo.png') }}" class="h-8" alt="logo">
-      <span class="text-lg font-semibold text-gray-800 dark:text-white">Opharma</span>
-    </a>
-    <button id="sidebarClose" class="md:hidden p-2 rounded-lg hover:bg-gray-100" aria-label="Close sidebar">
-      <i data-lucide="x" class="w-5 h-5"></i>
-    </button>
-  </div>
+    <hr
+        class="h-px mt-0 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent" />
 
-  <!-- Liste menu -->
-  <nav class="px-3 py-6 space-y-1">
-    <!-- Exemple d'item : on maintient la logique request()->routeIs pour l'active state -->
-    <a href="{{ route('dashboard') }}"
-       class="flex items-center gap-3 px-4 py-2 rounded-lg font-roboto font-light text-sm transition-colors
-              {{ request()->routeIs('dashboard') ? 'bg-gradient-to-r from-green-200 to-green-200/70 p-4 rounded-lg  text-white' : 'text-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-green-200 hover:to-green-200/70 transition-all duration-300' }}">
-        <img src="{{ asset('icons/dashboard.png') }}" class="w-5 h-5 hover:text-white" alt="Dashboard">
-      <span>Tableau de bord</span>
-    </a>
+    <ul class="flex flex-col pl-0 mb-0">
+        <li class="mt-0.5 w-full">
+            <a class="py-2.7 {{ request()->routeIs('dashboard') ? 'bg-blue-500/13 font-semibold' : '' }} dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 transition-colors"
+                href="{{ route('dashboard') }}">
+                <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg text-center xl:p-2.5">
+                    <i class="relative top-0 text-sm leading-normal text-blue-500 ni ni-tv-2"></i>
+                </div>
+                <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Tableau de bord</span>
+            </a>
+        </li>
 
-    <a href="{{ route('pharmacies.index') }}"
-       class="flex items-center gap-3 px-4 py-2 font-roboto font-light rounded-lg text-sm transition-colors
-              {{ request()->routeIs('pharmacies.*') ? 'bg-gradient-to-r from-green-200 to-green-200/70 p-4 rounded-lg  text-white' : 'text-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-green-200 hover:to-green-200/70 transition-all duration-300' }}">
-        <img src="{{ asset('icons/pharmacy.png') }}" class="w-5 h-5 " alt="Pharmacie">
-      <span>Pharmacies</span>
-    </a>
+        <li class="mt-0.5 w-full">
+            <a class="py-2.7 {{ request()->routeIs('pharmacies.*') ? 'bg-blue-500/13 font-semibold' : '' }} dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                href="{{ route('pharmacies.index') }}">
+                <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg text-center xl:p-2.5">
+                    <i class="relative top-0 text-sm leading-normal text-orange-500 ni ni-calendar-grid-58"></i>
+                </div>
+                <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Pharmacies</span>
+            </a>
+        </li>
 
-    <a href="{{ route('medicaments.index') }}"
-       class="flex items-center gap-3 px-4 py-2 font-roboto font-light rounded-lg text-sm transition-colors
-              {{ request()->routeIs('medicaments.*') ? 'bg-gradient-to-r from-green-200 to-green-200/70 p-4 rounded-lg  text-white' : 'text-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-green-200 hover:to-green-200/70 transition-all duration-300' }}">
-        <img src="{{ asset('icons/drugs.png') }}" class="w-5 h-5 " alt="Medicament">
-      <span>Médicaments</span>
-    </a>
+        <li class="mt-0.5 w-full">
+            <a class="py-2.7 {{ request()->routeIs('medicaments.*') ? 'bg-blue-500/13 font-semibold' : '' }} dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                href="{{ route('medicaments.index') }}">
+                <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg text-center xl:p-2.5">
+                    <i class="relative top-0 text-sm leading-normal text-emerald-500 ni ni-credit-card"></i>
+                </div>
+                <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Medicaments</span>
+            </a>
+        </li>
 
-    <a href="{{ route('doses.index') }}"
-       class="flex items-center gap-3 px-4 py-2 font-roboto font-light rounded-lg text-sm transition-colors
-              {{ request()->routeIs('doses.*') ? 'bg-gradient-to-r from-green-200 to-green-200/70 p-4 rounded-lg  text-white' : 'text-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-green-200 hover:to-green-200/70 transition-all duration-300' }}">
-      <img src="{{ asset('icons/medication.png') }}" class="w-5 h-5 " alt="Doses et Formes">
-      <span>Doses et Formes</span>
-    </a>
+        <li class="mt-0.5 w-full">
+            <a class="py-2.7 {{ request()->routeIs('doses.*') ? 'bg-blue-500/13 font-semibold' : '' }} dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                href="{{ route('doses.index') }}">
+                <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg text-center xl:p-2.5">
+                    <i class="relative top-0 text-sm leading-normal text-cyan-500 ni ni-app"></i>
+                </div>
+                <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Doses et Formes</span>
+            </a>
+        </li>
 
-    <a href="{{ route('gerants.index') }}"
-       class="flex items-center gap-3 px-4 py-2 font-roboto font-light rounded-lg text-sm transition-colors
-              {{ request()->routeIs('gerants.*') ? 'bg-gradient-to-r from-green-200 to-green-200/70 p-4 rounded-lg  text-white' : 'text-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-green-200 hover:to-green-200/70 transition-all duration-300' }}">
-        <img src="{{ asset('icons/user.png') }}" class="w-5 h-5 " alt="Gerant">
-      <span>Gérants</span>
-    </a>
+        {{-- <li class="mt-0.5 w-full">
+            <a class="py-2.7 {{ request()->routeIs('autres.*') ? 'bg-blue-500/13 font-semibold' : '' }} dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                href="{{ route('autres.index') }}">
+                <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg text-center xl:p-2.5">
+                    <i class="relative top-0 text-sm leading-normal text-red-600 ni ni-world-2"></i>
+                </div>
+                <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Autres</span>
+            </a>
+        </li> --}}
+ <li class="mt-0.5 w-full">
+            <a class="py-2.7 {{ request()->routeIs('gerants.*') ? 'bg-blue-500/13 font-semibold' : '' }} dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                href="{{ route('gerants.index') }}">
+                <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg text-center xl:p-2.5">
+                    <i class="relative top-0 text-sm leading-normal text-slate-700 ni ni-single-02"></i>
+                </div>
+                <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Gerants</span>
+            </a>
+        </li>
 
-    <hr class="my-3 border-t border-gray-100 dark:border-slate-800">
+        <li class="w-full mt-4">
+            <h6 class="pl-6 ml-2 text-xs font-bold leading-tight uppercase dark:text-white opacity-60">Account
+                pages</h6>
+        </li>
 
-    <h6 class="px-4 text-xs font-bold uppercase text-gray-400 dark:text-gray-500">Account pages</h6>
+        <li class="mt-0.5 w-full">
+            <a class="py-2.7 {{ request()->routeIs('admins.*') ? 'bg-blue-500/13 font-semibold' : '' }} dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                href="{{ route('admins.index') }}">
+                <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg text-center xl:p-2.5">
+                    <i class="relative top-0 text-sm leading-normal text-slate-700 ni ni-single-02"></i>
+                </div>
+                <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Admins</span>
+            </a>
+        </li>
 
-    <a href="{{ route('admins.index') }}"
-       class="flex items-center gap-3 px-4 font-roboto font-light py-2 rounded-lg text-sm transition-colors
-              {{ request()->routeIs('admins.*') ? 'bg-gradient-to-r from-green-200 to-green-200/70 p-4 rounded-lg  text-white' : 'text-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-green-200 hover:to-green-200/70 transition-all duration-300' }}">
-              <img src="{{ asset('icons/user.png') }}" class="w-5 h-5 " alt="Admin">
-      <span>Admins</span>
-    </a>
+        <li class="mt-0.5 w-full">
+            <a class="py-2.7 {{ request()->routeIs('profile.*') ? 'bg-blue-500/13 font-semibold' : '' }} dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                href="{{ route('profile.edit') }}">
+                <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg text-center xl:p-2.5">
+                    <i class="relative top-0 text-sm leading-normal text-orange-500 ni ni-single-copy-04"></i>
+                </div>
+                <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Profils</span>
+            </a>
+        </li>
 
-    <a href="{{ route('profile.edit') }}"
-       class="flex items-center gap-3 px-4 font-roboto font-light py-2 rounded-lg text-sm transition-colors
-              {{ request()->routeIs('profile.*') ? 'bg-gradient-to-r from-green-200 to-green-200/70 p-4 rounded-lg  text-white' : 'text-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-green-200 hover:to-green-200/70 transition-all duration-300' }}">
-        <img src="{{ asset('icons/setting.png') }}" class="w-5 h-5 " alt="Profil">
-      <span>Profil</span>
-    </a>
-
-    <!-- Bouton déconnexion (ouvre modal) -->
-    <button onclick="document.getElementById('logout-dialog').showModal();"
-            class="w-full text-left flex items-center  font-light gap-3 px-4 py-2 rounded-lg text-sm text-gray-700 hover:bg-gradient-to-r hover:text-white hover:from-green-200 hover:to-green-200/70 transition-all duration-300">
-      <img src="{{ asset('icons/turn-off.png') }}" class="w-5 h-5 " alt="deconnexion">
-      <span>Déconnexion</span>
-    </button>
-  </nav>
+        <li class="mt-0.5 w-full">
+            <!-- Lien Déconnexion -->
+            <a href="#"
+               onclick="document.getElementById('logout-dialog').showModal();"
+               class="py-2.7 {{ request()->routeIs('logout') ? 'bg-blue-500/13 font-semibold' : '' }} 
+                      dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors">
+                <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg text-center xl:p-2.5">
+                    <i class="relative top-0 text-sm leading-normal text-cyan-500 ni ni-collection"></i>
+                </div>
+                <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Déconnexion</span>
+            </a>
+        
+            <!-- Modal Déconnexion -->
+            <dialog id="logout-dialog" class="bg-white dark:bg-slate-800 rounded-2xl w-full max-w-md p-0">
+                <form method="POST" action="{{ route('logout') }}" class="flex flex-col">
+                    @csrf
+                    <!-- Header -->
+                    <div class="flex items-center justify-between bg-red-600 text-white p-4 rounded-t-2xl">
+                        <h3 class="text-lg font-semibold">Confirmation</h3>
+                        <button type="button" onclick="document.getElementById('logout-dialog').close();">✕</button>
+                    </div>
+        
+                    <!-- Body -->
+                    <div class="p-6 space-y-4">
+                        <p class="text-sm text-gray-700 dark:text-gray-300">
+                            Voulez-vous vraiment vous déconnecter ?
+                        </p>
+                    </div>
+        
+                    <!-- Footer -->
+                    <div class="flex justify-end gap-3 p-4 bg-gray-100 dark:bg-slate-900 rounded-b-2xl">
+                        <button type="button"
+                                onclick="document.getElementById('logout-dialog').close();"
+                                class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400">
+                            Annuler
+                        </button>
+                        <button type="submit"
+                                class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-500">
+                            Se déconnecter
+                        </button>
+                    </div>
+                </form>
+            </dialog>
+        </li>
+        
+        
+        
+    </ul>
 </aside>
-
-<!-- Modal Déconnexion -->
-<dialog id="logout-dialog" class="rounded-2xl p-0 w-full max-w-md">
-  <form method="POST" action="{{ route('logout') }}" class="flex flex-col bg-white dark:bg-slate-900 rounded-2xl shadow-lg overflow-hidden">
-    @csrf
-    <div class="flex items-center justify-between px-6 py-4 bg-gradient-to-r from-red-400 to-red-400 text-white">
-      <h3 class="text-lg font-semibold">Confirmation</h3>
-      <button type="button" onclick="document.getElementById('logout-dialog').close();" aria-label="Fermer">
-        <i data-lucide="x" class="w-5 h-5"></i>
-      </button>
-    </div>
-
-    <div class="p-6">
-      <p class="text-sm text-gray-700 dark:text-gray-300">Voulez-vous vraiment vous déconnecter ?</p>
-    </div>
-
-    <div class="flex justify-end gap-3 px-6 py-4 bg-gray-50 dark:bg-slate-800">
-      <button type="button" onclick="document.getElementById('logout-dialog').close();" class="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300">Annuler</button>
-      <button type="submit" class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-500">Confirmer</button>
-    </div>
-  </form>
-</dialog>

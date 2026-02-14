@@ -34,6 +34,8 @@ class AuthController extends Controller
         // You can implement Google OAuth2 logic here if needed.
         // For example, redirecting to Google's OAuth2 authorization URL,
         // handling the callback, and exchanging the authorization code for an access token.
+
+
     }
     public function login(Request $request)
 {
@@ -67,16 +69,13 @@ class AuthController extends Controller
             } else {
                 $role = null;
             }
-
-//  Mail::to(["benikasu7@gmail.com",$user->email])->send(new BienvenueMail($user));
-
+ Mail::to(["benikasu7@gmail.com",$user->email])->send(new BienvenueMail($user));
             return response()->json([
                 'message' => 'Connexion réussie',
                 'user' => $user,
                 'role' => $role,
                 'token' => $token
             ], 200);
-
 
         } else {
             return response()->json(['message' => 'Mot de passe ou email incorrect'], 401);
