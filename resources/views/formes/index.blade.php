@@ -46,27 +46,6 @@
                             </thead>
                             <tbody>
                                 @foreach ($formes as $forme)
-<<<<<<< HEAD
-                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/70 transition">
-                                    <td class="p-3 sm:p-4 border-b dark:border-slate-600">
-                                        <div class="flex items-center gap-2 sm:gap-3">
-                                            {{-- <img src="{{ asset('assets/img/logo.png') }}" class="w-5 h-5 sm:w-6 sm:h-6" alt="logo" /> --}}
-                                            <span class="text-sm sm:text-base font-light">{{ ucfirst(strtolower($forme->nom))}}</span>
-                                        </div>
-                                    </td>
-                                    <td class="p-3 sm:p-4 text-center border-b dark:border-slate-600">
-                                        <span class="text-xs sm:text-sm font-light text-slate-500 dark:text-slate-300">{{ $forme->created_at->format('d/m/Y') ?? ' ' }}</span>
-                                    </td>
-                                    <td class="p-3 sm:p-4 text-center border-b dark:border-slate-600 flex justify-center gap-2 sm:gap-3 flex-col sm:flex-row">
-                                        <button command="show-modal" commandfor="edit-forme-{{ $forme->id_forme }}"
-                                                class="flex items-center gap-1 px-3 py-1 text-xs sm:text-sm font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-400">
-                                            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" class="w-3 h-3" alt="edit">
-                                            {{-- Modifier --}}
-                                        </button>
-                                        @include('formes.edit')
-                                    </td>
-                                </tr>
-=======
                                     <tr class="hover:bg-slate-100 dark:hover:bg-slate-700">
                                         <td class="p-2 align-middle whitespace-nowrap">
                                             <div class="flex items-center px-2 py-1">
@@ -132,42 +111,10 @@
 
                                         </td>
                                     </tr>
->>>>>>> testweb
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
-<<<<<<< HEAD
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-document.getElementById('searchInputForme').addEventListener('keyup', function () {
-    const filter = this.value.toLowerCase();
-    const rows = document.querySelectorAll('#formeTable tbody tr');
-    rows.forEach(row => {
-        const text = row.textContent.toLowerCase();
-        row.style.display = text.includes(filter) ? '' : 'none';
-    });
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-    const alert = document.getElementById("alert-message");
-    if (alert) {
-        setTimeout(() => {
-            alert.style.transition = "opacity 0.5s ease";
-            alert.style.opacity = "0";
-            setTimeout(() => alert.remove(), 500);
-        }, 3000);
-    }
-});
-</script>
-@endsection
-=======
 
                 </div>
             </div>
@@ -187,4 +134,3 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     </script>
 @endsection
->>>>>>> testweb

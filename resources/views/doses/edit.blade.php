@@ -33,15 +33,8 @@
                 class="px-4 py-2 rounded-md bg-slate-200 text-slate-800 hover:bg-slate-300 dark:bg-slate-700 dark:text-white">
                 Annuler
             </button>
-<<<<<<< HEAD
-            <button type="submit"
-                class="px-4 py-2 text-sm font-semibold text-white bg-emerald-600 
-                rounded-lg hover:bg-emerald-500 shadow">
-                Mettre à jour
-=======
             <button type="submit" class="px-4 py-2 rounded-md bg-emerald-500 text-white hover:bg-emerald-600">
                  Enregistrer
->>>>>>> testweb
             </button>
         </div>
     </form>

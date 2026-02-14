@@ -55,8 +55,4 @@
             </el-dialog-panel>
         </div>
     </dialog>
-<<<<<<< HEAD
 </el-dialog>
-=======
-</el-dialog>
->>>>>>> testweb
