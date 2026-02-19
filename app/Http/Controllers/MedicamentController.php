@@ -33,9 +33,6 @@ class MedicamentController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         try {
@@ -56,6 +53,7 @@ class MedicamentController extends Controller
      */
     public function get()
     {
+        
         return [
             "gffgf"
         ];

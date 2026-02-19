@@ -22,7 +22,7 @@ class vente extends Model
     
         public function lots()
         {
-            return $this->belongsToMany(Lot::class, 'lot_vente', 'id_vente', 'id_lot')
+            return $this->belongsToMany(lot::class, 'lot_vente', 'id_vente', 'id_lot')
                         ->withPivot('quantite_vendu', 'montant') 
                         ->withTimestamps(); 
         }
