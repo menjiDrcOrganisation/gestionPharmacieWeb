@@ -12,6 +12,7 @@ return new class extends Migration {
             $table->foreignId('id_lot')->constrained('lots', 'id_lot');
             $table->foreignId('id_vente')->constrained('ventes', 'id_vente');
             $table->primary(['id_lot', 'id_vente']);
+            $table->timestamps();
         });
     }
 
