@@ -17,15 +17,21 @@ class vente extends Model
     "montant_total",
     "nom_client",
     "id_pharmacie" 
-    
     ];
 
-    public function lots()
-    {
-        return $this->belongsToMany(lot::class, 'lot_vente','id_vente','id_lot');
-    }
+    
+        public function lots()
+        {
+            return $this->belongsToMany(Lot::class, 'lot_vente', 'id_vente', 'id_lot')
+                        ->withPivot('quantite_vendu', 'montant') 
+                        ->withTimestamps(); 
+        }
+
+    
     public function pharmacie()
     {
         return $this->belongsTo(Pharmacie::class, 'id_pharmacie', 'id_pharmacie');
     }
+   
+
 }

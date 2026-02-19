@@ -2,6 +2,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\VenteController;
+use App\Http\Controllers\Api\RapportVenteController;
 
 Route::prefix('pharmacie/{id_pharmacie}/vente')->name('ventes.')->group(function () {
     Route::get('/', [VenteController::class, 'index'])->name('index'); 
@@ -10,3 +11,5 @@ Route::prefix('pharmacie/{id_pharmacie}/vente')->name('ventes.')->group(function
     Route::put('/{id_vente}', [VenteController::class, 'update'])->name('update'); 
     Route::delete('/{id_vente}', [VenteController::class, 'destroy'])->name('destroy'); 
 });
+
+Route::post('rapportVente/', [RapportVenteController::class, 'getRapportVente'])->name('rapportVente.getRapportVente'); 
